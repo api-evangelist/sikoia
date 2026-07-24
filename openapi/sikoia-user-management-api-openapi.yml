@@ -1,0 +1,244 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media User Management API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: User Management
+paths:
+  /v2/users:
+    get:
+      tags:
+      - User Management
+      summary: List all users
+      description: "### Retrieves a list of all users.\r\n\r\nReturns a list of users affiliated with your organisation.\r\n\r\nRefer to our Guides section for additional information on users, user roles, and user permissions.\r\n"
+      operationId: GET_v2-users
+      responses:
+        '200':
+          description: All User are retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.User'
+              example:
+              - user_id: 592d6b22-a5d4-4226-b5a3-c374cf1a38fe
+                first_name: John
+                last_name: Smith
+                email: john.smith@acme.com
+                account_date_created: '2024-01-19T03:06:41.0000000+00:00'
+                account_date_updated: '2024-01-19T03:06:41.0000000+00:00'
+                roles:
+                - name: Admin
+                  description: Admin Role
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+components:
+  schemas:
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse401:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: InvalidToken
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '401'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Invalid Token
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Invalid token
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: Sikoia ID for the user
+          format: uuid
+          readOnly: true
+          example: 592d6b22-a5d4-4226-b5a3-c374cf1a38fe
+        first_name:
+          type: string
+          description: The user’s first name
+          nullable: true
+          example: John
+        last_name:
+          type: string
+          description: The user’s last name
+          nullable: true
+          example: Smith
+        email:
+          type: string
+          description: The user’s email address
+          nullable: true
+          example: john.smith@acme.com
+        account_date_created:
+          type: string
+          description: The date the user was created
+          format: date-time
+          readOnly: true
+          example: '2024-01-19T03:06:41.0000000+00:00'
+        account_date_updated:
+          type: string
+          description: The date the user’s details were last updated
+          format: date-time
+          readOnly: true
+          example: '2024-01-19T03:06:41.0000000+00:00'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.Role'
+          nullable: true
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse429:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: RateLimit
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '429'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Too Many Requests
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: You've exceeded the maximum API request limit per minute. Please try again later.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.Role:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The role assigned to the user
+          nullable: true
+          readOnly: true
+          example: Admin
+        description:
+          type: string
+          description: A description of the role assigned to the user
+          nullable: true
+          readOnly: true
+          example: Admin Role
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: ServerError
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '500'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Internal Server Error
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Something has gone wrong, please try again
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

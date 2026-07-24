@@ -1,0 +1,578 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Online Data API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Online Data
+paths:
+  /v2/company-online-data:
+    post:
+      tags:
+      - Online Data
+      summary: Request online data
+      description: "### Requests online data for a company.\r\n\r\nProvide the `company_id` and optionally specify the `company_name`. If the company_name is specified, it will override the company entity name.\r\n"
+      operationId: POST_v2-company-online-data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Request.OnlineDataRequest'
+            example:
+              company_id: string
+              company_name: string
+      responses:
+        '201':
+          description: Request online data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataResponse'
+              example:
+                request_id: 98aacc2c-5bcd-43da-8425-cbd17034e826
+                status: Complete
+                company_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                entity_type: company
+                datetime_requested: '2024-02-12T15:34:25.4850000+00:00'
+                message: string
+                company_name: Acme Inc
+        '400':
+          description: Company Entity Deleted/Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: 77fbd479-b1c8-4b7e-b3a7-427700993552
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: c594501e-e8ec-496e-9295-e5178844947b
+        '422':
+          description: Company Entity Missing Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: UnprocessableRequest
+                status: 422
+                title: Entity Missing Information
+                detail: Entity with id 5b6d1a09-726f-4807-adaa-b4adbdbc3248 is missing required information, please update entity.
+                correlation_id: 859ff592-0ae3-466c-bea4-27dc8c24c90e
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 47e2f72b-6b86-4c80-8587-21be8666a8fe
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 33eff0e9-bf76-418d-995e-6b92d899b7c1
+  /v2/companies/{company_id}/online-data:
+    get:
+      tags:
+      - Online Data
+      summary: List all online data requests
+      description: "### Returns a list of all online data requests for a company.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-online-data/{request_id}` endpoint.\r\n"
+      operationId: GET_v2-companies-company_id-online-data
+      parameters:
+      - name: company_id
+        in: path
+        description: Sikoia ID for the Company
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Online Data Requests List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataListResponse'
+              example:
+                company_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                online_data_requests:
+                - request_id: 98aacc2c-5bcd-43da-8425-cbd17034e826
+                  status: Complete
+                  datetime_requested: '2024-02-12T15:34:25.4850000+00:00'
+                  message: string
+                  company_name: Acme Inc
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 807e9735-f25f-4067-89b0-9ee706277047
+        '404':
+          description: Company Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id a4b186c4-2c16-45b1-ac5e-b48d6c5138df.
+                correlation_id: bcc61d95-51a2-4968-bc1a-66561852ac20
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: cb73af08-2a34-4972-be4e-1c908172b9a9
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: b38daf1f-ac34-49eb-87ce-f681a4c09fe7
+  /v2/company-online-data/{request_id}:
+    get:
+      tags:
+      - Online Data
+      summary: Retrieve online data
+      description: "### Returns online data for a company.\r\n\r\nThis endpoint returns the company online data associated with a specific `request_id`.\r\n"
+      operationId: GET_v2-company-online-data-request_id
+      parameters:
+      - name: request_id
+        in: path
+        description: Sikoia ID for the request
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Online Data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineDataMappedResponse'
+              example:
+                request_id: 98aacc2c-5bcd-43da-8425-cbd17034e826
+                status: Complete
+                company_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                datetime_requested: '2024-02-12T15:34:25.4850000+00:00'
+                message: string
+                company_name: Acme Inc
+                data:
+                  website_url: https://www.acmeinc.com
+                  phones: '[]'
+                  emails: ''
+                  online_accounts: ''
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: ab799048-1821-4f19-9ff7-b5477b08305d
+        '404':
+          description: Request ID Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 46f48fd1-94d4-4b7e-8530-f827e78334cc.
+                correlation_id: c465c8b7-fbf5-4c58-be97-c1fdd11b5427
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 03de5d9a-076c-47a3-837b-e20eb927426c
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 46c8dc43-1952-4c3c-8bef-88280b6e6f1f
+components:
+  schemas:
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataResponse:
+      title: Online Data Response
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Sikoia ID for the request
+          format: uuid
+          readOnly: true
+          example: 98aacc2c-5bcd-43da-8425-cbd17034e826
+        status:
+          type: string
+          description: The status of the request(`Complete` `Failed`)
+          nullable: true
+          example: Complete
+        company_id:
+          type: string
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity
+          nullable: true
+          example: company
+        datetime_requested:
+          type: string
+          description: The time the request was made
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T15:34:25.485Z'
+        message:
+          type: string
+          description: Additional detail about the request
+          nullable: true
+        company_name:
+          type: string
+          description: The name of the company
+          nullable: true
+          example: Acme Inc
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Email:
+      title: Email
+      type: object
+      properties:
+        email_type:
+          type: string
+          description: The Email Type (e.g. Work vs Private)
+          nullable: true
+          example: Work
+        date_from:
+          type: string
+          description: Creation Date of the Email
+          nullable: true
+          example: '2020-01-01T00:00:00Z'
+        date_to:
+          type: string
+          description: Deleteion Date of the Email
+          nullable: true
+          example: '2024-05-03T00:00:00Z'
+        email_address:
+          type: string
+          description: The Email Address
+          nullable: true
+          example: info@acmeinc.com
+        email_domain:
+          type: string
+          description: The Email Domain
+          nullable: true
+          example: acme.com
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Request.OnlineDataRequest:
+      title: Online Data Request
+      required:
+      - company_id
+      type: object
+      properties:
+        company_id:
+          minLength: 1
+          pattern: ^(?:\{{0,1}(?:[0-9a-fA-F]){8}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){12}\}{0,1})$
+          type: string
+          description: Sikoia ID for the Company
+        company_name:
+          type: string
+          description: The legal name of the company
+          nullable: true
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineAccount:
+      title: Online Account
+      type: object
+      properties:
+        provider_name:
+          type: string
+          description: The Name of the Account Provider (e.g. LinkedIn)
+          nullable: true
+          example: Facebook
+        provider_url:
+          type: string
+          description: The URL of the Account Provider
+          nullable: true
+          example: https://www.facebook.com/
+        account_name:
+          type: string
+          description: The Account Name (if any)
+          nullable: true
+          example: John Doe
+        account_url:
+          type: string
+          description: The Account URL
+          nullable: true
+          example: https://www.facebook.com/AcmeInc
+        date_from:
+          type: string
+          description: Creation Date of the Account
+          nullable: true
+          example: '2020-01-01T00:00:00Z'
+        date_to:
+          type: string
+          description: Deletion Date of the Account
+          nullable: true
+          example: '2024-05-03T00:00:00Z'
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Phone:
+      title: Phone
+      type: object
+      properties:
+        number_type:
+          type: string
+          description: The Number Type (e.g. Work vs Private)
+          nullable: true
+        date_from:
+          type: string
+          description: Creation Date of the Number
+          nullable: true
+        date_to:
+          type: string
+          description: Deleteion Date of the Number
+          nullable: true
+        country_code:
+          type: string
+          description: The Country Code of the Number
+          nullable: true
+        full_number:
+          type: string
+          description: The Full Number
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataListResponse:
+      title: Online Data List Response
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        online_data_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataOrchestrationResponse'
+          description: The list of all online data requests for the company
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataOrchestrationResponse:
+      title: Online Data Orchestration Response
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Sikoia ID for the request
+          format: uuid
+          readOnly: true
+          example: 98aacc2c-5bcd-43da-8425-cbd17034e826
+        status:
+          type: string
+          description: The status of the request(`Complete` `Failed`)
+          nullable: true
+          example: Complete
+        datetime_requested:
+          type: string
+          description: The time the request was made
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T15:34:25.485Z'
+        message:
+          type: string
+          description: Additional detail about the request
+          nullable: true
+        company_name:
+          type: string
+          description: The name of the company
+          nullable: true
+          example: Acme Inc
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineData:
+      title: Online Data
+      type: object
+      properties:
+        website_url:
+          type: string
+          description: The Website URL
+          nullable: true
+          example: https://www.acmeinc.com
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Phone'
+          description: The Company Phones
+          nullable: true
+          example: '[]'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Email'
+          description: The Company Emails
+          nullable: true
+          example: ''
+        online_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineAccount'
+          description: The Company Online Accounts
+          nullable: true
+          example: ''
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineDataMappedResponse:
+      title: Online Data Mapped Response
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Sikoia ID for the request
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: 98aacc2c-5bcd-43da-8425-cbd17034e826
+        status:
+          type: string
+          description: The status of the request(`Complete` `Failed`)
+          nullable: true
+          example: Complete
+        company_id:
+          type: string
+          description: Sikoia ID for the Company
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        datetime_requested:
+          type: string
+          description: The time the request was made
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T15:34:25.485Z'
+        message:
+          type: string
+          description: Additional detail about the request
+          nullable: true
+        company_name:
+          type: string
+          description: The name of the company
+          nullable: true
+          example: Acme Inc
+        data:
+          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineData'
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

@@ -1,0 +1,144 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Authentication API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Authentication
+paths:
+  /token:
+    post:
+      tags:
+      - Authentication
+      summary: Creates an access token
+      description: "### To generate an access token, make a request to one of the following:\r\n- Production Environment: `https://oauth2.sikoia.com` \r\n- Staging Environment: `https://oauth2-staging.sikoia.com`\r\n\r\n ### Ensure that the following parameters are provided: \r\n- `client_id:` See our Guides section for more information on how to obtain your `client_id`.\r\n- `client_secret:` See our Guides section for more information on how to obtain your `client_secret`.\r\n- `grant_type:` Set this parameter to client_credentials.\r\n- `scope:` Set this parameter to: \r\n- * Production Environment: `https://api.sikoia.com/.default`\r\n- * Staging Environment: `https://api-staging.sikoia.com/.default`\r\n\r\n The endpoint will return the access token in JSON Web Token (JWT) format, along with metadata indicating its expiry and validity."
+      operationId: POST_token
+      security: []
+      servers:
+      - url: https://oauth2.sikoia.com
+        description: Authorization Server (Production)
+      - url: https://oauth2-staging.sikoia.com
+        description: Authorization Server (Staging)
+      requestBody:
+        description: Token request
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ObtainTokenRequest'
+      responses:
+        '201':
+          description: Returns the access token in JWT format along with metadata about token expiry and validity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Error response compliant with Oauth 2.0 specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenErrorResponse'
+components:
+  schemas:
+    TokenErrorResponse:
+      title: Token Error Response
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+          - invalid_scope
+          description: A string describing the error type.
+          example: invalid_request
+        error_description:
+          type: string
+          description: A more detailed description of the error.
+          example: Invalid client secret is provided
+      additionalProperties: false
+    ObtainTokenRequest:
+      title: ObtainToken
+      required:
+      - grant_type
+      - scope
+      - client_id
+      - client_secret
+      type: object
+      properties:
+        grant_type:
+          type: string
+          description: The type of Oauth 2.0 grant. Must be set to `client_credentials`
+          nullable: false
+          example: client_credentials
+        scope:
+          type: string
+          description: The scope of the token. Must be set to `https://api.sikoia.com/.default` for production and `https://api-staging.sikoia.com/.default` for staging
+          nullable: false
+          example: https://api.sikoia.com/.default
+        client_id:
+          type: string
+          description: The client ID of your application
+          format: uuid
+          nullable: false
+          example: e5ca26ec-f3a0-4d7f-bcf1-b6ebd5446aee
+        client_secret:
+          type: string
+          description: The client secret that you created for your application
+          nullable: false
+          example: Yoa8Q@of26stihrz3~JfP4Wz6TGby0fJFT2^UcU0
+      additionalProperties: false
+    TokenResponse:
+      title: Token Response
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The access token in JWT format
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        token_type:
+          type: string
+          description: The type of the token. Will be returned as `Bearer`
+          example: Bearer
+        not_before:
+          type: integer
+          description: Epoch timestamp of when the token is valid from
+          example: '1729153756'
+        expires_in:
+          type: integer
+          description: Expiry time of the token in seconds
+          example: '3600'
+        expires_on:
+          type: integer
+          description: Epoch timestamp of when the token expires
+          example: '1729157356'
+        resource:
+          type: string
+          description: fdd608dc-2f2f-48b1-aefe-3fed991f587e
+          example: Audience of the token
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

@@ -1,0 +1,139 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Excel Report API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Excel Report
+paths:
+  /v2/{entity_type}/{entity_id}/excel-report:
+    get:
+      tags:
+      - Excel Report
+      summary: Retrieve excel report
+      description: "### Generates an Excel report with a summary of key data for the specified entity.\r\n\r\nThis endpoint returns a report containing data on income and employment verification, affordability insights, validation checklists, and integrity checks.\r\n\r\nThe only validation checklists that are included in the report, if you have requested them, are:\r\n- `Last 3 months of payslips`\r\n- `Last 3 months of bank transactions`\r\n"
+      operationId: GET_v2-entity_type-entity_id-excel-report
+      parameters:
+      - name: entity_type
+        in: path
+        description: Entity Type
+        required: true
+        schema:
+          enum:
+          - Companies
+          - Persons
+          - Cases
+          type: string
+      - name: entity_id
+        in: path
+        description: Entity ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Excel Report
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+              example: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 6ebde479-c50f-43b2-b831-a32b51c859c0
+        '404':
+          description: Entity deleted/not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 0208fd85-0ae2-45b8-82d3-2d2b022b2e78.
+                correlation_id: b9c12a9b-2cf0-4b59-a776-51780a31f13b
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: e5367b1c-3eeb-4785-af90-49b4d0278839
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: ae1b4b15-8df7-464c-8203-2042cd3a8510
+components:
+  schemas:
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

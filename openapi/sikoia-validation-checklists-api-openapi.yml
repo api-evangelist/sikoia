@@ -1,0 +1,687 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Validation Checklists API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Validation Checklists
+paths:
+  /v2/validation-checks/validation-types:
+    get:
+      tags:
+      - Validation Checklists
+      summary: List all validation checklists
+      description: "### Returns a list of all validation checklists available.\r\n\r\nThis list includes all available checklists along with their `validation_type_id`, `validation_check_name`, `validation_description` and `entity_type`.\r\n"
+      operationId: GET_v2-validation-checks-validation-types
+      responses:
+        '200':
+          description: Checklist types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.CheckListValidationType'
+              example:
+              - validation_type_id: a072e37a-dee1-4a4e-b098-168a6a1f4603
+                validation_check_name: Last 3 months of payslips
+                validation_description: Checks if all payslips from the last 3 months have been provided
+                entity_type: case
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 185dd335-3a93-4e3a-8d37-e59bd5a14259
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a76ae66e-9aee-4aae-93c1-c2ed14d36e1b
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: bfbb0cfa-0c8e-43a5-a87a-2ffe32a493d3
+  /v2/validation-checks:
+    post:
+      tags:
+      - Validation Checklists
+      summary: Run a validation checklist
+      description: "### Runs a validation checklist against a specific case, person, company, or data source.\r\n\r\nThis endpoint automatically checks whether an entity passes all the rules in a specific validation checklist.\r\n\r\nTo proceed, ensure that `validation_type_id`, `entity_id` and `entity_type` are valid.\r\n\r\nTo run the checklist against a specific data source use the `check_params` filter and provide the `source_id` and `source_id_type` of the data source you want to use.\r\n\r\nA successful response will include a `validation_instance_id` that can be used to check the status of the request.\r\n"
+      operationId: POST_v2-validation-checks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.CheckListValidationRequest'
+            example:
+              validation_type_id: a072e37a-dee1-4a4e-b098-168a6a1f4603
+              entity_id: 3f615611-3dc3-418b-bed5-a53c4390c97c
+              entity_type: case
+              checklist_params:
+              - source_id: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+                source_category_type: Document
+      responses:
+        '201':
+          description: The validation check is pending
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.RequestValidationCheckResponse'
+              example:
+                validation_instance_id: 2ef5079a-b3de-44a5-b4ff-c534259e752c
+                validation_type_id: a072e37a-dee1-4a4e-b098-168a6a1f4603
+                status: Pending
+                entity_id: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
+                entity_type: case
+                checklist_params:
+                - source_id: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+                  source_category_type: Document
+                datetime_requested: '2024-01-01T12:38:45.7110000+00:00'
+                datetime_completed: '2024-01-02T12:22:07.7470000+00:00'
+                message: Validation Check request pending
+        '400':
+          description: Entity Deleted/Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: d8c6e7b5-4ad6-4b22-a35c-0a107b7780e1
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: edf58a4d-b90f-4cdd-96d7-20c2d4dbbe9b
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 3edfe4be-2ab6-4518-9a1d-c6b0d31edd3a
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: e87eba1c-ee27-4469-9ac1-3dffe8ff577f
+  /v2/{entity_type}/{entity_id}/validation-checks:
+    get:
+      tags:
+      - Validation Checklists
+      summary: List all validation checklist requests
+      description: "### List all validation checklist requests.\r\n\r\nReturns a list of all validation checklists requested for an entity.\r\n\r\nThe list includes the validation_instance_id for each request, which can be used to retrieve the validation check rules result using the GET `/v2/validation-checks/{validation_instance_id}` endpoint.\r\n"
+      operationId: GET_v2-entity_type-entity_id-validation-checks
+      parameters:
+      - name: entity_type
+        in: path
+        description: Entity Type
+        required: true
+        schema:
+          enum:
+          - Companies
+          - Persons
+          - Cases
+          type: string
+      - name: entity_id
+        in: path
+        description: Entity ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Validation Check Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestListResponse'
+              example:
+                entity_id: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+                entity_type: case
+                validation_check_requests:
+                - validation_instance_id: 2ef5079a-b3de-44a5-b4ff-c534259e752c
+                  validation_type_id: a072e37a-dee1-4a4e-b098-168a6a1f4603
+                  status: Complete
+                  datetime_requested: '2024-01-29T12:21:52.9330000+00:00'
+                  datetime_completed: '2024-01-30T09:44:22.4660000+00:00'
+                  message: Income Employer complete
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: b52cb216-280c-4a8b-8505-49cb5e59463d
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 85d2cc51-4be8-473a-9ec6-60d7920b978e.
+                correlation_id: c883325a-bd60-47c9-b053-4541e4e686ba
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: fe491217-07f7-4d3b-8a06-2ecf6ef5af4e
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 376efd61-9519-41d5-8c22-55f6239e9f54
+  /v2/validation-checks/{validation_instance_id}:
+    get:
+      tags:
+      - Validation Checklists
+      summary: Retrieve validation checklist result
+      description: "### Returns an instance of a validation checklist.\r\n\r\nThis endpoint returns the validation check results associated with a specific `validation_instance_id`.\r\n"
+      operationId: GET_v2-validation-checks-validation_instance_id
+      parameters:
+      - name: validation_instance_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Validation Check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckInstanceResponse'
+              example:
+                validation_instance_id: 2ef5079a-b3de-44a5-b4ff-c534259e752c
+                validation_type_id: a072e37a-dee1-4a4e-b098-168a6a1f4603
+                validation_check_name: Last 3 months of payslips
+                status: Complete
+                entity_id: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+                entity_type: case
+                checklist_params:
+                - source_id: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+                  source_category_type: Document
+                datetime_requested: '2024-01-01T12:38:45.7110000+00:00'
+                datetime_completed: '2024-01-02T12:22:07.7470000+00:00'
+                message: Validation Check request pending
+                rules:
+                - rule_name: Payslips span a 3 month period
+                  decision: Pass
+                  recipient: Sam Smith
+                  message: Validation Check Passed
+                  sources:
+                  - source_id: 6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+                    source_category_type: Document
+                    source_uri: https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+                    date: '2025-01-25'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 7f70212a-e64c-471b-8e3f-c962b0ece194
+        '404':
+          description: Validation check instance ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id b7b98885-7e10-4eec-940b-2f60b51b6ef1.
+                correlation_id: 4dafab83-28a4-4545-875a-3f1e39753312
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 27b7cb17-34de-4679-bcf1-de2a1bd427d0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: ea5bf8d0-72ec-472c-946e-d8fa4ef2fd8a
+components:
+  schemas:
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource:
+      type: object
+      properties:
+        source_id:
+          type: string
+          description: The identifier for the root source of the data, such as a document ID for files (e.g. payslips) or an account connection ID for a successful open banking connection.
+          nullable: true
+          example: 6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+        source_category_type:
+          type: string
+          description: The category of the data source, such as `Document` or `OpenBanking`.
+          nullable: true
+          example: Document
+        source_uri:
+          type: string
+          description: The URI of the data source, such as the URI to call in order to retrieve the original document.
+          nullable: true
+          example: https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+        date:
+          type: string
+          description: The date of the data source.
+          nullable: true
+          example: '2025-01-25'
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse:
+      type: object
+      properties:
+        rule_name:
+          type: string
+          description: The name of the rule, such as 'Payslips span a 3 month period'.
+          nullable: true
+          example: Payslips span a 3 month period
+        decision:
+          type: string
+          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
+          nullable: true
+          example: Pass
+        recipient:
+          type: string
+          description: The name of the recipient
+          nullable: true
+          example: Sam Smith
+        message:
+          type: string
+          description: An optional field providing additional context regarding the status of the rule evaluation.
+          nullable: true
+          example: Validation Check Passed
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource'
+          description: The data sources used for evaluating the rule.
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.CheckListValidationType:
+      type: object
+      properties:
+        validation_type_id:
+          type: string
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          format: uuid
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        validation_check_name:
+          type: string
+          description: The name of the check type, such as 'Last 3 months of payslips'.
+          nullable: true
+          example: Last 3 months of payslips
+        validation_description:
+          type: string
+          description: A detailed description of the check type, explaining its purpose and scope.
+          nullable: true
+          example: Checks if all payslips from the last 3 months have been provided
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity.
+          nullable: true
+          example: case
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckInstanceResponse:
+      title: Validation Check Instance Response
+      type: object
+      properties:
+        validation_instance_id:
+          type: string
+          description: The unique identifier for a specific instance of the check type.
+          nullable: true
+          example: 2ef5079a-b3de-44a5-b4ff-c534259e752c
+        validation_type_id:
+          type: string
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          nullable: true
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        validation_check_name:
+          type: string
+          description: The name of the check type, such as 'Last 3 months of payslips'.
+          nullable: true
+          example: Last 3 months of payslips
+        status:
+          type: string
+          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          nullable: true
+          example: Complete
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          nullable: true
+          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity.
+          nullable: true
+          example: case
+        checklist_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
+          description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
+          nullable: true
+        datetime_requested:
+          type: string
+          description: The date and time when the request was initiated.
+          nullable: true
+          example: '2024-01-01T12:38:45.711Z'
+        datetime_completed:
+          type: string
+          description: The date and time when the request was completed.
+          nullable: true
+          example: '2024-01-02T12:22:07.747Z'
+        message:
+          type: string
+          description: An optional field providing additional context about the status of the check.
+          nullable: true
+          example: Validation Check request pending
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse'
+          description: A list of rules to be evaluated as part of the check.
+          nullable: true
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestListResponse:
+      title: Validation Check Request Instances Response
+      type: object
+      properties:
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          nullable: true
+          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity.
+          nullable: true
+          example: case
+        validation_check_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestInstance'
+          description: A list of validation check instance requests for the entity.
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.RequestValidationCheckResponse:
+      title: Request Validation Check Instance Response
+      type: object
+      properties:
+        validation_instance_id:
+          type: string
+          description: The unique identifier for a specific instance of the check type.
+          nullable: true
+          example: 2ef5079a-b3de-44a5-b4ff-c534259e752c
+        validation_type_id:
+          type: string
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          nullable: true
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        status:
+          type: string
+          description: 'The current status of the check, which may be one of the following: `Pending`.'
+          nullable: true
+          example: Pending
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          nullable: true
+          example: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity.
+          nullable: true
+          example: case
+        checklist_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
+          description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
+          nullable: true
+        datetime_requested:
+          type: string
+          description: The date and time when the request was initiated.
+          nullable: true
+          example: '2024-01-01T12:38:45.711Z'
+        datetime_completed:
+          type: string
+          description: The date and time when the request was completed.
+          nullable: true
+          example: '2024-01-02T12:22:07.747Z'
+        message:
+          type: string
+          description: An optional field providing additional context about the status of the check.
+          nullable: true
+          example: Validation Check request pending
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestInstance:
+      title: Validation Check Request Instance
+      type: object
+      properties:
+        validation_instance_id:
+          type: string
+          description: The unique identifier for a specific instance of the check type.
+          nullable: true
+          example: 2ef5079a-b3de-44a5-b4ff-c534259e752c
+        validation_type_id:
+          type: string
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          nullable: true
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        status:
+          type: string
+          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          nullable: true
+          example: Complete
+        datetime_requested:
+          type: string
+          description: The date and time when the request was initiated.
+          nullable: true
+          example: '2024-01-29T12:21:52.933Z'
+        datetime_completed:
+          type: string
+          description: The date and time when the request was completed.
+          nullable: true
+          example: '2024-01-30T09:44:22.466Z'
+        message:
+          type: string
+          description: An optional field providing additional context about the status of the check.
+          nullable: true
+          example: Income Employer complete
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Request.CheckListValidationRequest:
+      type: object
+      properties:
+        validation_type_id:
+          type: string
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          nullable: true
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          nullable: true
+          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity.
+          nullable: true
+          example: case
+        checklist_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
+          description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter:
+      type: object
+      properties:
+        source_id:
+          type: string
+          description: Unique identifier for source
+          nullable: true
+          example: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+        source_category_type:
+          type: string
+          description: Type of source
+          nullable: true
+          example: Document
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

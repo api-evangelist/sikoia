@@ -1,0 +1,343 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Adverse Media
+paths:
+  /v2/adverse-media:
+    post:
+      tags:
+      - Adverse Media
+      summary: Request Adverse Media search
+      description: "### Requests an Adverse Media search for an entity.\r\n\r\nCheck if the entity has any potential Adverse Media results.\r\n\r\n* If the `entity_type` is case, a search_term must be included.\r\n* If the `entity_type` is person or company, the search term is taken from the name on the entity. If the `search_term` is included, the entity data is overridden.\r\n* If `entity_type` is person, providing a `birth_date` enhances search accuracy.\r\n* Adjust the `fuzziness` level (ranging from 0-1) to control spelling variations. Lower levels yield fewer variations, while higher levels increase flexibility.\r\n\r\nThis endpoint returns the number of matches the entity has. For detailed match information, refer to the Sikoia Dashboard.\r\n"
+      operationId: POST_v2-adverse-media
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingRequest'
+            example:
+              search_term: Acme Inc
+              entity_type: company
+              entity_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+              birth_date: string
+              monitored: 'true'
+              fuzziness: '0.2'
+      responses:
+        '200':
+          description: Adverse Media Search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingResponse'
+              example:
+                request_id: e6b1b4d6-d5cf-426e-a4dc-d9c0264299df
+                search_ref: 1729289992-b91nmEFh
+                status: Complete
+                entity_type: company
+                entity_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                search_term: Acme Inc
+                birthdate: '1950-08-08'
+                monitored: 'true'
+                datetime_requested: '2024-02-12T16:02:06.9000000+00:00'
+                total_matches: '9'
+                search_certificate_uri: https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: ce61d563-9353-4407-9f79-a71ca508566b
+        '404':
+          description: Details Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id a313ba4f-e1c3-4430-929c-7ed126c7de95.
+                correlation_id: 5bafbbd7-b21c-4085-8b2a-1b7df04c1469
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: d789669a-aae9-4818-89c8-ee4a1d0de7c7
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 55bad154-b9e5-4f65-8ece-a3afebb52156
+  /v2/{entity_type}/{entity_id}/adverse-media:
+    get:
+      tags:
+      - Adverse Media
+      summary: List all Adverse Media searches
+      description: "### Returns a list of all Adverse Media searches for an entity.\r\n\r\nThe response returns the number of matches returned in each search.\r\nFor detailed match information, refer to the Sikoia Dashboard.\r\n"
+      operationId: GET_v2-entity_type-entity_id-adverse-media
+      parameters:
+      - name: entity_type
+        in: path
+        description: The type of entity (company, person, case)
+        required: true
+        schema:
+          enum:
+          - Companies
+          - Persons
+          - Cases
+          type: string
+      - name: entity_id
+        in: path
+        description: The company_id, person_id or case_id of the entity
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Adverse Media Retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingResponse'
+              example:
+              - request_id: e6b1b4d6-d5cf-426e-a4dc-d9c0264299df
+                search_ref: 1729289992-b91nmEFh
+                status: Complete
+                entity_type: company
+                entity_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                search_term: Acme Inc
+                birthdate: '1950-08-08'
+                monitored: 'true'
+                datetime_requested: '2024-02-12T16:02:06.9000000+00:00'
+                total_matches: '9'
+                search_certificate_uri: https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: f404c0a1-9e56-4739-a319-51628962f37f
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 6f7b9161-2a30-49a1-aa53-3d804f4cfda9.
+                correlation_id: 630ff69e-fd74-4b0f-8bb0-9c1e5ca38956
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 168b11b5-5c00-4dbc-9d3c-804bde7aada7
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 9f55622c-e244-41c0-85d1-c2e47de56259
+components:
+  schemas:
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingRequest:
+      title: Anti Money Laundering Request
+      required:
+      - entity_id
+      - entity_type
+      type: object
+      properties:
+        search_term:
+          type: string
+          description: The name of the entity
+          nullable: true
+          example: Acme Inc
+        entity_type:
+          minLength: 1
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity
+          example: company
+        entity_id:
+          minLength: 1
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        birth_date:
+          type: string
+          description: The date of birth of the person
+          format: date-time
+          nullable: true
+        monitored:
+          type: boolean
+          description: Indicates if search should be automatically updated when new data is found.Set to `true` by default
+          example: 'true'
+        fuzziness:
+          type: number
+          description: Float to control for spelling variations
+          format: float
+          nullable: true
+          example: '0.2'
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingResponse:
+      title: Anti Money Laundering Response
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Sikoia ID for the request
+          nullable: true
+          example: e6b1b4d6-d5cf-426e-a4dc-d9c0264299df
+        search_ref:
+          type: string
+          description: Data provider’s search ID
+          nullable: true
+          example: 1729289992-b91nmEFh
+        status:
+          type: string
+          description: The status of the request(`Complete` `Failed`)
+          nullable: true
+          example: Complete
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity
+          nullable: true
+          example: company
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          nullable: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        search_term:
+          type: string
+          description: The name of the entity
+          nullable: true
+          example: Acme Inc
+        birthdate:
+          type: string
+          description: The date of birth of the person
+          nullable: true
+          example: '1950-08-08'
+        monitored:
+          type: boolean
+          description: Indicates if search should be automatically updated when new data is found. Set to `true` by default
+          example: 'true'
+        datetime_requested:
+          type: string
+          description: The time the request was made
+          nullable: true
+          example: '2024-02-12T16:02:06.9Z'
+        total_matches:
+          type: integer
+          description: The total number of potential matches found
+          format: int32
+          example: '9'
+        search_certificate_uri:
+          type: string
+          description: The URI of the Search Certificate
+          nullable: true
+          example: https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

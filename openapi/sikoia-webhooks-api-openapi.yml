@@ -1,0 +1,1252 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Webhooks API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Webhooks
+paths:
+  /v2/webhooks:
+    post:
+      tags:
+      - Webhooks
+      summary: Create a new webhook
+      description: "### Creates a webhook for one or more events.\r\n\r\nA webhook is an HTTP request that keeps your system informed about changes in the Sikoia Platform in real-time. Refer to our Guides section for additional information on webhooks.\r\nYou can retrieve a complete list of supported `event_types` by using the `GET/v2/webhooks/event-types` endpoint.\r\n"
+      operationId: POST_v2-webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.Webhook'
+            example:
+              webhook_id: string
+              webhook_name: Bank Statement Hook
+              webhook_callback_url: https://yourdomain.com/webhook/
+              external_ref: IntRef001
+              event_types: '["BankStatementProcessing.Completed"]'
+              datetime_created: '2024-01-18T12:37:35.0000000+00:00'
+              datetime_updated: '2024-01-18T12:37:35.0000000+00:00'
+      responses:
+        '201':
+          description: Webhook successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.Webhook'
+              example:
+                webhook_id: string
+                webhook_name: Bank Statement Hook
+                webhook_callback_url: https://yourdomain.com/webhook/
+                external_ref: IntRef001
+                event_types: '["BankStatementProcessing.Completed"]'
+                datetime_created: '2024-01-18T12:37:35.0000000+00:00'
+                datetime_updated: '2024-01-18T12:37:35.0000000+00:00'
+        '400':
+          description: Validation failure trying to create webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse400'
+              example:
+                type: InvalidRequest
+                status: '400'
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+    get:
+      tags:
+      - Webhooks
+      summary: List all webhooks
+      description: "### Retrieves a list of all available webhooks.\r\n\r\nReturns a list of all webhooks affiliated with your organisation.\r\n\r\nThis list includes the `webhook_id`, which can be used to update or delete the webhook using the `GET/v2/webhooks/{webhook_id}` and `DELETE/v2/webhooks/{webhook_id}` endpoints.\r\n"
+      operationId: GET_v2-webhooks
+      responses:
+        '200':
+          description: Webhooks successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.Webhook'
+              example:
+              - webhook_id: string
+                webhook_name: Bank Statement Hook
+                webhook_callback_url: https://yourdomain.com/webhook/
+                external_ref: IntRef001
+                event_types: '["BankStatementProcessing.Completed"]'
+                datetime_created: '2024-01-18T12:37:35.0000000+00:00'
+                datetime_updated: '2024-01-18T12:37:35.0000000+00:00'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+  /v2/webhooks/{webhook_id}:
+    get:
+      tags:
+      - Webhooks
+      summary: Retrieve a webhook
+      description: "### Retrieves a webhook.\r\n\r\nReturns information about a webhook, including the `webhook_callback_url` and a list of associated `event_types`.\r\n"
+      operationId: GET_v2-webhooks-webhook_id
+      parameters:
+      - name: webhook_id
+        in: path
+        description: Webhook Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Webhook successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.Webhook'
+              example:
+                webhook_id: string
+                webhook_name: Bank Statement Hook
+                webhook_callback_url: https://yourdomain.com/webhook/
+                external_ref: IntRef001
+                event_types: '["BankStatementProcessing.Completed"]'
+                datetime_created: '2024-01-18T12:37:35.0000000+00:00'
+                datetime_updated: '2024-01-18T12:37:35.0000000+00:00'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '404':
+          description: Webhook does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse404'
+              example:
+                type: ResourceNotFound
+                status: '404'
+                title: Resource Not Found
+                detail: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+    patch:
+      tags:
+      - Webhooks
+      summary: Update a webhook
+      description: "### Updates details for an existing webhook.\r\n\r\nWhile all fields are optional, the request must include at least one field.\r\nTo clear a field, send an empty string as the field value.\r\n"
+      operationId: PATCH_v2-webhooks-webhook_id
+      parameters:
+      - name: webhook_id
+        in: path
+        description: Webhook Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookUpdate'
+            example:
+              webhook_name: Bank Statement Hook
+              webhook_callback_url: https://yourdomain.com/webhook/
+              external_ref: IntRef001
+              event_types: '["BankStatementProcessing.Completed"]'
+      responses:
+        '200':
+          description: Webhook successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.Webhook'
+              example:
+                webhook_id: string
+                webhook_name: Bank Statement Hook
+                webhook_callback_url: https://yourdomain.com/webhook/
+                external_ref: IntRef001
+                event_types: '["BankStatementProcessing.Completed"]'
+                datetime_created: '2024-01-18T12:37:35.0000000+00:00'
+                datetime_updated: '2024-01-18T12:37:35.0000000+00:00'
+        '400':
+          description: Validation failure trying to update webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse400'
+              example:
+                type: InvalidRequest
+                status: '400'
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '404':
+          description: Webhook does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse404'
+              example:
+                type: ResourceNotFound
+                status: '404'
+                title: Resource Not Found
+                detail: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+    delete:
+      tags:
+      - Webhooks
+      summary: Delete a webhook
+      description: "### Deletes a single webhook.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+      operationId: DELETE_v2-webhooks-webhook_id
+      parameters:
+      - name: webhook_id
+        in: path
+        description: Webhook Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Webhook successfully deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '404':
+          description: Webhook does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse404'
+              example:
+                type: ResourceNotFound
+                status: '404'
+                title: Resource Not Found
+                detail: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+  /v2/webhooks/event-types:
+    get:
+      tags:
+      - Webhooks
+      summary: List all event types
+      description: "### Retrieves a list of all available webhook event_types.\r\n\r\nThe list includes the name of all events that a webhook can subscribe to.\r\nRefer to our Guides section for additional information on webhooks.\r\n"
+      operationId: GET_v2-webhooks-event-types
+      responses:
+        '200':
+          description: Event types successfully returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookEventGroup'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+  /v2/webhooks/{webhook_id}/requests:
+    get:
+      tags:
+      - Webhooks
+      summary: List all webhook requests
+      description: Returns a paginated list of all requests with the most recent request provided first.
+      operationId: GET_v2-webhooks-webhook_id-requests
+      parameters:
+      - name: webhook_id
+        in: path
+        description: Webhook Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: after_request_id
+        in: query
+        description: Last Request Id Seen
+        schema:
+          type: string
+          format: uuid
+      - name: event_status
+        in: query
+        description: Event Status
+        schema:
+          $ref: '#/components/schemas/MicroserviceUserManagement.Domain.Model.Webhooks.WebhookEventStatusCode'
+      - name: pagination_direction
+        in: query
+        description: Pagination Direction
+        schema:
+          $ref: '#/components/schemas/MicroserviceUserManagement.Domain.Model.Common.PaginationDirection'
+      responses:
+        '200':
+          description: Webhook requests successfully returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.PaginatedWebhookRequestsResponse'
+              example:
+                pagination_meta_data:
+                  next_page_url: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Forward
+                  previous_page_url: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Backward
+                  page_size: '25'
+                  page_count: '5'
+                webhook_requests:
+                - request_id: 2bf8cbc7-b646-41ad-9881-4944ad2b786e
+                  grouping_id: 07322b4b-6739-486c-9eb4-5466a8bc1875
+                  event_type: BankStatementProcessing.Completed
+                  webhook_callback_url: https://yourdomain.com/webhook/
+                  datetime_created: '2024-01-18T12:37:35.0000000+00:00'
+                  event_data: '{"key":"value","key2":"value2"]}'
+                  webhook_event_status: Complete
+                  request_attempts: '[{"attempt_id":"8b1391e4-7ace-41a2-a04b-55decffb9fe5","requested_on":"2024-01-18T12:37:35.053Z","http_response_code":200}]'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '404':
+          description: Webhook or Request does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse404'
+              example:
+                type: ResourceNotFound
+                status: '404'
+                title: Resource Not Found
+                detail: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+  /v2/webhooks/secrets:
+    get:
+      tags:
+      - Webhooks
+      summary: Get a shared secret
+      description: "### Retrieves a single secret key used to sign all webhook requests.\r\n\r\nThis secret will be used to create a HMACSHA256 hash of every webhook request sent. The result will be Base64 encoded and sent under the `X-HMAC-SHA256-Signature` header in the request."
+      operationId: GET_v2-webhooks-secrets
+      responses:
+        '200':
+          description: Webhook Secret successfully returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookSecret'
+              example:
+                shared_key: string
+                date_created: string
+                date_updated: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '404':
+          description: Webhook Secret Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse404'
+              example:
+                type: ResourceNotFound
+                status: '404'
+                title: Resource Not Found
+                detail: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+    post:
+      tags:
+      - Webhooks
+      summary: Create a shared secret
+      description: "### Creates a new secret key to be used to sign all webhook requests.\r\n\r\nAll subsequent wehook requests sent will include a HMACSHA256 hash that has been Base64 encoded in the `X-HMAC-SHA256-Signature` header. Comparing this hashed value against a SHA256 hash of the request body (using the secret as a key) enables you to verify the payload has not been tampered with."
+      operationId: POST_v2-webhooks-secrets
+      responses:
+        '201':
+          description: Create a new webhook secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookSecret'
+              example:
+                shared_key: string
+                date_created: string
+                date_updated: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '409':
+          description: Cannot create multiple webhook secrets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse409'
+              example:
+                type: UnprocessableRequest
+                status: '409'
+                title: Cannot create multiple webhook secrets
+                detail: Only one webhook secret is supported. Please refer to the API docs on how to either rotate the existing key value or delete it from the system.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+    delete:
+      tags:
+      - Webhooks
+      summary: Delete a shared secret
+      description: "### Deletes a secret key used to sign webhook requests.\r\n\r\nPlease note that this action cannot be undone. Webhooks will continue to be sent without a secret - they will just not include the `X-HMAC-SHA256-Signature` header for verification purposes."
+      operationId: DELETE_v2-webhooks-secrets
+      responses:
+        '204':
+          description: Webhook secret successfully deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '404':
+          description: No secret exists to be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse404'
+              example:
+                type: ResourceNotFound
+                status: '404'
+                title: Resource Not Found
+                detail: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+  /v2/webhooks/secrets/rotate:
+    patch:
+      tags:
+      - Webhooks
+      summary: Change a shared secret
+      description: "### Changes the shared secret to a new secure value.\r\n\r\nGenerates a new secret used to create the `X-HMAC-SHA256-Signature` header on all webhook requests.  This new secret will be implemented on all requests sent after the date_updated timestamp included in the response."
+      operationId: PATCH_v2-webhooks-secrets-rotate
+      responses:
+        '200':
+          description: Webhook secret rotated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookSecret'
+              example:
+                shared_key: string
+                date_created: string
+                date_updated: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse401'
+              example:
+                type: InvalidToken
+                status: '401'
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '404':
+          description: No secret has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse404'
+              example:
+                type: ResourceNotFound
+                status: '404'
+                title: Resource Not Found
+                detail: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse429'
+              example:
+                type: RateLimit
+                status: '429'
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroserviceUserManagement.Resources.SikoiaErrorResponse500'
+              example:
+                type: ServerError
+                status: '500'
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
+components:
+  schemas:
+    MicroserviceUserManagement.Resources.External.Webhook:
+      required:
+      - event_types
+      - webhook_callback_url
+      - webhook_name
+      type: object
+      properties:
+        webhook_id:
+          type: string
+          format: uuid
+          readOnly: true
+        webhook_name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: The user friendly, case sensitive, name for a webhook - it does not have to be unique
+          example: Bank Statement Hook
+        webhook_callback_url:
+          maxLength: 2048
+          minLength: 1
+          type: string
+          description: The absolute HTTPS URL that a POST request will be made to when the webhook is triggered
+          example: https://yourdomain.com/webhook/
+        external_ref:
+          type: string
+          description: Optional value if you need to associate a webhook instance with a reference in your system
+          nullable: true
+          example: IntRef001
+        event_types:
+          minItems: 1
+          type: array
+          items:
+            type: string
+          description: Supported events a webhook can subscribe to
+          example: '["BankStatementProcessing.Completed"]'
+        datetime_created:
+          type: string
+          description: 'UTC Date and time when the webhook was created, formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
+          readOnly: true
+          example: '2024-01-18T12:37:35.0000000+00:00'
+        datetime_updated:
+          type: string
+          description: 'UTC Date and time when the webhook was last updated, formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
+          readOnly: true
+          example: '2024-01-18T12:37:35.0000000+00:00'
+      additionalProperties: false
+    MicroserviceUserManagement.Domain.Model.Common.PaginationDirection:
+      enum:
+      - Forward
+      - Backward
+      type: string
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse400:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: InvalidRequest
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '400'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Validation Errors
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Entity Id is required.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse401:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: InvalidToken
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '401'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Invalid Token
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Invalid token
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData:
+      type: object
+      properties:
+        next_page_url:
+          type: string
+          description: A pre-formatted URL containing the location of the next ordered page of data
+          nullable: true
+          readOnly: true
+          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Forward
+        previous_page_url:
+          type: string
+          description: A pre-formatted URL containing the location of the previous ordered page of data
+          nullable: true
+          readOnly: true
+          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Backward
+        page_size:
+          type: integer
+          description: The maxium number of items that may be returned in a given page (the actual number may be equal to or less than)
+          format: int32
+          readOnly: true
+          example: '25'
+        page_count:
+          type: integer
+          description: ' Number of records in the current page (will be less than or equal to page_size)'
+          format: int32
+          readOnly: true
+          example: '5'
+      additionalProperties: false
+      description: Basic structure for keyset pagination results
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse409:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: UnprocessableRequest
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '409'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Cannot create multiple webhook secrets
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Only one webhook secret is supported. Please refer to the API docs on how to either rotate the existing key value or delete it from the system.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.WebhookRequestAttempt:
+      type: object
+      properties:
+        attempt_id:
+          type: string
+          description: The unique identifier of each attempt to send a request
+          format: uuid
+          example: 8b1391e4-7ace-41a2-a04b-55decffb9fe5
+        datetime_created:
+          type: string
+          description: The date and time a request was attempted
+          format: date-time
+          example: '2024-01-18T12:37:35.0000000+00:00'
+        http_response_code:
+          type: integer
+          description: The HTTP response code we received back from a given request attempt
+          format: int32
+          example: '200'
+      additionalProperties: false
+      description: Represents each attempt made to deliver a webhook request to a callback URL
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse429:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: RateLimit
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '429'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Too Many Requests
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: You've exceeded the maximum API request limit per minute. Please try again later.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.WebhookUpdate:
+      type: object
+      properties:
+        webhook_name:
+          type: string
+          description: The user friendly, case sensitive, name for a webhook - it does not have to be unique
+          nullable: true
+          example: Bank Statement Hook
+        webhook_callback_url:
+          type: string
+          description: The absolute HTTPS URL that a POST request will be made to when the webhook is triggered
+          nullable: true
+          example: https://yourdomain.com/webhook/
+        external_ref:
+          type: string
+          description: Optional value if you need to associate a webhook instance with a reference in your system
+          nullable: true
+          example: IntRef001
+        event_types:
+          type: array
+          items:
+            type: string
+          description: Supported events a webhook can subscribe to
+          nullable: true
+          example: '["BankStatementProcessing.Completed"]'
+      additionalProperties: false
+    MicroserviceUserManagement.Domain.Model.Webhooks.WebhookEventStatusCode:
+      enum:
+      - NotRequested
+      - Pending
+      - Complete
+      - Failed
+      type: string
+    MicroserviceUserManagement.Resources.External.WebhookRequest:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: The unique identifier of a single webhook request
+          format: uuid
+          readOnly: true
+          example: 2bf8cbc7-b646-41ad-9881-4944ad2b786e
+        grouping_id:
+          type: string
+          description: The identifier that groups related webhook requests triggered by the same event
+          format: uuid
+          readOnly: true
+          example: 07322b4b-6739-486c-9eb4-5466a8bc1875
+        event_type:
+          type: string
+          description: The specific event type that triggered a webhook request being sent
+          readOnly: true
+          example: BankStatementProcessing.Completed
+        webhook_callback_url:
+          type: string
+          description: The URL that the request was made to
+          example: https://yourdomain.com/webhook/
+        datetime_created:
+          type: string
+          description: An optional value that indicates when a webhook was successfully received at a given callback url
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-01-18T12:37:35.0000000+00:00'
+        event_data:
+          description: The exact event data sent in the body of the webhook request
+          example: '{"key":"value","key2":"value2"]}'
+        webhook_event_status:
+          type: string
+          description: The exact status a request has been marked with
+          example: Complete
+        request_attempts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookRequestAttempt'
+          description: Each unique attempt at delivering a webhook before a success response was returned
+          example: '[{"attempt_id":"8b1391e4-7ace-41a2-a04b-55decffb9fe5","requested_on":"2024-01-18T12:37:35.053Z","http_response_code":200}]'
+      additionalProperties: false
+      description: Represents a historic request made after a webhook was triggered by event in the Sikoia platform
+    MicroserviceUserManagement.Resources.External.WebhookSecret:
+      type: object
+      properties:
+        shared_key:
+          type: string
+          description: The UTF8 encoded value used as the key in the SHA256 hash.
+          readOnly: true
+        date_created:
+          type: string
+          description: 'The timestamp for when the secret started being used to add a HMACSHA256 header to all webhook requests. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          description: 'The timestamp for when the key last changed. If a key is rotated this will be different to the date_created. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
+          readOnly: true
+      additionalProperties: false
+      description: The current secret used as the shared key for the HMACSHA256 header.
+    MicroserviceUserManagement.Resources.External.WebhookEventType:
+      type: object
+      properties:
+        event_name:
+          type: string
+          description: The unique name of an event you can subscribe to notifications for
+          readOnly: true
+          example: DocumentProcessing.Completed
+        event_types:
+          type: array
+          items: {}
+          description: The event types that exist hierarchically under this current event type
+          readOnly: true
+          example: '[{"event_name":"BankStatementProcessing.Completed", "event_types":[{"event_name":"ExampleBankStatementProcessing.Completed", "event_types":[]}]}]'
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.WebhookEventGroup:
+      type: object
+      properties:
+        event_group_name:
+          type: string
+          description: The unique name that groups together a related hierarchy of event types
+          readOnly: true
+          example: Document Lifecycle
+        event_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookEventType'
+          description: The top most 'coarse' event types under a given group
+          readOnly: true
+          example: '[{"event_group_name":"Document Lifecycle","event_types":[{"event_name":"DocumentProcessing.Completed","event_types":[{"event_name":"BankStatementProcessing.Completed","event_types":[]}]}]}]'
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.PaginatedWebhookRequestsResponse:
+      type: object
+      properties:
+        pagination_meta_data:
+          $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData'
+        webhook_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookRequest'
+          description: All known requests made for a given webhook limited to the page size specified in pagination_meta_data.page_size
+          readOnly: true
+      additionalProperties: false
+      description: An ordered (most recent first) subset of webhook requests
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse404:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: ResourceNotFound
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '404'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Resource Not Found
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: ServerError
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '500'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Internal Server Error
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Something has gone wrong, please try again
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

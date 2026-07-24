@@ -1,0 +1,922 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Documents API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Documents
+paths:
+  /v2/documents:
+    post:
+      tags:
+      - Documents
+      summary: Upload a document to an entity
+      description: "### Uploads a document to a `case`, `person`, or `company`.\r\n\r\nThe document must be base64 encoded and included as a string in the file field.\r\n\r\nEnsure that the `file_name` field includes the file extension.\r\n"
+      operationId: POST_v2-documents
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.DocumentUpload.Request.DocumentUploadRequest'
+            example:
+              entity_id: 3f615611-3dc3-418b-bed5-a53c4390c97c
+              entity_type: person
+              file: c29tZSBlbmNvZGVkIGRhdGE=
+              document_type: BankStatement
+              display_name: January 2023 Bank Statement
+              file_name: January-2023-Bank-Statement.pdf
+      responses:
+        '201':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.DocumentUpload.Response.DocumentUploadResponse'
+              example:
+                document_id: 181eba57-b6b4-4288-8c97-f8299530f071
+                document_uri: https://sikoialake.blob.core.windows.net/clientid/documents/181eba57-b6b4-4288-8c97-f8299530f071.pdf?sv=2021-08-06&st=2023-05-26T14%3A49%3A36Z&se=2023-05-26T14%3A59%3A36Z&sr=b&sp=r&sig=lMhD8hOX0USZid8RpkYGDZr3DQ8ouN6PDCXM1cRNI3w%3D
+                entity_type: company
+                entity_id: 3f615611-3dc3-418b-bed5-a53c4390c97c
+                file_type: .pdf
+                display_name: January 2023 Bank Statement
+                document_type: BankStatement
+                sikoia_document_type: BankStatement
+                file_name: January-2023-Bank-Statement.pdf
+                status: Complete
+                datetime_created: '2023-02-10T10:59:46.0260000+00:00'
+                date_created: string
+                datetime_last_modified: '2023-02-10T10:59:46.0260000+00:00'
+                date_uploaded: string
+        '400':
+          description: Entity deleted/not found or invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: b10650aa-a046-4a93-9071-1815a8c9a0c4
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 42629208-38a2-47ec-a270-bb4cfb848345
+        '403':
+          description: Document upload not enabled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InsufficientPermissions
+                status: 403
+                title: Service not enabled
+                detail: Service is not currently enabled.
+                correlation_id: 5383963d-002b-4e5c-8316-af455da386dc
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: ca297a48-0486-4087-abcc-a4b91eed7186
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 81ca7064-baa8-4ccb-ab5b-827a345c455e
+  /v2/documents/{document_id}:
+    get:
+      tags:
+      - Documents
+      summary: Retrieve a document
+      description: "### Returns a document.\r\n\r\nThe document is returned as a short lived URI.\r\n"
+      operationId: GET_v2-documents-document_id
+      parameters:
+      - name: document_id
+        in: path
+        description: Sikoia ID for the document
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.DocumentUpload.Response.DocumentUploadResponse'
+              example:
+                document_id: 181eba57-b6b4-4288-8c97-f8299530f071
+                document_uri: https://sikoialake.blob.core.windows.net/clientid/documents/181eba57-b6b4-4288-8c97-f8299530f071.pdf?sv=2021-08-06&st=2023-05-26T14%3A49%3A36Z&se=2023-05-26T14%3A59%3A36Z&sr=b&sp=r&sig=lMhD8hOX0USZid8RpkYGDZr3DQ8ouN6PDCXM1cRNI3w%3D
+                entity_type: company
+                entity_id: 3f615611-3dc3-418b-bed5-a53c4390c97c
+                file_type: .pdf
+                display_name: January 2023 Bank Statement
+                document_type: BankStatement
+                sikoia_document_type: BankStatement
+                file_name: January-2023-Bank-Statement.pdf
+                status: Complete
+                datetime_created: '2023-02-10T10:59:46.0260000+00:00'
+                date_created: string
+                datetime_last_modified: '2023-02-10T10:59:46.0260000+00:00'
+                date_uploaded: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 77e69b59-543c-49e5-9e1f-9887e036f6fd
+        '404':
+          description: Document deleted/not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id b1e9a05d-084d-490d-95fa-db7dd47357b1.
+                correlation_id: 5b7d829a-0e95-4549-b98a-93f33bbe2d96
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 4802da9c-d792-4329-9544-c69e9a8f6ae1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: bb95deb0-efaa-4dd9-a5a5-849869378061
+    delete:
+      tags:
+      - Documents
+      summary: Delete a document
+      description: "### Deletes a document.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+      operationId: DELETE_v2-documents-document_id
+      parameters:
+      - name: document_id
+        in: path
+        description: Sikoia ID for the document
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 833691de-e857-486e-b1e9-50be38c5eb86
+        '404':
+          description: Document deleted/not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 03d85f8b-041e-4634-b4a5-72cb97cd0e5a.
+                correlation_id: 78438c9f-245a-4234-bd5d-9c89651b7198
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: b78bab89-e879-4f5c-92ef-a65bdfe4917e
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: affb7a0c-6686-415e-83cc-8faf9329be29
+  /v2/{entity_type}/{entity_id}/documents:
+    get:
+      tags:
+      - Documents
+      summary: List all documents for an entity
+      description: "### Returns a list of documents for an entity.\r\n\r\nThe list includes the `document_id` for each document, which can be used to retrieve or delete the file using the following endpoints:\r\n*`GET /v2/documents/{document_id}`\r\n*`DELETE /v2/documents/{document_id}`\r\n"
+      operationId: GET_v2-entity_type-entity_id-documents
+      parameters:
+      - name: entity_type
+        in: path
+        description: The type of entity (company, person, case)
+        required: true
+        schema:
+          enum:
+          - Companies
+          - Persons
+          - Cases
+          type: string
+      - name: entity_id
+        in: path
+        description: The company_id, person_id or case_id of the entity
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.DocumentUpload.Response.DocumentUploadResponse'
+              example:
+              - document_id: 181eba57-b6b4-4288-8c97-f8299530f071
+                document_uri: https://sikoialake.blob.core.windows.net/clientid/documents/181eba57-b6b4-4288-8c97-f8299530f071.pdf?sv=2021-08-06&st=2023-05-26T14%3A49%3A36Z&se=2023-05-26T14%3A59%3A36Z&sr=b&sp=r&sig=lMhD8hOX0USZid8RpkYGDZr3DQ8ouN6PDCXM1cRNI3w%3D
+                entity_type: company
+                entity_id: 3f615611-3dc3-418b-bed5-a53c4390c97c
+                file_type: .pdf
+                display_name: January 2023 Bank Statement
+                document_type: BankStatement
+                sikoia_document_type: BankStatement
+                file_name: January-2023-Bank-Statement.pdf
+                status: Complete
+                datetime_created: '2023-02-10T10:59:46.0260000+00:00'
+                date_created: string
+                datetime_last_modified: '2023-02-10T10:59:46.0260000+00:00'
+                date_uploaded: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 27649ad7-ea2d-497b-a4d6-869971d85043
+        '404':
+          description: Entity deleted/not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id c14abbe4-81c4-42f9-ba49-3bee5171876c.
+                correlation_id: 13df5e64-ef33-4137-867b-bb758556aa0e
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 1e1509b5-8a1a-46dd-82d9-bfc8e9df9e75
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: cfa81e92-8d77-4573-858a-e5baa905c35a
+  /v2/{entity_type}/{entity_id}/integrity-checks:
+    get:
+      tags:
+      - Documents
+      summary: List all integrity checklist requests
+      description: "### List all integrity checklist requests.\r\n\r\nReturns a list of all integrity checklists requested for an entity.\r\n\r\nThe list includes the document_id for each request, which can be used to retrieve the integrity check rules result using the GET `/v2/documents/{document_id}/integrity-checks` endpoint.\r\n"
+      operationId: GET_v2-entity_type-entity_id-integrity-checks
+      parameters:
+      - name: entity_type
+        in: path
+        description: Entity Type
+        required: true
+        schema:
+          enum:
+          - Companies
+          - Persons
+          - Cases
+          type: string
+      - name: entity_id
+        in: path
+        description: Entity ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Integrity Check Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckRequestListResponse'
+              example:
+                entity_id: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+                entity_type: case
+                integrity_check_requests:
+                - integrity_type_id: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
+                  document_id: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+                  status: Complete
+                  datetime_requested: '2024-01-29T12:21:52.9330000+00:00'
+                  datetime_completed: '2024-01-30T09:44:22.4660000+00:00'
+                  message: Integrity Check complete
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: ae8211c8-105e-42bd-b171-f4463ddab871
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id f9bb5b1c-4beb-4333-8199-6f41cd46e4df.
+                correlation_id: 04837ba7-371e-4e07-b002-4e57293f1f56
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 962bff24-d810-42eb-89e1-a934f0ccd98d
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 138048c4-2fe3-435d-8ced-5ad9e968a894
+  /v2/documents/{document_id}/integrity-checks:
+    get:
+      tags:
+      - Documents
+      summary: Retrieve integrity checklist result
+      description: "### Returns an instance of a integrity checklist.\r\n\r\nThis endpoint returns the integrity check results associated with a specific `document_id`.\r\n"
+      operationId: GET_v2-documents-document_id-integrity-checks
+      parameters:
+      - name: document_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Integrity Check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckInstanceResponse'
+              example:
+                integrity_type_id: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
+                document_id: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+                integrity_check_name: Payslip Integrity Checks
+                integrity_check_version: '1'
+                status: Pass
+                entity_id: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+                entity_type: case
+                datetime_requested: '2024-01-01T12:38:45.7110000+00:00'
+                datetime_completed: '2024-01-02T12:22:07.7470000+00:00'
+                message: Integrity Check request pending
+                rules:
+                - data_source_id: 01951375-a680-77ce-b196-44d1feedc47c
+                  rule_name: Payslips are not handwritten
+                  decision: Pass
+                  message: Integrity Check Passed
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: fa15abf3-1779-47cd-a668-c9b8afa34d6c
+        '404':
+          description: Integrity check instance not found for docuemnt ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 3a80ebfd-57e6-4a04-a886-f0e844168a67.
+                correlation_id: 31447cf7-eb8a-4106-85da-aa2196731698
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: bf6f83dd-ae82-41b3-9a64-dbe571bc7a07
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 8c8e4236-b3d2-462a-b7d1-29264dfa7023
+components:
+  schemas:
+    SikoiaSharedModels.BusinessSupport.DocumentUpload.Request.DocumentUploadRequest:
+      title: Upload File
+      required:
+      - display_name
+      - entity_id
+      - entity_type
+      - file
+      - file_name
+      type: object
+      properties:
+        entity_id:
+          minLength: 1
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
+        entity_type:
+          minLength: 1
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity
+          example: person
+        file:
+          minLength: 1
+          type: string
+          description: File data base64 encoded
+          example: c29tZSBlbmNvZGVkIGRhdGE=
+        document_type:
+          enum:
+          - BankStatement
+          - Payslip
+          - Identity
+          - Contract
+          - FactFind
+          - Other
+          - CompanyRegistration
+          - StakeholdersDisclosure
+          - UtilityBill
+          - CreditReport
+          - SavingsStatement
+          - SA302
+          - TaxOverview
+          - P45
+          - P60
+          - EmploymentLetter
+          - EmploymentContract
+          - ChildBenefitLetter
+          - BenefitAwardLetter
+          - StudentLoanLetter
+          - PensionStatement
+          - FinancialAccounts
+          type: string
+          description: The type of document
+          nullable: true
+          example: BankStatement
+        display_name:
+          minLength: 1
+          type: string
+          description: Display name
+          example: January 2023 Bank Statement
+        file_name:
+          minLength: 1
+          type: string
+          description: File name including file extension
+          example: January-2023-Bank-Statement.pdf
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.IntegrityRuleResponse:
+      title: Integrity Rule Response
+      type: object
+      properties:
+        data_source_id:
+          type: string
+          description: 'A unique identifier for a specific data source within a document, such as an individual payslip in a multi-payslip file or an individual bank statement in a multi-statement document. For a full list of available data-sources, please visit this link: https://docs.sikoia.com/docs/data-sources-1.'
+          readOnly: true
+          example: 01951375-a680-77ce-b196-44d1feedc47c
+        rule_name:
+          type: string
+          description: The name of the rule, such as 'Payslips are not handwritten'.
+          nullable: true
+          example: Payslips are not handwritten
+        decision:
+          type: string
+          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
+          nullable: true
+          example: Pass
+        message:
+          type: string
+          description: An optional field providing additional context regarding the status of the rule evaluation.
+          nullable: true
+          example: Integrity Check Passed
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.BusinessSupport.DocumentUpload.Response.DocumentUploadResponse:
+      title: Document Response
+      type: object
+      properties:
+        document_id:
+          type: string
+          description: Sikoia ID for the document
+          readOnly: true
+          example: 181eba57-b6b4-4288-8c97-f8299530f071
+        document_uri:
+          type: string
+          description: The uri for the document
+          readOnly: true
+          example: https://sikoialake.blob.core.windows.net/clientid/documents/181eba57-b6b4-4288-8c97-f8299530f071.pdf?sv=2021-08-06&st=2023-05-26T14%3A49%3A36Z&se=2023-05-26T14%3A59%3A36Z&sr=b&sp=r&sig=lMhD8hOX0USZid8RpkYGDZr3DQ8ouN6PDCXM1cRNI3w%3D
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity
+          readOnly: true
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          readOnly: true
+          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
+        file_type:
+          type: string
+          description: The type of file
+          readOnly: true
+          example: .pdf
+        display_name:
+          type: string
+          description: The display name of the document
+          readOnly: true
+          example: January 2023 Bank Statement
+        document_type:
+          enum:
+          - BankStatement
+          - Payslip
+          - Identity
+          - Contract
+          - FactFind
+          - Other
+          - CompanyRegistration
+          - StakeholdersDisclosure
+          - UtilityBill
+          - CreditReport
+          - SavingsStatement
+          - SA302
+          - TaxOverview
+          - P45
+          - P60
+          - EmploymentLetter
+          - EmploymentContract
+          - ChildBenefitLetter
+          - BenefitAwardLetter
+          - StudentLoanLetter
+          - PensionStatement
+          - FinancialAccounts
+          type: string
+          description: The type of document
+          nullable: true
+          readOnly: true
+          example: BankStatement
+        sikoia_document_type:
+          enum:
+          - BankStatement
+          - Payslip
+          - Identity
+          - Contract
+          - FactFind
+          - Other
+          - CompanyRegistration
+          - StakeholdersDisclosure
+          - UtilityBill
+          - CreditReport
+          - SavingsStatement
+          - SA302
+          - TaxOverview
+          - P45
+          - P60
+          - EmploymentLetter
+          - EmploymentContract
+          - ChildBenefitLetter
+          - BenefitAwardLetter
+          - StudentLoanLetter
+          - PensionStatement
+          - FinancialAccounts
+          type: string
+          description: Document type, as classified by Sikoia's AI system
+          nullable: true
+          readOnly: true
+          example: BankStatement
+        file_name:
+          type: string
+          description: The name of the file
+          readOnly: true
+          example: January-2023-Bank-Statement.pdf
+        status:
+          type: string
+          description: 'The status of the document upload. Possible values: `Complete`, `Failed`'
+          readOnly: true
+          example: Complete
+        datetime_created:
+          type: string
+          description: The time the document was created
+          readOnly: true
+          example: '2023-02-10T10:59:46.026Z'
+        date_created:
+          type: string
+          description: Date Created
+          format: date-time
+          readOnly: true
+          deprecated: true
+        datetime_last_modified:
+          type: string
+          description: The time the document was last modified
+          readOnly: true
+          example: '2023-02-10T10:59:46.026Z'
+        date_uploaded:
+          type: string
+          description: Date Uploaded
+          format: date-time
+          readOnly: true
+          deprecated: true
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckInstanceResponse:
+      title: Integrity Check Instance Response
+      type: object
+      properties:
+        integrity_type_id:
+          type: string
+          description: The unique identifier for the integrity type, such as the ID for the 'Payslip Integrity' check.
+          nullable: true
+          example: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
+        document_id:
+          type: string
+          description: The unique identifier for the document
+          nullable: true
+          example: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+        integrity_check_name:
+          type: string
+          description: The name of the check type, such as 'Payslip Integrity Checks'.
+          nullable: true
+          example: Payslip Integrity Checks
+        integrity_check_version:
+          type: string
+          description: The version number of the integrity check.
+          example: '1'
+        status:
+          type: string
+          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          nullable: true
+          example: Pass
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          nullable: true
+          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity.
+          nullable: true
+          example: case
+        datetime_requested:
+          type: string
+          description: The date and time when the request was initiated.
+          nullable: true
+          example: '2024-01-01T12:38:45.711Z'
+        datetime_completed:
+          type: string
+          description: The date and time when the request was completed.
+          nullable: true
+          example: '2024-01-02T12:22:07.747Z'
+        message:
+          type: string
+          description: An optional field providing additional context about the status of the check.
+          nullable: true
+          example: Integrity Check request pending
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.IntegrityRuleResponse'
+          description: A list of rules to be evaluated as part of the check.
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckRequestInstance:
+      title: Integrity Check Request Instance
+      type: object
+      properties:
+        integrity_type_id:
+          type: string
+          description: The unique identifier for the integrity type, such as the ID for the 'Payslip Integrity' check.
+          nullable: true
+          example: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
+        document_id:
+          type: string
+          description: The unique identifier for the document
+          nullable: true
+          example: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+        status:
+          type: string
+          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          nullable: true
+          example: Complete
+        datetime_requested:
+          type: string
+          description: The date and time when the request was initiated.
+          nullable: true
+          example: '2024-01-29T12:21:52.933Z'
+        datetime_completed:
+          type: string
+          description: The date and time when the request was completed.
+          nullable: true
+          example: '2024-01-30T09:44:22.466Z'
+        message:
+          type: string
+          description: An optional field providing additional context about the status of the check.
+          nullable: true
+          example: Integrity Check complete
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckRequestListResponse:
+      title: Integrity Check Request Instances Response
+      type: object
+      properties:
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          nullable: true
+          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity.
+          nullable: true
+          example: case
+        integrity_check_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckRequestInstance'
+          description: A list of integrity check instance requests for the entity.
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

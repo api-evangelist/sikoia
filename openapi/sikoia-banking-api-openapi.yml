@@ -1,0 +1,1305 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Banking API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Banking
+paths:
+  /v2/openbanking:
+    post:
+      tags:
+      - Banking
+      summary: Create Open Banking connection
+      description: "### Creates a new Open Banking connection request.\r\n\r\nThis generates a URL that takes your end customer through a consent flow to connect their accounts.\r\n\r\nThe `country_code` is optional.  If it is included then your end customer will only be able to select a bank institution from that country.\r\n"
+      operationId: POST_v2-openbanking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenRequest'
+            example:
+              entity_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+              entity_type: company
+              country_code: GB
+      responses:
+        '201':
+          description: The Token Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenResponse'
+              example:
+                bank_connection_id: e81154bd-f85f-4223-8b4f-36643843fa99
+                bank_connection_url: https://verify.sikoia.com/openbanking/123456
+                entity_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                entity_type: company
+                datetime_requested: '2024-02-12T04:21:07.0000000+00:00'
+                datetime_refreshed: '2024-02-11T04:21:07.0000000+00:00'
+                datetime_connected: '2024-02-14T04:21:07.0000000+00:00'
+                datetime_expiry: '2024-05-12T04:24:34.0000000+00:00'
+                status: Connected
+                country_code: GB
+                institution_name: Sandbox
+                institution_logo: https://logolink.com
+                account_connection_ids: '["820eec09-dbdd-4c90-b0f2-acbca66f1ad5", "132d3353-ad29-46e0-b66a-caed8b572e93", "93886787-3307-4319-afa7-48540bf21362"]'
+                source: Document
+                document_id: r51154bd-f85f-4223-8b4f-36643843fa33
+        '400':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: 26adafd9-9c08-4ec2-8532-251f771630ef
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: b747b03f-caaf-42f8-b04b-2d4427f2dbec
+        '404':
+          description: Entity ID or Type Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id f6566eff-e7de-4437-afec-754d6842d1e0.
+                correlation_id: 7b3e3dee-48ad-426b-9b60-1f744fa73006
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 6fc274ac-f322-48a8-8acb-b276b5beafab
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: b988cbda-f68a-4d49-b14d-2ca90810b0e3
+  /v2/openbanking/{bank_connection_id}:
+    get:
+      tags:
+      - Banking
+      summary: Retrieve Open Banking connection status
+      description: "### Returns an Open Banking connection status.\r\n\r\nThis endpoint returns the status of the Open Banking connection, revealing the state of the end customer consent flow.\r\n\r\nIt will also return a list of connected accounts once the connection has been successfully established.\r\n"
+      operationId: GET_v2-openbanking-bank_connection_id
+      parameters:
+      - name: bank_connection_id
+        in: path
+        description: Bank Connection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Retrieved Open Banking Connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenResponse'
+              example:
+                bank_connection_id: e81154bd-f85f-4223-8b4f-36643843fa99
+                bank_connection_url: https://verify.sikoia.com/openbanking/123456
+                entity_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                entity_type: company
+                datetime_requested: '2024-02-12T04:21:07.0000000+00:00'
+                datetime_refreshed: '2024-02-11T04:21:07.0000000+00:00'
+                datetime_connected: '2024-02-14T04:21:07.0000000+00:00'
+                datetime_expiry: '2024-05-12T04:24:34.0000000+00:00'
+                status: Connected
+                country_code: GB
+                institution_name: Sandbox
+                institution_logo: https://logolink.com
+                account_connection_ids: '["820eec09-dbdd-4c90-b0f2-acbca66f1ad5", "132d3353-ad29-46e0-b66a-caed8b572e93", "93886787-3307-4319-afa7-48540bf21362"]'
+                source: Document
+                document_id: r51154bd-f85f-4223-8b4f-36643843fa33
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: dba18918-728e-4547-af42-8dc770613c0c
+        '404':
+          description: Bank Connection ID Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 0e4a8ab3-2d28-411a-acd8-55106076bda2.
+                correlation_id: 5b68753e-ee86-4ba2-ac94-1ab5c58342a1
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 2e7f1bec-f9b0-40be-887c-610b06c9a3e2
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: f8b87f95-c0be-4ad3-bf02-bd3e36d1aa32
+    delete:
+      tags:
+      - Banking
+      summary: Delete an Open Banking connection
+      description: "### Deletes an existing Open Banking connection\r\n\r\nThis also deletes all of the associated account, balance, and transaction data for the Open Banking connection.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+      operationId: DELETE_v2-openbanking-bank_connection_id
+      parameters:
+      - name: bank_connection_id
+        in: path
+        description: Bank Connection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully Deleted Open Banking connection
+        '400':
+          description: Open Banking connection Deleted/Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: 45be1c62-2c31-4809-9ab7-68ffbfc05009
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 1b324e61-e778-479a-8172-a184a4555587
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 1be35715-d9ad-48f9-8683-c14ccba45e19
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 25741886-17c7-49c6-ba07-c7e73cd4c01e
+  /v2/{entity_type}/{entity_id}/openbanking:
+    get:
+      tags:
+      - Banking
+      summary: List all Open Banking connections
+      description: "### Returns a list of all open banking connections requested for an entity.\r\n\r\nThis list includes `bank_connection_id` and associated `account_connection_id`, which can be used to retrieve more detailed account data.\r\n\r\nInclude the query parameter completed with a value of `true` if you only want to retrieve completed connections.\r\n"
+      operationId: GET_v2-entity_type-entity_id-openbanking
+      parameters:
+      - name: entity_type
+        in: path
+        description: Entity Type
+        required: true
+        schema:
+          enum:
+          - Companies
+          - Persons
+          - Cases
+          type: string
+      - name: entity_id
+        in: path
+        description: Entity ID
+        required: true
+        schema:
+          type: string
+      - name: completed
+        in: query
+        description: Return complete/incomplete/all OB Connections
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of Open Banking Connections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenResponse'
+              example:
+              - bank_connection_id: e81154bd-f85f-4223-8b4f-36643843fa99
+                bank_connection_url: https://verify.sikoia.com/openbanking/123456
+                entity_id: 78662640-73fc-4fa9-8367-ef4660d35cee
+                entity_type: company
+                datetime_requested: '2024-02-12T04:21:07.0000000+00:00'
+                datetime_refreshed: '2024-02-11T04:21:07.0000000+00:00'
+                datetime_connected: '2024-02-14T04:21:07.0000000+00:00'
+                datetime_expiry: '2024-05-12T04:24:34.0000000+00:00'
+                status: Connected
+                country_code: GB
+                institution_name: Sandbox
+                institution_logo: https://logolink.com
+                account_connection_ids: '["820eec09-dbdd-4c90-b0f2-acbca66f1ad5", "132d3353-ad29-46e0-b66a-caed8b572e93", "93886787-3307-4319-afa7-48540bf21362"]'
+                source: Document
+                document_id: r51154bd-f85f-4223-8b4f-36643843fa33
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 9ea93a05-8486-4ea4-b326-7155d11e3696
+        '404':
+          description: Entity ID or Type Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 875a09f4-0ef7-4026-a839-77b54f941166.
+                correlation_id: aa910e9b-fb08-4faa-9b49-7f0ad79a1f6f
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 27b878d6-acca-49a7-a638-d83a07b870e5
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 3ade176a-f5e5-4566-9281-1bba5f022f6c
+  /v2/bankaccounts/{account_connection_id}:
+    get:
+      tags:
+      - Banking
+      summary: Retrieve account details
+      description: "### Returns detailed account data.\r\n\r\nFetches the account details for a specific `account_connection_id` covering accounts connected through open banking or those for which bank statements have been uploaded.\r\n"
+      operationId: GET_v2-bankaccounts-account_connection_id
+      parameters:
+      - name: account_connection_id
+        in: path
+        description: Account Connection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account Details Retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.GetAccountDetailsResponse'
+              example:
+                account_connection_id: 132d3353-ad29-46e0-b66a-caed8b572e93
+                account_type: CREDIT_CARD
+                status: Connected
+                currency: GBP
+                owners_name: '["Acme Inc"]'
+                identifications:
+                - type: SORT_CODE
+                  value: '100001'
+                bank_connection_id: e81154bd-f85f-4223-8b4f-36643843fa99
+                datetime_last_refreshed: '2024-02-12T04:28:00.0000000+00:00'
+                datetime_connected: '2024-02-12T04:24:50.0000000+00:00'
+                datetime_expiry: '2024-05-12T04:24:34.0000000+00:00'
+                country_code: GB
+                institution_logo: https://logolink.com
+                institution_name: Sandbox
+                source: Document
+                document_id: r51154bd-f85f-4223-8b4f-36643843fa33
+                data_source_id: 01951375-a680-77ce-b196-44d1feedc47c
+                full_address: Flat 23, 49 Sample Street, London
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: df6a0d9a-046f-47e7-8a78-ee91ba629e13
+        '404':
+          description: Account Connection ID Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 616ee00a-fbd6-4706-ba79-e7be3a71837a.
+                correlation_id: 731be44f-376b-4be0-ba1e-c794de930d41
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: d94609b6-a46b-47fa-b4fd-ebf265991a96
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: f8687c0d-2c03-4737-aa3e-3d74c15b27ff
+  /v2/{entity_type}/{entity_id}/bankaccounts:
+    get:
+      tags:
+      - Banking
+      summary: List all accounts
+      description: "### Returns a list of all bank accounts for an entity.\r\n\r\nProvides a comprehensive list of all bank accounts associated with an entity. This includes accounts connected through open banking or for which bank statements have been uploaded.\r\n\r\nThis list includes the account_connection_id for each account, which can be used to retrieve more detailed data from the following endpoints:\r\n*`GET /v2/bankaccounts/{account_connection_id}`\r\n*`GET /v2/bankaccounts/{account_connection_id}/balances`\r\n*`GET /v2/bankaccounts/{account_connection_id}/transactions`\r\n"
+      operationId: GET_v2-entity_type-entity_id-bankaccounts
+      parameters:
+      - name: entity_type
+        in: path
+        description: Entity Type
+        required: true
+        schema:
+          enum:
+          - Companies
+          - Persons
+          - Cases
+          type: string
+      - name: entity_id
+        in: path
+        description: Entity ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of Accounts Retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.GetAccountDetailsResponse'
+              example:
+              - account_connection_id: 132d3353-ad29-46e0-b66a-caed8b572e93
+                account_type: CREDIT_CARD
+                status: Connected
+                currency: GBP
+                owners_name: '["Acme Inc"]'
+                identifications:
+                - type: SORT_CODE
+                  value: '100001'
+                bank_connection_id: e81154bd-f85f-4223-8b4f-36643843fa99
+                datetime_last_refreshed: '2024-02-12T04:28:00.0000000+00:00'
+                datetime_connected: '2024-02-12T04:24:50.0000000+00:00'
+                datetime_expiry: '2024-05-12T04:24:34.0000000+00:00'
+                country_code: GB
+                institution_logo: https://logolink.com
+                institution_name: Sandbox
+                source: Document
+                document_id: r51154bd-f85f-4223-8b4f-36643843fa33
+                data_source_id: 01951375-a680-77ce-b196-44d1feedc47c
+                full_address: Flat 23, 49 Sample Street, London
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: b89a5490-4bf4-4aba-984d-3b39b1580c9e
+        '404':
+          description: Entity ID or Entity Type Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 48a668b7-0d22-4924-aa4f-a30d6363963f.
+                correlation_id: fcdd14a2-79a0-4f9b-bb3a-8f87eb54fbde
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 39deb474-0600-4a03-b763-153ea6b6f75a
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 21234e98-6397-456d-9691-6dfe688aabcf
+  /v2/bankaccounts/{account_connection_id}/balances:
+    get:
+      tags:
+      - Banking
+      summary: Retrieve account balances
+      description: "### Returns bank account balances.\r\n\r\nFetches the account balance details for a specific `account_connection_id` covering accounts connected through open banking or those for which bank statements have been uploaded.\r\n"
+      operationId: GET_v2-bankaccounts-account_connection_id-balances
+      parameters:
+      - name: account_connection_id
+        in: path
+        description: Account Connection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account Balances Retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalancesResponse'
+              example:
+                account_connection_id: 132d3353-ad29-46e0-b66a-caed8b572e93
+                balances:
+                - type: CLOSING_AVAILABLE
+                  amount:
+                    value: '1528-08-01'
+                    currency: USD
+                  date: '2024-02-12T16:24:50.1490000+00:00'
+                datetime_refreshed: '2024-02-12T04:25:09.0000000+00:00'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 35e72111-9c05-4843-8f37-13c56ece25b6
+        '404':
+          description: Account Connection ID Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id fccb194f-5c85-4f6c-8548-ec58106ac3c1.
+                correlation_id: 3e4e883a-7b12-4500-b62a-66cf9f0aee33
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 50794c6f-cc99-4bbc-9c8e-4b9649e84f96
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 89deb46e-1126-4bbd-888f-3179d329d467
+  /v2/bankaccounts/{account_connection_id}/transactions:
+    get:
+      tags:
+      - Banking
+      summary: Retrieve account transactions
+      description: "### Returns detailed bank account transaction data.\r\n\r\nFetches a list off all available transactions for a specific `account_connection_id` covering accounts connected through open banking or those for which bank statements have been uploaded.\r\n"
+      operationId: GET_v2-bankaccounts-account_connection_id-transactions
+      parameters:
+      - name: account_connection_id
+        in: path
+        description: Account Connection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account Balances Retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransactionsResponse'
+              example:
+                account_connection_id: 132d3353-ad29-46e0-b66a-caed8b572e93
+                transactions:
+                - transaction_id: 0730deba-767a-4c40-bc89-ac7c96e5a1c9
+                  date: '2024-02-12T02:57:24.0000000+00:00'
+                  booking_datetime: '2024-02-12T02:57:24.0000000+00:00'
+                  value_date_time: '2024-02-12T02:57:24.0000000+00:00'
+                  status: PENDING
+                  amount:
+                    amount: '-1.1'
+                    currency: GBP
+                  currency: GBP
+                  reference: Acme123Ltd
+                  description: 1B8BAA320D3E4BFAB8B32495157B3604
+                  merchant:
+                    merchant_name: string
+                    merchant_category: string
+                  iso_bank_transaction_code:
+                    domain_code:
+                      code: PMNT
+                      name: Payments
+                    family_code:
+                      code: PMNT
+                      name: Payments
+                    sub_family_code:
+                      code: PMNT
+                      name: Payments
+                  proprietary_bank_transaction_code:
+                    code: open-banking-sip-Debit
+                    issuer: ozone
+                datetime_refreshed: '2024-02-12T03:34:25.0000000+00:00'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 6afe5488-dfa0-4fee-803f-ce31b471ce17
+        '404':
+          description: Account Connection ID Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 3db67787-8bb1-42b2-bab2-19cc165a558c.
+                correlation_id: 2554038b-b911-4263-8064-07a86ba471a6
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 3c4294c9-6a34-46be-9e6b-ac3344066caa
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 44e146ba-a608-4f4c-84f9-a8c16f1ade42
+  /v2/bankaccounts/{account_connection_id}/refresh:
+    post:
+      tags:
+      - Banking
+      summary: Refresh an account
+      description: "### Initiates a refresh of account data.\r\n\r\nTriggers an asynchronous refresh of the account details, balances and transactions for a specific Open Banking `account_connection_id`.\r\n"
+      operationId: POST_v2-bankaccounts-account_connection_id-refresh
+      parameters:
+      - name: account_connection_id
+        in: path
+        description: Account Connection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account Details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.GetAccountDetailsResponse'
+              example:
+                account_connection_id: 132d3353-ad29-46e0-b66a-caed8b572e93
+                account_type: CREDIT_CARD
+                status: Connected
+                currency: GBP
+                owners_name: '["Acme Inc"]'
+                identifications:
+                - type: SORT_CODE
+                  value: '100001'
+                bank_connection_id: e81154bd-f85f-4223-8b4f-36643843fa99
+                datetime_last_refreshed: '2024-02-12T04:28:00.0000000+00:00'
+                datetime_connected: '2024-02-12T04:24:50.0000000+00:00'
+                datetime_expiry: '2024-05-12T04:24:34.0000000+00:00'
+                country_code: GB
+                institution_logo: https://logolink.com
+                institution_name: Sandbox
+                source: Document
+                document_id: r51154bd-f85f-4223-8b4f-36643843fa33
+                data_source_id: 01951375-a680-77ce-b196-44d1feedc47c
+                full_address: Flat 23, 49 Sample Street, London
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 8eeb9a0a-aab1-4a4e-90d2-55926ace8173
+        '404':
+          description: Account Connection ID Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 540ab31b-4c1d-4ea3-9716-20e8a6532db6.
+                correlation_id: a95eb858-dfa7-4a43-bc71-cde0e20c6b7b
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 8cad8ef5-550f-4771-a3d8-728505d9265a
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: f2fb27ba-a132-4f4d-bde7-499849c6dba2
+components:
+  schemas:
+    SikoiaSharedModels.OpenBanking.OpenBanking.AmountDetails:
+      type: object
+      properties:
+        value:
+          type: string
+          nullable: true
+          example: '1528.08'
+        currency:
+          type: string
+          nullable: true
+          example: USD
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.TransactionAmount:
+      title: Transaction Amount
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The transaction amount
+          format: double
+          example: '-1.1'
+        currency:
+          type: string
+          description: The transaction currency
+          nullable: true
+          example: GBP
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.ProprietaryBankTransaction:
+      title: Proprietary Bank Transaction
+      type: object
+      properties:
+        code:
+          type: string
+          description: The proprietary bank transaction code
+          nullable: true
+          example: open-banking-sip-Debit
+        issuer:
+          type: string
+          description: The issuer
+          nullable: true
+          example: ozone
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.Merchant:
+      title: Merchant
+      type: object
+      properties:
+        merchant_name:
+          type: string
+          description: The merchant name
+          nullable: true
+        merchant_category:
+          type: string
+          description: The merchant category
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransaction:
+      title: Account Transactions
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Account Transaction ID
+          nullable: true
+          example: 0730deba-767a-4c40-bc89-ac7c96e5a1c9
+        date:
+          type: string
+          description: The account transaction date
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T02:57:24.0000000+00:00'
+        booking_datetime:
+          type: string
+          description: The booking date
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T02:57:24.0000000+00:00'
+        value_date_time:
+          type: string
+          description: The value date
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T02:57:24.0000000+00:00'
+        status:
+          type: string
+          description: The status
+          nullable: true
+          example: PENDING
+        amount:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.TransactionAmount'
+        currency:
+          type: string
+          description: The transaction currency
+          nullable: true
+          example: GBP
+        reference:
+          type: string
+          description: The transaction reference
+          nullable: true
+          example: Acme123Ltd
+        description:
+          type: string
+          description: The transaction description
+          nullable: true
+          example: 1B8BAA320D3E4BFAB8B32495157B3604
+        merchant:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.Merchant'
+        iso_bank_transaction_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.IsoBankTransactionCode'
+        proprietary_bank_transaction_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.ProprietaryBankTransaction'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalancesResponse:
+      title: Account Balances
+      type: object
+      properties:
+        account_connection_id:
+          type: string
+          description: The Account Connection ID of the bank account
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: 132d3353-ad29-46e0-b66a-caed8b572e93
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalances'
+          description: The list of account balances
+          nullable: true
+        datetime_refreshed:
+          type: string
+          description: The time the balances were refreshed
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T04:25:09.0000000+00:00'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+          example: PMNT
+        name:
+          type: string
+          nullable: true
+          example: Payments
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.IsoBankTransactionCode:
+      title: Iso Bank Transaction Code
+      type: object
+      properties:
+        domain_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
+        family_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
+        sub_family_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalances:
+      title: Account Balances
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of account balances
+          nullable: true
+          example: CLOSING_AVAILABLE
+        amount:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AmountDetails'
+        date:
+          type: string
+          description: The balance date
+          nullable: true
+          example: '2024-02-12T16:24:50.149Z'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.Models.IdentificationModel:
+      title: Account Identifiers
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of a Account Identifier
+          nullable: true
+          example: SORT_CODE
+        value:
+          type: string
+          description: The value of the Account Identifier
+          nullable: true
+          example: '100001'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenResponse:
+      title: Open Banking Connection
+      type: object
+      properties:
+        bank_connection_id:
+          type: string
+          description: The Open Banking Connection ID
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: e81154bd-f85f-4223-8b4f-36643843fa99
+        bank_connection_url:
+          type: string
+          description: The URL for the bank connection consent flow
+          format: url
+          nullable: true
+          example: https://verify.sikoia.com/openbanking/123456
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of the entity
+          nullable: true
+          example: company
+        datetime_requested:
+          type: string
+          description: The time the connection was requested
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T04:21:07.0000000+00:00'
+        datetime_refreshed:
+          type: string
+          description: The time the connection was refreshed
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-11T04:21:07.0000000+00:00'
+        datetime_connected:
+          type: string
+          description: The time the connection was connected
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-14T04:21:07.0000000+00:00'
+        datetime_expiry:
+          type: string
+          description: The expiry time of the connection
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-05-12T04:24:34.0000000+00:00'
+        status:
+          type: string
+          description: The connection status(`Created` `SelectingInstitutions` `Rejected` `Authorising` `Connected` `Deleted`)
+          nullable: true
+          example: Connected
+        country_code:
+          type: string
+          description: The country code of the selected institution
+          nullable: true
+          example: GB
+        institution_name:
+          type: string
+          description: Name of the institution
+          nullable: true
+          example: Sandbox
+        institution_logo:
+          type: string
+          description: Logo of the institution
+          nullable: true
+          example: https://logolink.com
+        account_connection_ids:
+          type: array
+          items:
+            type: string
+          description: List of connected accounts as Account Connection IDs
+          nullable: true
+          example: '["820eec09-dbdd-4c90-b0f2-acbca66f1ad5", "132d3353-ad29-46e0-b66a-caed8b572e93", "93886787-3307-4319-afa7-48540bf21362"]'
+        source:
+          type: string
+          description: The banking source(`Document` `OpenBanking`)
+          example: Document
+        document_id:
+          type: string
+          description: The document ID (when source is Document)
+          example: r51154bd-f85f-4223-8b4f-36643843fa33
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.OpenBanking.OpenBanking.GetAccountDetailsResponse:
+      title: Account Details
+      type: object
+      properties:
+        account_connection_id:
+          type: string
+          description: The Account Connection ID of the bank
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: 132d3353-ad29-46e0-b66a-caed8b572e93
+        account_type:
+          type: string
+          description: The type of account
+          nullable: true
+          example: CREDIT_CARD
+        status:
+          type: string
+          description: The account status(`Created` `SelectingInstitutions` `Rejected` `Authorising` `Connected` `Deleted`)
+          nullable: true
+          example: Connected
+        currency:
+          type: string
+          description: The currency of the account
+          nullable: true
+          example: GBP
+        owners_name:
+          type: array
+          items:
+            type: string
+          description: List of the owners' name
+          nullable: true
+          example: '["Acme Inc"]'
+        identifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.Models.IdentificationModel'
+          description: List of Account Identifiers
+          nullable: true
+        bank_connection_id:
+          type: string
+          description: The open banking Connection ID
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: e81154bd-f85f-4223-8b4f-36643843fa99
+        datetime_last_refreshed:
+          type: string
+          description: The time the account was last refreshed
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T04:28:00.0000000+00:00'
+        datetime_connected:
+          type: string
+          description: The time the account was connected
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-02-12T04:24:50.0000000+00:00'
+        datetime_expiry:
+          type: string
+          description: The access expiry date of the account
+          format: date-time
+          nullable: true
+          readOnly: true
+          example: '2024-05-12T04:24:34.0000000+00:00'
+        country_code:
+          type: string
+          description: The country code of the institution
+          nullable: true
+          example: GB
+        institution_logo:
+          type: string
+          description: The logo of the institution
+          nullable: true
+          example: https://logolink.com
+        institution_name:
+          type: string
+          description: The name of the institution
+          nullable: true
+          example: Sandbox
+        source:
+          type: string
+          description: The banking source(`Document` `OpenBanking`)
+          example: Document
+        document_id:
+          type: string
+          description: The Document ID
+          example: r51154bd-f85f-4223-8b4f-36643843fa33
+        data_source_id:
+          type: string
+          description: A unique identifier for a specific data source within a document, such as an individual bank statement in a multi-statement document.
+          readOnly: true
+          example: 01951375-a680-77ce-b196-44d1feedc47c
+        full_address:
+          type: string
+          description: Full Address
+          nullable: true
+          example: Flat 23, 49 Sample Street, London
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransactionsResponse:
+      title: Account Transactions
+      type: object
+      properties:
+        account_connection_id:
+          type: string
+          description: The Account Connection ID for the bank account
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: 132d3353-ad29-46e0-b66a-caed8b572e93
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransaction'
+          description: The list of account transactions
+          nullable: true
+        datetime_refreshed:
+          type: string
+          description: The time the transactions were refreshed
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T03:34:25.0000000+00:00'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenRequest:
+      title: Create Open Banking Connection
+      required:
+      - entity_id
+      - entity_type
+      type: object
+      properties:
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          format: uuid
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of the entity
+          example: company
+        country_code:
+          type: string
+          description: Must be ISO 2 digit country code. Limits the institution selection to country provided.
+          nullable: true
+          example: GB
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header

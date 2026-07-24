@@ -1,0 +1,1314 @@
+openapi: 3.0.1
+info:
+  title: Sikoia Adverse Media Cases API
+  termsOfService: https://sikoia.com/About/Terms
+  version: '1.0'
+servers:
+- url: https://api.sikoia.com
+  description: API (Production)
+- url: https://oauth2.sikoia.com
+  description: Authorization Server (Production)
+- url: https://api-staging.sikoia.com
+  description: API (Staging)
+- url: https://oauth2-staging.sikoia.com
+  description: Authorization Server (Staging)
+security:
+- authorizationHeader: []
+- apiKeyHeader: []
+tags:
+- name: Cases
+paths:
+  /v2/cases:
+    get:
+      tags:
+      - Cases
+      summary: List all cases
+      description: "### Returns a list of all cases.\r\n\r\nThis list can be filtered using query parameters such as `case_type`, `stage`, `source`, `owner`, `owner_id` and `keyword`.\r\n\r\nThe `keyword` query parameter searches for matching strings within the Case's `name`, `reference` and `description` fields.\r\n\r\nSupport for multiple filters is available by separating them with a comma. For instance, to retrieve all approved and rejected cases, use the `stage` query parameter with the value `Approved,Rejected`.\r\n"
+      operationId: GET_v2-cases
+      parameters:
+      - name: case_type
+        in: query
+        description: Case Types
+        schema:
+          enum:
+          - Business
+          - Consumer
+          type: string
+      - name: stage
+        in: query
+        description: Case Stages
+        schema:
+          enum:
+          - New
+          - InProgressWaitingCustomer
+          - InProgressNeedsReview
+          - Approved
+          - Rejected
+          - Dormant
+          type: string
+      - name: source
+        in: query
+        description: Source
+        schema:
+          type: string
+      - name: owner
+        in: query
+        description: Owner
+        schema:
+          type: string
+          deprecated: true
+      - name: owner_id
+        in: query
+        description: Owner Id
+        schema:
+          type: string
+      - name: keyword
+        in: query
+        description: Keywords
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of cases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.CasesResponse'
+              example:
+              - case_id: 64cd8202-2db4-44d5-85be-79438d65eb7b
+                name: Acme Ltd Loan Application
+                case_type: Business
+                stage: New
+                datetime_created: '2023-02-10T10:59:46.0000000+00:00'
+                datetime_last_modified: '2023-02-12T01:04:21.0000000+00:00'
+                reference: LOAN03584
+                reference_customer_id: CUST67044
+                reference_customer_name: Building Society Ltd
+                description: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+                source: API
+                owner: Cecilia Adams
+                ownership:
+                - owner_id: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+                  owner_type: user
+                number_of_companies: '2'
+                number_of_persons: '5'
+        '400':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: 9a518655-9572-43fa-b747-b282ca41365e
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: b16595e7-e145-4656-bc54-0f6acbcf3dcd
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 6df0d285-68aa-4132-b164-3212c2076e4e
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: e8eae48b-e73b-4a2e-8a63-e750f96437f2
+    post:
+      tags:
+      - Cases
+      summary: Create a case
+      description: "### Creates a new case\r\n\r\nYou have the option to add companies and people at the point of case creation or at a later stage.\r\n\r\nWhen adding companies at the point of case creation, you can retrieve company registration data by setting `registry_search` to `true`, and ensuring that `company_name`, `company_number`, and `jurisdiction_code` are not empty.  If the company registration data cannot be found, the case is created with the provided company details. If the company registration data is found, the `status`, `number_of_officers`, and `number_of_owners` are updated to reflect the registry data.\r\n\r\nAdditionally, you can choose to add all the company's (human) officers to the case by setting `add_directors` to `true`. Note that this flag is applicable only when `registry_search` is set to `true`.\r\n"
+      operationId: POST_v2-cases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.CreateCaseRequest'
+            example:
+              name: Acme Ltd Loan Application
+              case_type: Business
+              stage: New
+              reference: LOAN03584
+              reference_customer_id: CUST67044
+              reference_customer_name: Building Society Ltd
+              owner: Cecilia Adams
+              ownership:
+              - owner_id: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+                owner_type: user
+              description: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+              source: API
+              companies:
+              - company_name: Acme Limited
+                company_number: '77642080'
+                jurisdiction_code: GB
+                registry_search: true
+                add_directors: true
+              persons:
+              - first_name: Wilson
+                last_name: Pascale
+                email: wislon@acme.ltd.uk
+                postal_address:
+                  house_number: '123'
+                  building_name: Main House
+                  sub_building_name: string
+                  address_line_1: Main Street
+                  address_line_2: Apt.101
+                  locality: Test County
+                  city: Test Town
+                  post_code: X9 9AA
+                  country: GB
+                date_of_birth: '1985-06-12'
+                employer: Acme Limited
+                is_officer: true
+                reference_person_id: Wilson5432
+      responses:
+        '201':
+          description: The created case
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.CaseResponse'
+              example:
+                case_id: 64cd8202-2db4-44d5-85be-79438d65eb7b
+                name: Acme Ltd Loan Application
+                case_type: Business
+                stage: New
+                datetime_created: '2023-02-10T10:59:46.0260000+00:00'
+                datetime_last_modified: '2023-02-12T13:04:21.3260000+00:00'
+                reference: LOAN03584
+                reference_customer_id: CUST67044
+                reference_customer_name: Building Society Ltd
+                description: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+                source: API
+                owner: Cecilia Adams
+                ownership:
+                - owner_id: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+                  owner_type: user
+                number_of_companies: '2'
+                number_of_persons: '5'
+                companies:
+                - company_id: a035d37a-dee1-4a4e-b098-168a6a1f4603
+                  company_name: Acme Limited
+                  company_number: '77642080'
+                  jurisdiction_code: GB
+                  status: Active
+                  number_of_officers: '5'
+                  number_of_owners: '2'
+                  media_adverse_requested: true
+                  pep_sanction_requested: true
+                persons:
+                - person_id: 8303ce21-3120-4981-9a19-560ef110502b
+                  first_name: Wilson
+                  last_name: Pascale
+                  name: Wilson Pascale
+                  email: wislon@acme.ltd.uk
+                  postal_address:
+                    house_number: '123'
+                    building_name: Main House
+                    sub_building_name: string
+                    address_line_1: Main Street
+                    address_line_2: Apt. 101
+                    locality: Test Country
+                    city: Test Town
+                    post_code: X9 9AA
+                    country: GB
+                    summary_line: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
+                  date_of_birth: '1985-06-12'
+                  employer: Acme Limited
+                  is_officer: true
+                  appointments: string
+                  reference_person_id: Wilson5432
+                  media_adverse_requested: true
+                  pep_sanction_requested: true
+        '400':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: 582535be-c42a-4e5f-9efa-a121842cc6f8
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 2622efbf-488c-4824-91d8-01ccdd2010f2
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: e1c426b8-6f38-47d9-8efd-76e29653e977
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 844d74d3-d437-46db-8781-ee8f55e0676b
+  /v2/cases/{case_id}:
+    get:
+      tags:
+      - Cases
+      summary: Retrieve a case
+      description: "### Retrieve a single case.\r\n\r\nReturns information about a case, including lists of the individual companies and people within it as well as their associated `company_id` or `person_id`.\r\n"
+      operationId: GET_v2-cases-case_id
+      parameters:
+      - name: case_id
+        in: path
+        description: Sikoia ID for the case
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Retrieved Case
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.CaseResponse'
+              example:
+                case_id: 64cd8202-2db4-44d5-85be-79438d65eb7b
+                name: Acme Ltd Loan Application
+                case_type: Business
+                stage: New
+                datetime_created: '2023-02-10T10:59:46.0260000+00:00'
+                datetime_last_modified: '2023-02-12T13:04:21.3260000+00:00'
+                reference: LOAN03584
+                reference_customer_id: CUST67044
+                reference_customer_name: Building Society Ltd
+                description: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+                source: API
+                owner: Cecilia Adams
+                ownership:
+                - owner_id: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+                  owner_type: user
+                number_of_companies: '2'
+                number_of_persons: '5'
+                companies:
+                - company_id: a035d37a-dee1-4a4e-b098-168a6a1f4603
+                  company_name: Acme Limited
+                  company_number: '77642080'
+                  jurisdiction_code: GB
+                  status: Active
+                  number_of_officers: '5'
+                  number_of_owners: '2'
+                  media_adverse_requested: true
+                  pep_sanction_requested: true
+                persons:
+                - person_id: 8303ce21-3120-4981-9a19-560ef110502b
+                  first_name: Wilson
+                  last_name: Pascale
+                  name: Wilson Pascale
+                  email: wislon@acme.ltd.uk
+                  postal_address:
+                    house_number: '123'
+                    building_name: Main House
+                    sub_building_name: string
+                    address_line_1: Main Street
+                    address_line_2: Apt. 101
+                    locality: Test Country
+                    city: Test Town
+                    post_code: X9 9AA
+                    country: GB
+                    summary_line: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
+                  date_of_birth: '1985-06-12'
+                  employer: Acme Limited
+                  is_officer: true
+                  appointments: string
+                  reference_person_id: Wilson5432
+                  media_adverse_requested: true
+                  pep_sanction_requested: true
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 187f6c48-c248-4179-a1b5-f4114096690b
+        '404':
+          description: Case Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id 29ae6bb5-0a12-4c6c-98c3-92d160fb34dc.
+                correlation_id: dae3c74a-526d-4f0d-846a-5bdec0c569c3
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 5a2e5909-67e1-4406-aeb0-2cfac015a2ad
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 3126f0a6-7775-45d6-8082-b0281648be06
+    patch:
+      tags:
+      - Cases
+      summary: Update a case
+      description: "### Updates details for an existing case.\r\n\r\nWhile all fields are optional, the request must include at least one field.\r\n\r\nTo clear a field, send an empty string as the field value.\r\n"
+      operationId: PATCH_v2-cases-case_id
+      parameters:
+      - name: case_id
+        in: path
+        description: Sikoia ID for the case
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.UpdateCaseRequest'
+            example:
+              name: Acme Ltd 2nd Loan Application
+              stage: Approved
+              reference: LOAN03584
+              reference_customer_id: CUST67044
+              reference_customer_name: Building Society Ltd
+              description: Acme Ltd looking for another loan
+              source: API
+              owner: Katerina Valentin
+              ownership:
+              - owner_id: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+                owner_type: user
+      responses:
+        '200':
+          description: Updated Case
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.CaseResponse'
+              example:
+                case_id: 64cd8202-2db4-44d5-85be-79438d65eb7b
+                name: Acme Ltd Loan Application
+                case_type: Business
+                stage: New
+                datetime_created: '2023-02-10T10:59:46.0260000+00:00'
+                datetime_last_modified: '2023-02-12T13:04:21.3260000+00:00'
+                reference: LOAN03584
+                reference_customer_id: CUST67044
+                reference_customer_name: Building Society Ltd
+                description: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+                source: API
+                owner: Cecilia Adams
+                ownership:
+                - owner_id: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+                  owner_type: user
+                number_of_companies: '2'
+                number_of_persons: '5'
+                companies:
+                - company_id: a035d37a-dee1-4a4e-b098-168a6a1f4603
+                  company_name: Acme Limited
+                  company_number: '77642080'
+                  jurisdiction_code: GB
+                  status: Active
+                  number_of_officers: '5'
+                  number_of_owners: '2'
+                  media_adverse_requested: true
+                  pep_sanction_requested: true
+                persons:
+                - person_id: 8303ce21-3120-4981-9a19-560ef110502b
+                  first_name: Wilson
+                  last_name: Pascale
+                  name: Wilson Pascale
+                  email: wislon@acme.ltd.uk
+                  postal_address:
+                    house_number: '123'
+                    building_name: Main House
+                    sub_building_name: string
+                    address_line_1: Main Street
+                    address_line_2: Apt. 101
+                    locality: Test Country
+                    city: Test Town
+                    post_code: X9 9AA
+                    country: GB
+                    summary_line: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
+                  date_of_birth: '1985-06-12'
+                  employer: Acme Limited
+                  is_officer: true
+                  appointments: string
+                  reference_person_id: Wilson5432
+                  media_adverse_requested: true
+                  pep_sanction_requested: true
+        '400':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidRequest
+                status: 400
+                title: Validation Errors
+                detail: Entity Id is required.
+                correlation_id: bdc39a61-17f3-4d27-958b-86abe1bda15b
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: fff255f3-be78-48d9-826a-6b394e52bb49
+        '404':
+          description: Case Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id cb74296c-3b8c-4005-933b-355219d150cc.
+                correlation_id: 0bbcff17-0ed8-4ee3-80f0-a30c0334f12e
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 1174d652-7f7f-4d9f-9e01-e56844de42f0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 7ae566db-bf25-4297-9db4-c9ea466ecfab
+    delete:
+      tags:
+      - Cases
+      summary: Delete a case
+      description: "### Deletes a single case.\r\n\r\nThis also deletes all of the associated companies, people and documents within the case.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+      operationId: DELETE_v2-cases-case_id
+      parameters:
+      - name: case_id
+        in: path
+        description: Sikoia ID for the case
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted case
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: InvalidToken
+                status: 401
+                title: Invalid Token
+                detail: Invalid token
+                correlation_id: 1b8c07df-23c9-48c8-88bd-ffff6cdb37c9
+        '404':
+          description: Case Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ResourceNotFound
+                status: 404
+                title: Resource Not Found
+                detail: No resources found with id e3d720d8-8c4f-4737-85a5-382bd0be6105.
+                correlation_id: 9829fa7d-8a1d-4194-a82d-7fa94e907cf2
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: RateLimit
+                status: 429
+                title: Too Many Requests
+                detail: You've exceeded the maximum API request limit per minute. Please try again later.
+                correlation_id: 9b1d1da1-d9b0-4a83-871c-6d4241a0cf0d
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SikoiaCore.Common.SikoiaErrorResponse'
+              example:
+                type: ServerError
+                status: 500
+                title: Internal Server Error
+                detail: Something has gone wrong, please try again
+                correlation_id: 5569a5d0-dbfe-4fd0-81ad-822ab33ff2ad
+components:
+  schemas:
+    SikoiaSharedModels.CaseManagement.Requests.CreateCaseRequest:
+      title: Create Case
+      required:
+      - case_type
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: Name of the case
+          example: Acme Ltd Loan Application
+        case_type:
+          enum:
+          - Business
+          - Consumer
+          type: string
+          description: The type of case
+          example: Business
+        stage:
+          enum:
+          - New
+          - InProgressWaitingCustomer
+          - InProgressNeedsReview
+          - Approved
+          - Rejected
+          - Dormant
+          type: string
+          description: The stage of the case, this defaults to `New`
+          nullable: true
+          example: New
+        reference:
+          type: string
+          description: Your external reference for the case
+          nullable: true
+          example: LOAN03584
+        reference_customer_id:
+          type: string
+          description: Your external reference for the ID of the customer the case belongs to
+          nullable: true
+          example: CUST67044
+        reference_customer_name:
+          type: string
+          description: Your external reference for the name of the customer the case belongs to
+          nullable: true
+          example: Building Society Ltd
+        owner:
+          type: string
+          description: The current owner of the case
+          nullable: true
+          example: Cecilia Adams
+          deprecated: true
+        ownership:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.Owner'
+          description: The list of owner model of the case
+          nullable: true
+        description:
+          type: string
+          description: The description of the case
+          nullable: true
+          example: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+        source:
+          type: string
+          description: The source of the case creation, this defaults to `API`
+          nullable: true
+          example: API
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord'
+          description: The list of companies to add to the case
+          nullable: true
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord'
+          description: The list of people to add to the case
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel:
+      title: Address
+      type: object
+      properties:
+        house_number:
+          type: string
+          description: The building or house number
+          nullable: true
+          example: '123'
+        building_name:
+          type: string
+          description: The building or house name
+          nullable: true
+          example: Main House
+        sub_building_name:
+          type: string
+          description: The name of the sub-building
+          nullable: true
+        address_line_1:
+          type: string
+          description: The first line of the postal address, typically used for the street address
+          nullable: true
+          example: Main Street
+        address_line_2:
+          type: string
+          description: The second line of the postal address, typically used for additional information such as apartment or suite number
+          nullable: true
+          example: Apt.101
+        locality:
+          type: string
+          description: The locality of the postal address
+          nullable: true
+          example: Test County
+        city:
+          type: string
+          description: The city of the postal address
+          nullable: true
+          example: Test Town
+        post_code:
+          type: string
+          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
+          nullable: true
+          example: X9 9AA
+        country:
+          type: string
+          description: Two letter ISO country code
+          nullable: true
+          example: GB
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.CompanyRecordResponseModel:
+      title: Company
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: Sikoia ID for the company
+          format: uuid
+          readOnly: true
+          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
+        company_name:
+          type: string
+          description: The name of the company
+          example: Acme Limited
+        company_number:
+          type: string
+          description: The company registration number
+          nullable: true
+          example: '77642080'
+        jurisdiction_code:
+          type: string
+          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
+          nullable: true
+          example: GB
+        status:
+          type: string
+          description: The operational status of the company, defaults to `unknown`
+          readOnly: true
+          example: Active
+        number_of_officers:
+          type: integer
+          description: The number of officers
+          format: int32
+          readOnly: true
+          example: '5'
+        number_of_owners:
+          type: integer
+          description: The number of owners
+          format: int32
+          readOnly: true
+          example: '2'
+        media_adverse_requested:
+          type: boolean
+          deprecated: true
+        pep_sanction_requested:
+          type: boolean
+          deprecated: true
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel:
+      title: Address
+      type: object
+      properties:
+        house_number:
+          type: string
+          description: The building or house number
+          nullable: true
+          example: '123'
+        building_name:
+          type: string
+          description: The building or house name
+          nullable: true
+          example: Main House
+        sub_building_name:
+          type: string
+          description: The name of the sub-building
+          nullable: true
+        address_line_1:
+          type: string
+          description: The first line of the postal address, typically used for the street address.
+          nullable: true
+          example: Main Street
+        address_line_2:
+          type: string
+          description: The second line of the postal address, typically used for additional information such as apartment or suite number.
+          nullable: true
+          example: Apt. 101
+        locality:
+          type: string
+          description: The locality of the postal address.
+          nullable: true
+          example: Test Country
+        city:
+          type: string
+          description: The city of the postal address.
+          nullable: true
+          example: Test Town
+        post_code:
+          type: string
+          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
+          nullable: true
+          example: X9 9AA
+        country:
+          type: string
+          description: Two letter ISO country code
+          nullable: true
+          example: GB
+        summary_line:
+          type: string
+          nullable: true
+          example: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.UpdateCaseRequest:
+      title: Update Case
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the case
+          nullable: true
+          example: Acme Ltd 2nd Loan Application
+        stage:
+          enum:
+          - New
+          - InProgressWaitingCustomer
+          - InProgressNeedsReview
+          - Approved
+          - Rejected
+          - Dormant
+          type: string
+          description: The stage of the case
+          nullable: true
+          example: Approved
+        reference:
+          type: string
+          description: Your external reference for the case
+          nullable: true
+          example: LOAN03584
+        reference_customer_id:
+          type: string
+          description: Your external reference for the ID of the customer the case belongs to
+          nullable: true
+          example: CUST67044
+        reference_customer_name:
+          type: string
+          description: Your external reference for the name of the customer the case belongs to
+          nullable: true
+          example: Building Society Ltd
+        description:
+          type: string
+          description: The description of the case
+          nullable: true
+          example: Acme Ltd looking for another loan
+        source:
+          type: string
+          description: The source of the case creation, this defaults to `API`
+          nullable: true
+          example: API
+        owner:
+          type: string
+          description: The current owner of the case
+          nullable: true
+          example: Katerina Valentin
+          deprecated: true
+        ownership:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.Owner'
+          description: The list of owner model of the case
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.Owner:
+      type: object
+      properties:
+        owner_id:
+          type: string
+          description: The case owner id
+          nullable: true
+          example: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+        owner_type:
+          enum:
+          - User
+          type: string
+          description: The type of owner. This should be set to 'user'
+          nullable: true
+          example: user
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.CaseManagement.Responses.CaseResponse:
+      title: Case Record
+      type: object
+      properties:
+        case_id:
+          type: string
+          description: Sikoia ID for the case
+          format: uuid
+          readOnly: true
+          example: 64cd8202-2db4-44d5-85be-79438d65eb7b
+        name:
+          type: string
+          description: Name of the case
+          example: Acme Ltd Loan Application
+        case_type:
+          enum:
+          - Business
+          - Consumer
+          type: string
+          description: The type of case
+          example: Business
+        stage:
+          enum:
+          - New
+          - InProgressWaitingCustomer
+          - InProgressNeedsReview
+          - Approved
+          - Rejected
+          - Dormant
+          type: string
+          description: The stage of the case
+          example: New
+        datetime_created:
+          type: string
+          description: The time the case was created
+          nullable: true
+          readOnly: true
+          example: '2023-02-10T10:59:46.026Z'
+        datetime_last_modified:
+          type: string
+          description: The time the case was last modified
+          nullable: true
+          readOnly: true
+          example: '2023-02-12T13:04:21.326Z'
+        reference:
+          type: string
+          description: Your external reference for the case
+          nullable: true
+          example: LOAN03584
+        reference_customer_id:
+          type: string
+          description: Your external reference for the ID of the customer the case belongs to
+          nullable: true
+          example: CUST67044
+        reference_customer_name:
+          type: string
+          description: Your external reference for the name of the customer the case belongs to
+          nullable: true
+          example: Building Society Ltd
+        description:
+          type: string
+          description: The description for the case
+          nullable: true
+          example: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+        source:
+          type: string
+          description: The source of the case, this defaults to `API`
+          nullable: true
+          example: API
+        owner:
+          type: string
+          description: The owner of the case
+          nullable: true
+          example: Cecilia Adams
+          deprecated: true
+        ownership:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.Owner'
+          description: The list of owners of the case
+          nullable: true
+        number_of_companies:
+          type: integer
+          description: Number of companies in the case
+          format: int32
+          readOnly: true
+          example: '2'
+        number_of_persons:
+          type: integer
+          description: Number of people in the case
+          format: int32
+          readOnly: true
+          example: '5'
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.CompanyRecordResponseModel'
+          nullable: true
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.PersonRecordResponseModel'
+          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord:
+      title: Company
+      required:
+      - company_name
+      type: object
+      properties:
+        company_name:
+          minLength: 1
+          type: string
+          description: The name of the company
+          example: Acme Limited
+        company_number:
+          type: string
+          description: The company registration number
+          nullable: true
+          example: '77642080'
+        jurisdiction_code:
+          pattern: ^\w{2}(_\w{2})?$
+          type: string
+          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
+          nullable: true
+          example: GB
+        registry_search:
+          type: boolean
+          description: Search registries for the company details, defaults to `false`
+        add_directors:
+          type: boolean
+          description: Add directors to the list of people on the case, `registry_search` must be `true`, defaults to `false`
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord:
+      title: Person
+      required:
+      - first_name
+      - last_name
+      type: object
+      properties:
+        first_name:
+          minLength: 1
+          type: string
+          description: The person's first name
+          example: Wilson
+        last_name:
+          minLength: 1
+          type: string
+          description: The person's last name
+          example: Pascale
+        email:
+          type: string
+          description: The person's email address
+          format: email
+          nullable: true
+          example: wislon@acme.ltd.uk
+        postal_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel'
+        date_of_birth:
+          type: string
+          description: The person's date of birth
+          nullable: true
+          example: '1985-06-12'
+        employer:
+          type: string
+          description: The name of the person's employer
+          nullable: true
+          example: Acme Limited
+        is_officer:
+          type: boolean
+          description: Whether the person is an officer of their employer
+          readOnly: true
+        reference_person_id:
+          type: string
+          description: Your external reference for the ID of the person/applicant in the case
+          nullable: true
+          example: Wilson5432
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.PersonRecordResponseModel:
+      title: Person
+      type: object
+      properties:
+        person_id:
+          type: string
+          description: Sikoia ID for the person
+          format: uuid
+          nullable: true
+          readOnly: true
+          example: 8303ce21-3120-4981-9a19-560ef110502b
+        first_name:
+          type: string
+          description: The person's first name
+          nullable: true
+          example: Wilson
+        last_name:
+          type: string
+          description: The person's last name
+          nullable: true
+          example: Pascale
+        name:
+          type: string
+          description: The person's full name
+          nullable: true
+          readOnly: true
+          example: Wilson Pascale
+        email:
+          type: string
+          description: The person's email address
+          format: email
+          nullable: true
+          example: wislon@acme.ltd.uk
+        postal_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel'
+        date_of_birth:
+          type: string
+          description: The person's date of birth
+          format: date
+          nullable: true
+          example: '1985-06-12'
+        employer:
+          type: string
+          description: The name of the person's employer
+          nullable: true
+          example: Acme Limited
+        is_officer:
+          type: boolean
+          description: Whether the person is an officer of their employer
+          readOnly: true
+        appointments:
+          type: string
+          nullable: true
+        reference_person_id:
+          type: string
+          description: Your external reference for the ID of the person/applicant in the case
+          nullable: true
+          example: Wilson5432
+        media_adverse_requested:
+          type: boolean
+          deprecated: true
+        pep_sanction_requested:
+          type: boolean
+          deprecated: true
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.CasesResponse:
+      title: Cases Record
+      type: object
+      properties:
+        case_id:
+          type: string
+          description: Sikoia ID for the case
+          format: uuid
+          readOnly: true
+          example: 64cd8202-2db4-44d5-85be-79438d65eb7b
+        name:
+          type: string
+          description: Name of the case
+          example: Acme Ltd Loan Application
+        case_type:
+          enum:
+          - Business
+          - Consumer
+          type: string
+          description: The type of case
+          example: Business
+        stage:
+          enum:
+          - New
+          - InProgressWaitingCustomer
+          - InProgressNeedsReview
+          - Approved
+          - Rejected
+          - Dormant
+          type: string
+          description: The stage of the case
+          example: New
+        datetime_created:
+          type: string
+          description: The time the case was created
+          format: date-time
+          readOnly: true
+          example: '2023-02-10T10:59:46.0000000+00:00'
+        datetime_last_modified:
+          type: string
+          description: The time the case was last modified
+          format: date-time
+          readOnly: true
+          example: '2023-02-12T01:04:21.0000000+00:00'
+        reference:
+          type: string
+          description: Your external reference for the case
+          nullable: true
+          example: LOAN03584
+        reference_customer_id:
+          type: string
+          description: Your external reference for the ID of the customer the case belongs to
+          nullable: true
+          example: CUST67044
+        reference_customer_name:
+          type: string
+          description: Your external reference for the name of the customer the case belongs to
+          nullable: true
+          example: Building Society Ltd
+        description:
+          type: string
+          description: The description for the case
+          nullable: true
+          example: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
+        source:
+          type: string
+          description: The source of the case, this defaults to `API`
+          nullable: true
+          example: API
+        owner:
+          type: string
+          description: The owner of the case
+          nullable: true
+          example: Cecilia Adams
+          deprecated: true
+        ownership:
+          type: array
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.Owner'
+          description: The list of owners of the case
+          nullable: true
+        number_of_companies:
+          type: integer
+          description: Number of Companies in the Case
+          format: int32
+          readOnly: true
+          example: '2'
+        number_of_persons:
+          type: integer
+          description: Number of People in the Case
+          format: int32
+          readOnly: true
+          example: '5'
+      additionalProperties: false
+  securitySchemes:
+    authorizationHeader:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyHeader:
+      type: apiKey
+      name: apikey
+      in: header
