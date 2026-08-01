@@ -1,0 +1,76 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sikoia-openapi.yml; https://docs.sikoia.com/docs/cases-1
+entities:
+- name: Case
+  id: case_id
+  summary: Folder grouping companies and people for a decision.
+- name: Company
+  id: company_id
+  summary: Company entity; enrichable with registry, credit, online, banking, screening data.
+- name: Person
+  id: person_id
+  summary: Person entity; enrichable with IDV, banking, screening data.
+- name: Document
+  id: document_id
+  summary: Uploaded file attached to a case, person, or company.
+- name: BankConnection
+  id: bank_connection_id
+  summary: Open Banking connection to an entity.
+- name: BankAccount
+  id: account_connection_id
+  summary: Account from open banking or uploaded statements.
+- name: Webhook
+  id: webhook_id
+  summary: Event subscription with a callback URL.
+- name: RegistryDataRequest
+  id: request_id
+  summary: Company registry data request.
+- name: CreditReportRequest
+  id: request_id
+  summary: Company credit report request.
+- name: IdentityVerificationRequest
+  id: request_id
+  summary: Person identity verification (IDV) request.
+- name: AffordabilityInsight
+  id: request_id
+  summary: Affordability insight for an entity.
+- name: IncomeEmployerVerification
+  id: request_id
+  summary: Income & employer verification for an entity.
+- name: ValidationChecklist
+  id: validation_instance_id
+  summary: Validation/completeness checklist run.
+relationships:
+- from: Case
+  type: has_many
+  to: Company
+  via: case entities
+- from: Case
+  type: has_many
+  to: Person
+  via: case entities
+- from: Document
+  type: belongs_to
+  to: Case|Company|Person
+  via: entity_type/entity_id
+- from: BankConnection
+  type: belongs_to
+  to: Case|Company|Person
+  via: entity_type/entity_id
+- from: BankConnection
+  type: has_many
+  to: BankAccount
+  via: account_connection_id
+- from: Company
+  type: has_many
+  to: RegistryDataRequest
+  via: company_id
+- from: Company
+  type: has_many
+  to: CreditReportRequest
+  via: company_id
+- from: Person
+  type: has_many
+  to: IdentityVerificationRequest
+  via: person_id

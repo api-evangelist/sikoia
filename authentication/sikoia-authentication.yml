@@ -1,0 +1,41 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/docs/authentication
+docs: https://docs.sikoia.com/docs/authentication
+summary:
+  types:
+  - oauth2
+  - http
+  - apiKey
+  primary: oauth2 client_credentials (bearer JWT)
+  api_key_in:
+  - header
+  oauth2_flows:
+  - clientCredentials
+  notes: Migrated to OAuth 2.0. Legacy 'apikey' header auth deprecated; end of support 2025-11-30 (transitional
+    for pre-Jan-2024 customers).
+oauth2:
+  flow: clientCredentials
+  token_url: https://oauth2.sikoia.com/token
+  token_url_staging: https://oauth2-staging.sikoia.com/token
+  scope: https://api.sikoia.com/.default
+  scope_staging: https://api-staging.sikoia.com/.default
+  token_format: JWT
+  token_expiry: 1 hour
+  client_secret_expiry: 2 years (rotatable; two secrets per application supported)
+  credential_management: https://portal.sikoia.com/Management/Applications
+schemes:
+- name: authorizationHeader
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/sikoia-openapi.yml
+- name: apiKeyHeader
+  type: apiKey
+  in: header
+  parameter: apikey
+  deprecated: true
+  end_of_support: '2025-11-30'
+  sources:
+  - openapi/sikoia-openapi.yml

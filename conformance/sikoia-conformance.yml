@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/docs/api-behaviour; https://sikoia.com
+standards:
+- id: oauth2
+  conforms: true
+  evidence: OAuth 2.0 client_credentials grant; token endpoint oauth2.sikoia.com.
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: Documented client_credentials flow with JWT access tokens.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Error envelope has type/status/title/detail but uses media type application/json and a string
+    enum 'type' rather than a URI + application/problem+json.
+- id: rfc8594-sunset
+  conforms: false
+  evidence: Deprecation announced via Changelog/email; no documented Sunset header.
+- id: psd2-open-banking
+  conforms: true
+  evidence: FCA-authorised Account Information Service Provider (AISP); Open Banking module.
+- id: iso-27001
+  conforms: true
+  evidence: ISO 27001 certification stated on sikoia.com.
+- id: openidconnect
+  conforms: false
+  evidence: No OIDC discovery endpoint (/.well-known/openid-configuration returns 404).
+compliance_program:
+  certifications:
+  - ISO 27001
+  regulatory:
+  - FCA-authorised AISP (Account Information Service Provider)
+  source: https://sikoia.com

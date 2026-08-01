@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/docs/api-behaviour
+versioning:
+  scheme: uri-path
+  current: v2
+  docs: https://docs.sikoia.com/docs/api-behaviour
+breaking_changes:
+  non_breaking:
+  - new resource endpoints
+  - new HTTP methods on existing resources
+  - new fields on response objects
+  - new optional/defaulted request fields
+  breaking:
+  - changing or removing fields
+  - changing resource paths
+  policy: API version is incremented on backwards-incompatible changes.
+deprecation:
+  policy_url: https://docs.sikoia.com/docs/api-behaviour
+  policy: On a new version release the previous version is marked deprecated and announced via Changelog
+    and email; the previous version is supported for a migration period.
+  example: API key auth deprecated; end of support 2025-11-30.
+status_page: https://stats.uptimerobot.com/lg0E9f1r3V
+changelog: https://docs.sikoia.com/changelog

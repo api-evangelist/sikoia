@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/docs/webhooks
+spec_type: Webhooks
+delivery:
+  transport: HTTP callback (webhook_callback_url)
+  signing_header: X-HMAC-SHA256-Signature
+  signing: HMAC-SHA256 of the request body using the shared secret, Base64 encoded.
+  management_api: /v2/webhooks (+ /v2/webhooks/secrets for the shared secret)
+event_types:
+- DocumentProcessing.Completed
+- BankStatementProcessing.Completed
+- PayslipProcessing.Completed
+- TaxOverviewProcessing.Completed
+- BankingProcessing.Completed
+- OpenBankingProcessing.Completed
+- IdentityVerification.Completed
+- IdentityVerification.Expired
+- AffordabilityInsights.Completed
+- IncomeEmployerInsights.Completed
+management_operations:
+- POST_v2-webhooks
+- GET_v2-webhooks
+- GET_v2-webhooks-webhook_id
+- PATCH_v2-webhooks-webhook_id
+- DELETE_v2-webhooks-webhook_id
+- GET_v2-webhooks-event-types
+- GET_v2-webhooks-webhook_id-requests
+- GET_v2-webhooks-secrets
+- POST_v2-webhooks-secrets
+- DELETE_v2-webhooks-secrets
+- PATCH_v2-webhooks-secrets-rotate

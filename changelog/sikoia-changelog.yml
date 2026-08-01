@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/changelog
+scheme: sequential release numbers, dated (DD/MM/YYYY), production deploys
+current: Release 72
+entries:
+- version: Release 72
+  date: '2026-04-27'
+  breaking: false
+  highlights:
+  - Insights endpoint performance improvements
+  - 'Income & Employer: new employee_name / employer_name fields, payslip validation'
+  - Completeness Checks support Open Banking transactions
+- version: Release 71
+  date: '2026-03-05'
+  breaking: false
+  highlights:
+  - Payslip page detection and field extraction/validation improvements
+  - Improved page-annotation detection for integrity checks
+- version: Release 70
+  date: '2026-02-10'
+  breaking: false
+  additions:
+  - POST /v2/completeness-income-checks (combined Completeness + Income endpoint)
+  highlights:
+  - New gross-pay/deduction categories (Arrears, Salary Sacrifice, Employer Pension)
+  - SA302 income data-model improvements (beta)
+- version: Release 69
+  date: '2025-12-18'
+  breaking: false
+  highlights:
+  - Income Insights transaction interpretation and weekly/monthly income accuracy fixes
+- version: Release 68
+  date: '2025-10-10'
+  breaking: false
+  highlights:
+  - Additional document integrity/tampering checks
+  - Barclays statement page-number check fix

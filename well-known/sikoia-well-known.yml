@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: searched
+source: live probes of /.well-known/ on sikoia.com, api.sikoia.com, docs.sikoia.com
+result: none — no /.well-known/ discovery documents published (all 404)
+documents:
+- host: sikoia.com
+  path: /.well-known/security.txt
+  status: 404
+- host: sikoia.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: sikoia.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: sikoia.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: sikoia.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: api.sikoia.com
+  path: /.well-known/security.txt
+  status: 404
+- host: api.sikoia.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: api.sikoia.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: api.sikoia.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: api.sikoia.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: docs.sikoia.com
+  path: /.well-known/security.txt
+  status: 404
+- host: docs.sikoia.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: docs.sikoia.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: docs.sikoia.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: docs.sikoia.com
+  path: /.well-known/ai-plugin.json
+  status: 404

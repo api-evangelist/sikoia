@@ -1,0 +1,11 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/docs/api-behaviour
+policy: Fixed window rate limit to ensure fair usage.
+rate_limits:
+- scope: global
+  limit_count: 200
+  window: 1 minute
+  exceeded_status: 429
+  exceeded_type: RateLimit
+  reset: Request count resets after one minute.

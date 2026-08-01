@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/docs/api-behaviour
+authentication:
+  style: OAuth 2.0 client_credentials, Bearer JWT in Authorization header
+  ref: authentication/sikoia-authentication.yml
+media_type:
+  request: application/json
+  response: application/json
+  https_required: true
+idempotency:
+  supported: true
+  mechanism: Idempotency key on write requests; reusing a key returns HTTP 409 Conflict.
+  conflict_status: 409
+  note: Documented via the 409 Conflict error ('reusing an idempotency key'); exact request header name
+    is not published in the public docs.
+  source: https://docs.sikoia.com/docs/api-behaviour
+pagination:
+  style: list endpoints return most-recent-first; webhook requests explicitly paginated
+  note: e.g. GET /v2/webhooks/{webhook_id}/requests returns a paginated list, most recent first.
+request_tracing:
+  header: X-Correlation-Id
+  note: Returned on every request and response and echoed as correlation_id in error bodies; include in
+    support tickets.
+versioning:
+  style: uri-path
+  current: v2
+  note: Version is required in the resource path; omitting it returns 404.
+  ref: lifecycle/sikoia-lifecycle.yml
+error_envelope:
+  fields:
+  - status
+  - type
+  - title
+  - detail
+  - correlation_id
+  ref: errors/sikoia-problem-types.yml
+rate_limiting:
+  limit: 200
+  window: 1 minute
+  exceeded_status: 429
+  ref: rate-limits/sikoia-rate-limits.yml
+webhook_signing:
+  header: X-HMAC-SHA256-Signature
+  algorithm: HMAC-SHA256 over request body, Base64 encoded
+  ref: asyncapi/sikoia-webhooks.yml

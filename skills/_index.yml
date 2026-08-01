@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: generated
+skills:
+- file: sikoia-company-registry.md
+  name: Access company registry data
+  api: openapi/sikoia-openapi.yml
+  operations:
+  - POST_v2-cases
+  - POST_v2-company-registry-data
+  - GET_v2-company-registry-data-request_id
+- file: sikoia-income-employer.md
+  name: Verify income & employer
+  api: openapi/sikoia-openapi.yml
+  operations:
+  - POST_v2-documents
+  - POST_v2-income-employer
+  - GET_v2-income-employer-request_id
+- file: sikoia-open-banking.md
+  name: Set up an open banking connection
+  api: openapi/sikoia-openapi.yml
+  operations:
+  - POST_v2-openbanking
+  - GET_v2-openbanking-bank_connection_id
+  - GET_v2-bankaccounts-account_connection_id-transactions
+- file: sikoia-screening.md
+  name: Screen an entity for PEPs, sanctions and adverse media
+  api: openapi/sikoia-openapi.yml
+  operations:
+  - POST_v2-peps-sanctions
+  - POST_v2-adverse-media

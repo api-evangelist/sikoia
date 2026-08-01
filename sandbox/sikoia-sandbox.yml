@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/reference/staging-production
+environments:
+- name: staging
+  api: https://api-staging.sikoia.com
+  auth: https://oauth2-staging.sikoia.com/token
+  scope: https://api-staging.sikoia.com/.default
+  purpose: Test environment to build and test against; receives new features ahead of production.
+- name: production
+  api: https://api.sikoia.com
+  auth: https://oauth2.sikoia.com/token
+  scope: https://api.sikoia.com/.default
+  purpose: Live production environment.
+notes:
+- Separate client_id/client_secret application per environment.
+- 'IMPORTANT: both environments are connected to the same live 3rd-party integrations, so staging calls
+  can incur real costs / real credit searches.'
+test_values: None published — Sikoia does not document synthetic/magic test identifiers; staging uses
+  live third-party data.

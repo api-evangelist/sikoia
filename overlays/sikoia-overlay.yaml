@@ -1,0 +1,13 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Sikoia API
+  version: 1.0.0
+extends: openapi/sikoia-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-status-page: https://stats.uptimerobot.com/lg0E9f1r3V
+    x-apievangelist-rate-limit: 200/min
+    x-apievangelist-idempotency: 409 Conflict on idempotency-key reuse
+    x-apievangelist-webhooks: HMAC-SHA256 signed (X-HMAC-SHA256-Signature)

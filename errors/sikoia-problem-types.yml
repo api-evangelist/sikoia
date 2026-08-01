@@ -1,0 +1,53 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sikoia.com/docs/api-behaviour
+format: problem-details (RFC 9457-inspired; media type application/json, type is a string enum not a URI)
+envelope:
+  fields:
+  - status
+  - type
+  - title
+  - detail
+  - correlation_id
+  correlation_header: X-Correlation-Id
+problems:
+- type: InvalidRequest
+  status: 400
+  title: Invalid request
+  detail: A field in the request failed validation.
+- type: InvalidToken
+  status: 401
+  title: Invalid Token
+  detail: Invalid or missing bearer token.
+- type: ExpiredToken
+  status: 401
+  title: Expired Token
+  detail: The bearer token has expired; request a new access token.
+- type: InsufficientPermissions
+  status: 403
+  title: Insufficient Permissions
+  detail: The client application does not have permission to perform the requested action.
+- type: ResourceNotFound
+  status: 404
+  title: Resource Not Found
+  detail: The requested resource could not be found.
+- type: ResourceDeleted
+  status: 404
+  title: Resource Deleted
+  detail: The resource at this location has been deleted.
+- type: Conflict
+  status: 409
+  title: Conflict
+  detail: The request conflicts with another request, likely due to reusing an idempotency key.
+- type: UnprocessableRequest
+  status: 422
+  title: Unprocessable Request
+  detail: The request was valid but could not be processed.
+- type: RateLimit
+  status: 429
+  title: Too Many Requests
+  detail: You've exceeded the maximum API request limit per minute (200/min). Please try again later.
+- type: ServerError
+  status: 500
+  title: Internal Server Error
+  detail: Something went wrong on Sikoia's end.

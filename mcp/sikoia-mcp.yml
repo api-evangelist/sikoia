@@ -1,0 +1,224 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/sikoia-openapi.yml
+note: Candidate MCP tool list derived one-per-operation from the harvested OpenAPI. No official hosted
+  Sikoia MCP server found.
+server:
+  name: sikoia
+  transport: http
+tools:
+- name: DELETE_v2-cases-case_id
+  description: Delete a case
+  source_operation: openapi/sikoia-openapi.yml#DELETE_v2-cases-case_id
+- name: DELETE_v2-documents-document_id
+  description: Delete a document
+  source_operation: openapi/sikoia-openapi.yml#DELETE_v2-documents-document_id
+- name: DELETE_v2-openbanking-bank_connection_id
+  description: Delete an Open Banking connection
+  source_operation: openapi/sikoia-openapi.yml#DELETE_v2-openbanking-bank_connection_id
+- name: DELETE_v2-webhooks-secrets
+  description: Delete a shared secret
+  source_operation: openapi/sikoia-openapi.yml#DELETE_v2-webhooks-secrets
+- name: DELETE_v2-webhooks-webhook_id
+  description: Delete a webhook
+  source_operation: openapi/sikoia-openapi.yml#DELETE_v2-webhooks-webhook_id
+- name: GET_v2-affordability-insights-request_id
+  description: Retrieve affordability insight
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-affordability-insights-request_id
+- name: GET_v2-affordability-insights-request_id-transaction-details
+  description: Retrieve a full breakdown of all transaction data
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-affordability-insights-request_id-transaction-details
+- name: GET_v2-affordability-insights-request_id-transactions
+  description: Retrieve a monthly summary of transaction data
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-affordability-insights-request_id-transactions
+- name: GET_v2-bankaccounts-account_connection_id
+  description: Retrieve account details
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-bankaccounts-account_connection_id
+- name: GET_v2-bankaccounts-account_connection_id-balances
+  description: Retrieve account balances
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-bankaccounts-account_connection_id-balances
+- name: GET_v2-bankaccounts-account_connection_id-transactions
+  description: Retrieve account transactions
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-bankaccounts-account_connection_id-transactions
+- name: GET_v2-cases
+  description: List all cases
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-cases
+- name: GET_v2-cases-case_id
+  description: Retrieve a case
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-cases-case_id
+- name: GET_v2-companies-company_id-credit-reports
+  description: List all credit report requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-companies-company_id-credit-reports
+- name: GET_v2-companies-company_id-online-data
+  description: List all online data requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-companies-company_id-online-data
+- name: GET_v2-companies-company_id-registry-data
+  description: List all registry data requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-companies-company_id-registry-data
+- name: GET_v2-company-credit-reports-request_id
+  description: Retrieve credit report
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-company-credit-reports-request_id
+- name: GET_v2-company-online-data-request_id
+  description: Retrieve online data
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-company-online-data-request_id
+- name: GET_v2-company-registry-data-request_id
+  description: Retrieve registry data
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-company-registry-data-request_id
+- name: GET_v2-documents-document_id
+  description: Retrieve a document
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-documents-document_id
+- name: GET_v2-documents-document_id-integrity-checks
+  description: Retrieve integrity checklist result
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-documents-document_id-integrity-checks
+- name: GET_v2-entity_type-entity_id-adverse-media
+  description: List all Adverse Media searches
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-adverse-media
+- name: GET_v2-entity_type-entity_id-affordability-insights
+  description: List all affordability insight requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-affordability-insights
+- name: GET_v2-entity_type-entity_id-bankaccounts
+  description: List all accounts
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-bankaccounts
+- name: GET_v2-entity_type-entity_id-documents
+  description: List all documents for an entity
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-documents
+- name: GET_v2-entity_type-entity_id-excel-report
+  description: Retrieve excel report
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-excel-report
+- name: GET_v2-entity_type-entity_id-incomeemployer
+  description: List all income & employer verifications
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-incomeemployer
+- name: GET_v2-entity_type-entity_id-insight-data-sources
+  description: List data sources for an entity
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-insight-data-sources
+- name: GET_v2-entity_type-entity_id-integrity-checks
+  description: List all integrity checklist requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-integrity-checks
+- name: GET_v2-entity_type-entity_id-openbanking
+  description: List all Open Banking connections
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-openbanking
+- name: GET_v2-entity_type-entity_id-peps-sanctions
+  description: List all PEPs & Sanctions searches
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-peps-sanctions
+- name: GET_v2-entity_type-entity_id-validation-checks
+  description: List all validation checklist requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-entity_type-entity_id-validation-checks
+- name: GET_v2-identity-request_id
+  description: Retrieve IDV result
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-identity-request_id
+- name: GET_v2-income-employer-request_id
+  description: Retrieve income & employer verification
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-income-employer-request_id
+- name: GET_v2-income-employer-request_id-additional-details
+  description: Retrieve detailed payslip, bank statement, tax documents and/or open banking connection
+    data
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-income-employer-request_id-additional-details
+- name: GET_v2-openbanking-bank_connection_id
+  description: Retrieve Open Banking connection status
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-openbanking-bank_connection_id
+- name: GET_v2-persons-person_id-identity-verifications
+  description: List all IDV requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-persons-person_id-identity-verifications
+- name: GET_v2-users
+  description: List all users
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-users
+- name: GET_v2-validation-checks-validation-types
+  description: List all validation checklists
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-validation-checks-validation-types
+- name: GET_v2-validation-checks-validation_instance_id
+  description: Retrieve validation checklist result
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-validation-checks-validation_instance_id
+- name: GET_v2-webhooks
+  description: List all webhooks
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-webhooks
+- name: GET_v2-webhooks-event-types
+  description: List all event types
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-webhooks-event-types
+- name: GET_v2-webhooks-secrets
+  description: Get a shared secret
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-webhooks-secrets
+- name: GET_v2-webhooks-webhook_id
+  description: Retrieve a webhook
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-webhooks-webhook_id
+- name: GET_v2-webhooks-webhook_id-requests
+  description: List all webhook requests
+  source_operation: openapi/sikoia-openapi.yml#GET_v2-webhooks-webhook_id-requests
+- name: PATCH_v2-cases-case_id
+  description: Update a case
+  source_operation: openapi/sikoia-openapi.yml#PATCH_v2-cases-case_id
+- name: PATCH_v2-cases-case_id-entities
+  description: Update entities in a case
+  source_operation: openapi/sikoia-openapi.yml#PATCH_v2-cases-case_id-entities
+- name: PATCH_v2-webhooks-secrets-rotate
+  description: Change a shared secret
+  source_operation: openapi/sikoia-openapi.yml#PATCH_v2-webhooks-secrets-rotate
+- name: PATCH_v2-webhooks-webhook_id
+  description: Update a webhook
+  source_operation: openapi/sikoia-openapi.yml#PATCH_v2-webhooks-webhook_id
+- name: POST_token
+  description: Creates an access token
+  source_operation: openapi/sikoia-openapi.yml#POST_token
+- name: POST_v2-adverse-media
+  description: Request Adverse Media search
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-adverse-media
+- name: POST_v2-affordability-insights
+  description: Request affordability insight
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-affordability-insights
+- name: POST_v2-bankaccounts-account_connection_id-refresh
+  description: Refresh an account
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-bankaccounts-account_connection_id-refresh
+- name: POST_v2-cases
+  description: Create a case
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-cases
+- name: POST_v2-cases-case_id-entities
+  description: Add entities to a case
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-cases-case_id-entities
+- name: POST_v2-cases-case_id-entities-delete
+  description: Delete entities in a case
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-cases-case_id-entities-delete
+- name: POST_v2-company-credit-reports
+  description: Request credit report
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-company-credit-reports
+- name: POST_v2-company-credit-reports-picklist
+  description: Resolve credit report picklist
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-company-credit-reports-picklist
+- name: POST_v2-company-online-data
+  description: Request online data
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-company-online-data
+- name: POST_v2-company-registry-data
+  description: Request registry data
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-company-registry-data
+- name: POST_v2-company-registry-data-picklist
+  description: Resolve registry picklist
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-company-registry-data-picklist
+- name: POST_v2-company-registry-data-search
+  description: Search for a company
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-company-registry-data-search
+- name: POST_v2-completeness-income-checks
+  description: Run a completeness and income insights check
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-completeness-income-checks
+- name: POST_v2-documents
+  description: Upload a document to an entity
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-documents
+- name: POST_v2-identity
+  description: Request IDV
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-identity
+- name: POST_v2-income-employer
+  description: Request income & employer verification
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-income-employer
+- name: POST_v2-openbanking
+  description: Create Open Banking connection
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-openbanking
+- name: POST_v2-peps-sanctions
+  description: Request PEPs & Sanctions search
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-peps-sanctions
+- name: POST_v2-validation-checks
+  description: Run a validation checklist
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-validation-checks
+- name: POST_v2-webhooks
+  description: Create a new webhook
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-webhooks
+- name: POST_v2-webhooks-secrets
+  description: Create a shared secret
+  source_operation: openapi/sikoia-openapi.yml#POST_v2-webhooks-secrets
