@@ -344,7 +344,7 @@ common:
 - type: StatusPage
   url: https://stats.uptimerobot.com/lg0E9f1r3V
 - type: OpenAPI
-  url: openapi/sikoia-openapi.yml
+  url: openapi/_original/sikoia-openapi.yml
 - type: Authentication
   url: authentication/sikoia-authentication.yml
 - type: ErrorCatalog
