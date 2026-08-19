@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Company Registry API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Company Registry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request registry data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/company-registry-data",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Requests registry data for a company.\r\n\r\nYou can create a request with only the `company_id`, and the necessary data will be retrieved from the company entity. If the company entity is missing `company_number` or `country_code`, a 422 - Unprocessable error will be raised.\r\n\r\nAlternatively, you can override the company entity details by sending `company_number`, `company_name`, and `country_code` alongside the `company_id` in the request body.  \r\n\r\nIf it is not possible to identify a single c"
+        },
+        {
+          "info": {
+            "name": "List all registry data requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/companies/:company_id/registry-data",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the Company"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all registry data requests for a company.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-registry-data/{request_id}` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve registry data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/company-registry-data/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the request"
+              }
+            ]
+          },
+          "docs": "### Returns detailed company registry data\r\n\r\nThis endpoint returns the full registry data associated with a specific request_id.\r\n"
+        },
+        {
+          "info": {
+            "name": "Resolve registry picklist",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/company-registry-data/picklist",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Resolves a company registry data picklist.\r\n\r\nTo resolve a picklist, send the original `request_id` and the `picklist_index` to this endpoint.\r\n\r\nThis will create a new entry in the list of registry data requests for the company entity.\r\n\r\nYou can retrieve a list of all registry data requests for a company using the `GET /v2/companies/{company_id}/registry-data` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Search for a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/company-registry-data/search",
+            "params": [
+              {
+                "name": "items_per_page",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Searches for a company in business registries.\r\n\r\nSearch using the `company_name` and at least one of `jurisdiction_code` or `country_code`.  If both codes are specified, jurisdiction_code takes priority.\r\n\r\nYou can exclude inactive companies from results by setting `exclude_inactive` to `true`.\r\n\r\nIf your search is associated with a specific company entity instead of a standalone search, include the `company_id` in the request.  Keep in mind that even when using a `company_id`, the search d"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

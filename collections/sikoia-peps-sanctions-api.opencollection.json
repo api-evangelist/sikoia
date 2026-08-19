@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media PEPs & Sanctions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "PEPs & Sanctions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request PEPs & Sanctions search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/peps-sanctions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Requests a PEPs & Sanctions search for an entity.\r\n\r\nCheck if the entity is listed in any Politically Exposed Persons (PEPs) or Sanctions lists.\r\n\r\n* If the `entity_type` is case, a `search_term` must be included.\r\n* If the `entity_type` is person or company, the search term is taken from the name on the entity. If the `search_term` is included, the entity data is overridden.\r\n* If `entity_type` is person, providing a `birth_date` enhances search accuracy.\r\n* Adjust the `fuzziness` level (ra"
+        },
+        {
+          "info": {
+            "name": "List all PEPs & Sanctions searches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/peps-sanctions",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of entity (company, person, case)"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "The company_id, person_id or case_id of the entity"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all PEPs & Sanctions searches for an entity.\r\n\r\nThe response returns the number of matches returned in each search.\r\nFor detailed match information, refer to the Sikoia Dashboard.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

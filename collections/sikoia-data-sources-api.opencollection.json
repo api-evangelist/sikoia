@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Data Sources API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List data sources for an entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/insight-data-sources",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "Type of entity to find all related data sources for"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of entity to find all related data sources for"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all data sources for an entity.\r\nProvides a list of all data sources attached to an entity which might be used to generate Sikoia Insights and their status. Possible statuses include: Provided, Pending, Complete, Failed.\r\nOnly data sources with a status of 'Complete' will be used to generate Affordability Insights or Income & Employer Verifications."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Authentication API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "### To generate an access token, make a request to one of the following:\r\n- Production Environment: `https://oauth2.sikoia.com` \r\n- Staging Environment: `https://oauth2-staging.sikoia.com`\r\n\r\n ### Ensure that the following parameters are provided: \r\n- `client_id:` See our Guides section for more information on how to obtain your `client_id`.\r\n- `client_secret:` See our Guides section for more information on how to obtain your `client_secret`.\r\n- `grant_type:` Set this parameter to client_credent"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1702 @@
+{
+  "item": [
+    {
+      "id": "3dc87933-5a3c-4d56-b720-b0d431f0f34c",
+      "name": "Affordability Insights",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56c52371-3466-44e6-9d19-c1c715524f4d",
+          "name": "Request affordability insight",
+          "request": {
+            "name": "Request affordability insight",
+            "description": {
+              "content": "### Request an affordability insights for a `case`, `person`, or `company` entity.\r\n\r\nBefore making the request, ensure that at least one data source with a status of `Complete` is associated with the entity.\r\nA successful response will include a `request_id` that can be used to check the status of the request.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "affordability-insights"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4de640d3-41aa-47ca-a815-bba2b9e0afe1",
+              "name": "Affordability Insights Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"a5f84a41-01cf-4d21-901d-124c5a7c743a\",\n  \"status\": \"Pending\",\n  \"entity_id\": \"7885857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"datetime_requested\": \"2023-11-24T12:38:45.7110000+00:00\",\n  \"datetime_completed\": \"2023-11-24T12:41:14.2220000+00:00\",\n  \"message\": \"Affordability insights pending\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87f6b3cc-6595-4c3b-aae1-479901edc418",
+              "name": "Entity deleted/not found or invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"91475491-a429-4d3b-8e7e-dcce0e4d5ef6\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2587ce34-9f75-4325-9a0e-129db84f0b74",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"85da31dd-7c62-468d-8c4b-a47dfe2818a4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "685c7a44-0129-4ab9-98ed-b09b27dd0e76",
+              "name": "Affordability Insights not enabled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InsufficientPermissions\",\n  \"status\": 403,\n  \"title\": \"Service not enabled\",\n  \"detail\": \"Service is not currently enabled.\",\n  \"correlation_id\": \"7786209b-0423-486e-a72b-919a237c6ac1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e98f004-1822-4bf5-9205-5f983e6d7f8b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"52d21edd-0901-4210-9c9b-ea601fd6208d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e154c97-128c-4afd-89fb-6564ab247bde",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"a11b9bab-9fbe-4305-88e7-c72ddac0f322\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "edd65e67-8227-47c9-935d-cecafe7858d4",
+          "name": "List all affordability insight requests",
+          "request": {
+            "name": "List all affordability insight requests",
+            "description": {
+              "content": "### Returns a list of all affordability insights requested for an entity.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve the affordability insight using the `GET /v2/affordability-insights/{request_id}` endpoint.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                ":entity_type",
+                ":entity_id",
+                "affordability-insights"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_type",
+                  "description": "(Required) The type of entity (company, person, case)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ce9e000d-20c6-48d5-8c88-044f3c6a7621",
+              "name": "Affordability Insights List",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entity_id\": \"7885857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"affordability_insights_requests\": [\n    {\n      \"request_id\": \"a5f84a41-01cf-4d21-901d-124c5a7c743a\",\n      \"status\": \"Complete\",\n      \"datetime_requested\": \"2023-11-29T12:21:52.9330000+00:00\",\n      \"datetime_completed\": \"2023-11-29T12:22:07.7470000+00:00\",\n      \"message\": \"Affordability insights complete\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef621eac-283a-441b-a206-7ead45147170",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"244b0164-df50-4fca-8bf6-a4cb897e451a\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3787bb59-59bd-4f57-b6d0-63189e7f0e5d",
+              "name": "Entity deleted/not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id e6e472d3-a892-41b6-8497-a014ba88c0d9.\",\n  \"correlation_id\": \"d4a13baf-0b0e-4c51-a6e5-01a9f048de13\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3398e8ca-ec30-4b00-b302-3776cbb74da1",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"29decd6a-f48c-48c9-ac15-914fc4821506\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7200e89-6654-409d-b856-cec2a7c77745",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "affordability-insights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"0c8f9aa5-df23-470c-a598-5c1aa2491687\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68952bae-1645-493a-a9ad-f2b25d853071",
+          "name": "Retrieve affordability insight",
+          "request": {
+            "name": "Retrieve affordability insight",
+            "description": {
+              "content": "### Returns an affordability insight.\r\n\r\nThis endpoint returns the affordability insight associated with a specific `request_id`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "affordability-insights",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) Sikoia ID for the request"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04531bdc-9552-4701-99f3-9a6bb6f754e5",
+              "name": "Affordability Insights",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"a5f84a41-01cf-4d21-901d-124c5a7c743a\",\n  \"status\": \"Complete\",\n  \"entity_id\": \"7885857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"datetime_requested\": \"2023-11-29T12:21:52.9330000+00:00\",\n  \"datetime_completed\": \"2023-11-29T12:22:07.7470000+00:00\",\n  \"message\": \"Affordability insights pending\",\n  \"data\": {\n    \"cashflow\": [\n      {\n        \"group\": \"Income\",\n        \"value\": \"5249.19\",\n        \"categories\": [\n          {\n            \"name\": \"Employment and/or Self-employment\",\n            \"value\": \"5109.45\",\n            \"subcategories\": [\n              {\n                \"name\": \"Phone / Broadband\",\n                \"value\": \"5109.45\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"indicators\": [\n      {\n        \"name\": \"Benefits\",\n        \"present\": \"true\",\n        \"transactions\": [\n          {\n            \"transaction_id\": \"e77cc404-5978-4429-a25a-135303cd8fdf\",\n            \"account_connection_id\": \"e77cc404-5978-4429-a25a-135303cd8fdf\",\n            \"date\": \"2025-01-24\",\n            \"group\": \"Essential expenditure\",\n            \"category\": \"Utilities\",\n            \"subcategory\": \"Phone and broadband\",\n            \"short_description\": \"EE Limited\",\n            \"long_description\": \"EE LIMITED, LONDON GB\",\n            \"amount\": \"-6.90\"\n          }\n        ]\n      }\n    ],\n    \"data_sources\": [\n      {\n        \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n        \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley\",\n        \"source_category_type\": \"Document\",\n        \"source_type\": \"BankStatement\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "803187a2-659b-48e6-89fe-9215b509271a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"565240aa-b14a-4a5c-bec6-c2bc41cac423\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a94b2ca-20c4-4bbc-819d-b684f4058687",
+              "name": "Request ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 2b63ef4e-3397-4606-aab1-3bfd9eba7efb.\",\n  \"correlation_id\": \"27ad5fea-c1bb-4ff4-b9a2-1780eb7d58f1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d4a0df0-aa62-41b6-afcd-55ee1e2316b9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"38e76326-17b6-4695-bec6-b5b8e276c9aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b603fb23-fbd4-4583-9209-a6f87e4749ac",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"392e2b48-fb50-48ba-991f-8b3944ed02ca\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f401fef4-8c72-41eb-8a9b-cb9d484e7ba5",
+          "name": "Retrieve a monthly summary of transaction data",
+          "request": {
+            "name": "Retrieve a monthly summary of transaction data",
+            "description": {
+              "content": "### Returns aggregated transaction data per month for an affordability insight.\r\n\r\nThis endpoint returns a monthly summary of all the transactions used to generate a specific affordability insight identified by a unique `request_id`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "affordability-insights",
+                ":request_id",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) Sikoia ID for the request"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a53c9a9-a9f5-40f5-adaa-d00ae7457b2d",
+              "name": "Transaction View",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"a5f84a41-01cf-4d21-901d-124c5a7c743a\",\n  \"status\": \"Complete\",\n  \"entity_id\": \"7885857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"datetime_requested\": \"2023-11-29T12:21:52.9330000+00:00\",\n  \"datetime_completed\": \"2023-11-29T12:22:07.7470000+00:00\",\n  \"message\": \"Affordability insights completed.\",\n  \"data\": [\n    {\n      \"group\": \"Essential expenditure\",\n      \"category\": \"Utilities\",\n      \"subcategory\": \"Phone / Broadband\",\n      \"short_description\": \"EE Limited\",\n      \"number_of_transactions\": \"6\",\n      \"total_value\": \"-271.4\",\n      \"average_value\": \"-45.2\",\n      \"minimum_value\": \"-50.34\",\n      \"maximum_value\": \"-40.14\",\n      \"monthly_data\": [\n        {\n          \"year\": \"2023\",\n          \"month\": \"10\",\n          \"total_value\": \"-90.48\"\n        }\n      ]\n    }\n  ],\n  \"data_sources\": [\n    {\n      \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n      \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley\",\n      \"source_category_type\": \"Document\",\n      \"source_type\": \"BankStatement\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dafc3a4a-e712-46fe-9c01-caf41b6b288d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"73d64331-7e33-41c4-98a7-901530bbf525\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecd6a8c1-4633-4e11-9778-e6f45ba80c0f",
+              "name": "Request ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 37ef26f9-4e18-4e8c-a835-57f03f0d3b23.\",\n  \"correlation_id\": \"743ae536-fc39-4a06-94eb-34ceb39b1fc7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edfd7365-4f60-4759-8733-e56906d29a42",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"3e8b5cfd-f55d-4198-a994-2926d1e81196\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3543b785-cc00-48ff-8f01-6470191ade65",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"176b9a17-d24b-435d-b899-ee29d9b23786\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7042e9e2-b0a6-4c19-91d0-e19bcd6b8feb",
+          "name": "Retrieve a full breakdown of all transaction data",
+          "request": {
+            "name": "Retrieve a full breakdown of all transaction data",
+            "description": {
+              "content": "### Returns all transactions for an affordability insight.\r\n\r\nThis endpoint returns all the transactions used to generate a specific affordability insight identified by a unique `request_id`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "affordability-insights",
+                ":request_id",
+                "transaction-details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) Sikoia ID for the request"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "715eae89-66d5-46ee-b118-2dffa9c45beb",
+              "name": "Transaction Details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transaction-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"a5f84a41-01cf-4d21-901d-124c5a7c743a\",\n  \"status\": \"Complete\",\n  \"entity_id\": \"7885857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"datetime_requested\": \"2023-11-29T12:21:52.9330000+00:00\",\n  \"datetime_completed\": \"2023-11-29T12:22:07.7470000+00:00\",\n  \"message\": \"Affordability insights completed.\",\n  \"data\": [\n    {\n      \"transaction_id\": \"e77cc404-5978-4429-a25a-135303cd8fdf\",\n      \"account_connection_id\": \"e77cc404-5978-4429-a25a-135303cd8fdf\",\n      \"date\": \"2025-01-24\",\n      \"group\": \"Essential expenditure\",\n      \"category\": \"Utilities\",\n      \"subcategory\": \"Phone and broadband\",\n      \"short_description\": \"EE Limited\",\n      \"long_description\": \"EE LIMITED, LONDON GB\",\n      \"amount\": \"-6.90\"\n    }\n  ],\n  \"data_sources\": [\n    {\n      \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n      \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley\",\n      \"source_category_type\": \"Document\",\n      \"source_type\": \"BankStatement\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bce557f-3f3c-4f74-98b1-a0fde26f3a01",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transaction-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"6970a547-1612-41f1-925e-0f0e601cdea7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97cb362c-1449-43f0-8612-bee1b74ae731",
+              "name": "Request ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transaction-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 1e24100b-1c1f-4189-a5e2-3b518836d75c.\",\n  \"correlation_id\": \"1720f95a-8404-4db2-9dcd-724f19c737f4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bd7f81f-b31a-43d4-95de-61636ca47cd8",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transaction-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"dc8b20e9-0cb5-4895-8997-fa1be9de8c2b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "825fde51-34ee-4d45-a79e-fdd6d742c597",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "affordability-insights",
+                    ":request_id",
+                    "transaction-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"8c61978d-602b-49db-9c9d-7b4654130fce\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7a4bde6f-2739-4be8-a1b2-d5dcd2026b9e",
+    "name": "Sikoia Adverse Media Affordability Insights API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

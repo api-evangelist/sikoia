@@ -1,0 +1,1910 @@
+{
+  "item": [
+    {
+      "id": "9b69fdf9-ba8b-4a9b-8a1a-970e2310f36f",
+      "name": "Company Registry",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6a2c05cf-1c07-47e8-a5ea-a632041256fb",
+          "name": "Request registry data",
+          "request": {
+            "name": "Request registry data",
+            "description": {
+              "content": "### Requests registry data for a company.\r\n\r\nYou can create a request with only the `company_id`, and the necessary data will be retrieved from the company entity. If the company entity is missing `company_number` or `country_code`, a 422 - Unprocessable error will be raised.\r\n\r\nAlternatively, you can override the company entity details by sending `company_number`, `company_name`, and `country_code` alongside the `company_id` in the request body.  \r\n\r\nIf it is not possible to identify a single company in the relevant registry based on the data provided, the response will have a status of `TooManyResults`. You can resolve this picklist using the `POST /v2/company-registry-data/picklist endpoint`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "company-registry-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"<string>\",\n  \"company_number\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5f29e2ca-fb02-4f9a-ba0a-2436eec93d6e",
+              "name": "Registry Data Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"276c102b-85d3-4e86-a69d-de1b2ba72150\",\n  \"status\": \"Complete\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"datetime_requested\": \"2024-02-12T13:18:28.9780000+00:00\",\n  \"message\": \"string\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\",\n  \"picklist\": \"[]\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2da22dda-ec98-44cb-8645-e4808e04063a",
+              "name": "Company Entity Deleted/Not Found or Country Not Recognised",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"71673cbb-3f75-48f1-b480-03d3c6c82a8a\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efd8fbcd-c314-4814-ad76-01c2bcb9fa20",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"ca87a716-7eb6-4093-8227-d46111b3b049\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f56b6128-8799-4b8f-abc7-3c2f98359e2c",
+              "name": "Insufficient Credits",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InsufficientPermissions\",\n  \"status\": 403,\n  \"title\": \"Service not enabled\",\n  \"detail\": \"Service is not currently enabled.\",\n  \"correlation_id\": \"8a83523b-7add-4dca-98f9-280ac083c62e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a029ee95-1d72-458e-b3ab-84db59e6e96b",
+              "name": "Company Entity Missing Information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"UnprocessableRequest\",\n  \"status\": 422,\n  \"title\": \"Entity Missing Information\",\n  \"detail\": \"Entity with id 2ad611a0-d26e-4502-a68c-7a70f58f12e2 is missing required information, please update entity.\",\n  \"correlation_id\": \"6c184595-c5a0-46ee-accd-ab97eed3c968\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3599107e-d5f0-4fcc-8875-ed863f1b2ae3",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"0c6d8b85-901a-44f2-861f-fdb7b22d60c5\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b11f6e1-a37d-4591-9386-a509a334acb4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"d305a79e-fef3-4adc-a063-6469eb4daabc\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7825fa2e-327a-4d56-a92a-576ef609f235",
+          "name": "List all registry data requests",
+          "request": {
+            "name": "List all registry data requests",
+            "description": {
+              "content": "### Returns a list of all registry data requests for a company.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-registry-data/{request_id}` endpoint.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "companies",
+                ":company_id",
+                "registry-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) Sikoia ID for the Company"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c713bb7-72a9-4dee-9d10-4dbca845c47b",
+              "name": "Registry Data Requests List",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "companies",
+                    ":company_id",
+                    "registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) Sikoia ID for the Company"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"registry_data_requests\": [\n    {\n      \"request_id\": \"276c102b-85d3-4e86-a69d-de1b2ba72150\",\n      \"status\": \"Complete\",\n      \"datetime_requested\": \"2024-02-12T13:18:28.9780000+00:00\",\n      \"message\": \"string\",\n      \"company_number\": \"12345678\",\n      \"company_name\": \"Acme Inc\",\n      \"country_code\": \"GB\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16e45827-0665-4dae-813e-350b2d508a22",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "companies",
+                    ":company_id",
+                    "registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) Sikoia ID for the Company"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"eede0337-baf7-48c5-b07f-641558af3f18\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ceaf9dd2-4a56-49f9-a393-c773ad00cfb2",
+              "name": "Company Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "companies",
+                    ":company_id",
+                    "registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) Sikoia ID for the Company"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 51d093e0-2ef7-426c-9d20-e454fc87ded6.\",\n  \"correlation_id\": \"b592f462-ab3f-4aa0-b236-2a51c0491d0c\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a64e839b-96af-40b3-83d9-3c145e4fe1be",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "companies",
+                    ":company_id",
+                    "registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) Sikoia ID for the Company"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"fd2efe10-b38c-4d4b-af30-8534788fba00\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43cb5132-def5-420a-b111-f1826c73e7e4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "companies",
+                    ":company_id",
+                    "registry-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) Sikoia ID for the Company"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"02ddd458-6e9f-408c-a223-8f50c9b9b92a\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92d4d435-f016-4a3d-bc5a-3128de0200df",
+          "name": "Retrieve registry data",
+          "request": {
+            "name": "Retrieve registry data",
+            "description": {
+              "content": "### Returns detailed company registry data\r\n\r\nThis endpoint returns the full registry data associated with a specific request_id.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "company-registry-data",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) Sikoia ID for the request"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "057e4c4c-cdd0-40fd-9d45-8d22637a26c1",
+              "name": "Registry Data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"status\": \"string\",\n  \"company_id\": \"string\",\n  \"datetime_requested\": \"string\",\n  \"message\": \"string\",\n  \"company_number\": \"string\",\n  \"company_name\": \"string\",\n  \"country_code\": \"string\",\n  \"data\": {\n    \"company_name\": \"string\",\n    \"company_number\": \"string\",\n    \"status\": \"string\",\n    \"registry_status\": \"string\",\n    \"registry_name\": \"string\",\n    \"registry_url\": \"string\",\n    \"data_provider\": \"string\",\n    \"generic_legal_form\": \"string\",\n    \"registry_legal_form\": \"string\",\n    \"country_code\": \"string\",\n    \"date_established\": \"string\",\n    \"date_dissolved\": \"string\",\n    \"official_address\": {\n      \"address_line_1\": \"10 Main Street\",\n      \"address_line_2\": \"Apt. 101\",\n      \"address_line_3\": \"Main House\",\n      \"address_line_4\": \"string\",\n      \"city\": \"Test Town\",\n      \"region\": \"Test Country\",\n      \"country\": \"GB\",\n      \"post_code\": \"X9 9AA\",\n      \"full_address\": \"123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n    },\n    \"summary_info\": {\n      \"has_insolvency_history\": true\n    },\n    \"special_characteristics\": [\n      \"string\"\n    ],\n    \"previous_company_names\": [\n      {\n        \"company_name\": \"string\",\n        \"date_from\": \"string\",\n        \"date_to\": \"string\"\n      }\n    ],\n    \"accounts\": {\n      \"last_accounts\": {\n        \"made_up_to\": \"string\",\n        \"period_start\": \"string\",\n        \"period_end\": \"string\",\n        \"type\": \"string\"\n      },\n      \"next_accounts\": {\n        \"overdue\": true,\n        \"period_start\": \"string\",\n        \"period_end\": \"string\",\n        \"due_date\": \"string\"\n      }\n    },\n    \"industry_codes\": [\n      {\n        \"code\": \"string\",\n        \"description\": \"string\"\n      }\n    ],\n    \"officers\": {\n      \"people\": [\n        {\n          \"source_id\": \"string\",\n          \"officer_role\": \"string\",\n          \"date_appointed\": \"string\",\n          \"date_resigned\": \"string\",\n          \"status\": \"string\",\n          \"tax_id\": \"string\",\n          \"first_name\": \"string\",\n          \"surname\": \"string\",\n          \"full_name\": \"string\",\n          \"date_of_birth\": \"string\",\n          \"birth_year\": 0,\n          \"birth_month\": 0,\n          \"birth_day\": 0,\n          \"nationality\": \"string\",\n          \"address\": {\n            \"address_line_1\": \"10 Main Street\",\n            \"address_line_2\": \"Apt. 101\",\n            \"address_line_3\": \"Main House\",\n            \"address_line_4\": \"string\",\n            \"city\": \"Test Town\",\n            \"region\": \"Test Country\",\n            \"country\": \"GB\",\n            \"post_code\": \"X9 9AA\",\n            \"full_address\": \"123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n          },\n          \"occupation\": \"string\"\n        }\n      ],\n      \"companies\": [\n        {\n          \"source_id\": \"string\",\n          \"officer_role\": \"string\",\n          \"date_appointed\": \"string\",\n          \"date_resigned\": \"string\",\n          \"status\": \"string\",\n          \"name\": \"string\",\n          \"address\": {\n            \"address_line_1\": \"10 Main Street\",\n            \"address_line_2\": \"Apt. 101\",\n            \"address_line_3\": \"Main House\",\n            \"address_line_4\": \"string\",\n            \"city\": \"Test Town\",\n            \"region\": \"Test Country\",\n            \"country\": \"GB\",\n            \"post_code\": \"X9 9AA\",\n            \"full_address\": \"123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n          },\n          \"occupation\": \"string\"\n        }\n      ]\n    },\n    \"owners\": {\n      \"people\": [\n        {\n          \"source_id\": \"string\",\n          \"first_name\": \"string\",\n          \"surname\": \"string\",\n          \"full_name\": \"string\",\n          \"type\": \"string\",\n          \"date_from\": \"string\",\n          \"date_to\": \"string\",\n          \"natures_of_control\": [\n            \"string\"\n          ],\n          \"date_of_birth\": \"string\",\n          \"birth_year\": 0,\n          \"birth_month\": 0,\n          \"birth_day\": 0,\n          \"nationality\": \"string\",\n          \"address\": {\n            \"address_line_1\": \"10 Main Street\",\n            \"address_line_2\": \"Apt. 101\",\n            \"address_line_3\": \"Main House\",\n            \"address_line_4\": \"string\",\n            \"city\": \"Test Town\",\n            \"region\": \"Test Country\",\n            \"country\": \"GB\",\n            \"post_code\": \"X9 9AA\",\n            \"full_address\": \"123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n          }\n        }\n      ],\n      \"companies\": [\n        {\n          \"source_id\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"date_from\": \"string\",\n          \"date_to\": \"string\",\n          \"natures_of_control\": [\n            \"string\"\n          ],\n          \"address\": {\n            \"address_line_1\": \"10 Main Street\",\n            \"address_line_2\": \"Apt. 101\",\n            \"address_line_3\": \"Main House\",\n            \"address_line_4\": \"string\",\n            \"city\": \"Test Town\",\n            \"region\": \"Test Country\",\n            \"country\": \"GB\",\n            \"post_code\": \"X9 9AA\",\n            \"full_address\": \"123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n          }\n        }\n      ]\n    },\n    \"filings\": [\n      {\n        \"category\": \"string\",\n        \"description\": \"string\",\n        \"type\": \"string\",\n        \"filing_date\": \"string\"\n      }\n    ],\n    \"charges\": [\n      {\n        \"charge_code\": \"string\",\n        \"status\": \"string\",\n        \"created_on\": \"string\",\n        \"delivered_on\": \"string\",\n        \"satisfied_on\": \"string\",\n        \"details\": {\n          \"type\": \"string\",\n          \"description\": \"string\"\n        },\n        \"transactions\": [\n          {\n            \"filing_type\": \"string\",\n            \"delivered_on\": \"string\"\n          }\n        ],\n        \"classification\": {\n          \"type\": \"string\",\n          \"description\": \"string\"\n        },\n        \"persons_entitled\": [\n          {\n            \"name\": \"string\"\n          }\n        ],\n        \"secured_details\": {\n          \"type\": \"string\",\n          \"description\": \"string\"\n        }\n      }\n    ],\n    \"insolvencies\": [\n      {\n        \"type\": \"string\",\n        \"dates\": [\n          {\n            \"date\": \"string\",\n            \"type\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"controlling_entity\": {\n      \"company_name\": \"string\",\n      \"company_number\": \"string\",\n      \"country_code\": \"string\",\n      \"generic_legal_form\": \"string\"\n    },\n    \"foreign_controlling_entity\": {\n      \"company_name\": \"string\",\n      \"company_number\": \"string\",\n      \"country_code\": \"string\",\n      \"generic_legal_form\": \"string\"\n    }\n  },\n  \"picklist\": [\n    {\n      \"index\": \"1\",\n      \"company_name\": \"ACME INC\",\n      \"company_number\": \"12345678\",\n      \"company_status\": \"Active\",\n      \"provider_id\": \"string\",\n      \"date_established\": \"1982-01-07\",\n      \"country_code\": \"GB\",\n      \"branch_status\": \"string\",\n      \"official_address\": {\n        \"address_line_1\": \"10 Main Street\",\n        \"address_line_2\": \"Apt. 101\",\n        \"address_line_3\": \"Main House\",\n        \"address_line_4\": \"string\",\n        \"city\": \"Test Town\",\n        \"region\": \"Test Country\",\n        \"country\": \"GB\",\n        \"post_code\": \"X9 9AA\",\n        \"full_address\": \"123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13d47d88-dba1-4464-8108-64c740601a89",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"8a512044-8d46-4ea7-b928-c9d44192879b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cfd6dfa-b2aa-439e-9578-ef337151381f",
+              "name": "Request ID Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id c10219d7-72f7-4643-9c4f-729a8031fb48.\",\n  \"correlation_id\": \"15d870cc-3acc-41d2-a22f-c1ebd2353da2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "581e8cb6-67dd-4871-a009-c8b591ba86c2",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"40b4e40f-bfcf-4131-b7ca-35cfde573846\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4078ffd-8b4a-4df2-b1af-807d277a9606",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) Sikoia ID for the request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"9e4905dc-233c-4336-a443-0d6bc1893bc8\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fda3a171-bbe8-4f16-8c5a-ebfa4eba8171",
+          "name": "Resolve registry picklist",
+          "request": {
+            "name": "Resolve registry picklist",
+            "description": {
+              "content": "### Resolves a company registry data picklist.\r\n\r\nTo resolve a picklist, send the original `request_id` and the `picklist_index` to this endpoint.\r\n\r\nThis will create a new entry in the list of registry data requests for the company entity.\r\n\r\nYou can retrieve a list of all registry data requests for a company using the `GET /v2/companies/{company_id}/registry-data` endpoint.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "company-registry-data",
+                "picklist"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"picklist_index\": \"<integer>\",\n  \"request_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f4a2a5dd-e3a8-49e1-952f-ef942fcfc04b",
+              "name": "Picklist Resolved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "picklist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"cfed4c7f-37e8-4657-b185-7cf572d0b019\",\n  \"picklist_index\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"276c102b-85d3-4e86-a69d-de1b2ba72150\",\n  \"status\": \"Complete\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"datetime_requested\": \"2024-02-12T13:18:28.9780000+00:00\",\n  \"message\": \"string\",\n  \"company_number\": \"12345678\",\n  \"company_name\": \"Acme Inc\",\n  \"country_code\": \"GB\",\n  \"picklist\": \"[]\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b810e86-9a05-48fa-9caa-7b705c8f40dc",
+              "name": "Company Entity Deleted/Not Found or Request Did Not Produce Picklist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "picklist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"cfed4c7f-37e8-4657-b185-7cf572d0b019\",\n  \"picklist_index\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"aca89a98-76f7-4421-9f58-3cd2da4b5228\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd180e4a-c371-4735-a09f-c915a0dbeb1d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "picklist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"cfed4c7f-37e8-4657-b185-7cf572d0b019\",\n  \"picklist_index\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"3382f396-8ecb-4e33-8d31-04a5826db4cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c93d82d6-11a4-49a9-b5cd-0c468fbcecc0",
+              "name": "Insufficient Credits",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "picklist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"cfed4c7f-37e8-4657-b185-7cf572d0b019\",\n  \"picklist_index\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InsufficientPermissions\",\n  \"status\": 403,\n  \"title\": \"Service not enabled\",\n  \"detail\": \"Service is not currently enabled.\",\n  \"correlation_id\": \"65cd7ade-d30d-43ea-b8a7-ce5bde41fe0e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89ece039-b2bd-45b4-ad46-8a66d43309e9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "picklist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"cfed4c7f-37e8-4657-b185-7cf572d0b019\",\n  \"picklist_index\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"95494aab-3b27-47ca-a451-085863b080dd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e9477cc-0a0f-4f33-8aa3-2b3c3998120c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "picklist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"cfed4c7f-37e8-4657-b185-7cf572d0b019\",\n  \"picklist_index\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"6f37c6d5-fedb-4ff8-8efd-97b0737f5e30\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0f59f7f-acbf-47f5-9acc-ebebd7d606bb",
+          "name": "Search for a company",
+          "request": {
+            "name": "Search for a company",
+            "description": {
+              "content": "### Searches for a company in business registries.\r\n\r\nSearch using the `company_name` and at least one of `jurisdiction_code` or `country_code`.  If both codes are specified, jurisdiction_code takes priority.\r\n\r\nYou can exclude inactive companies from results by setting `exclude_inactive` to `true`.\r\n\r\nIf your search is associated with a specific company entity instead of a standalone search, include the `company_id` in the request.  Keep in mind that even when using a `company_id`, the search data is transient and won't be stored against the company.\r\n\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "company-registry-data",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "items_per_page",
+                  "value": "100"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_name\": \"<string>\",\n  \"jurisdiction_code\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"exclude_inactive\": \"<boolean>\",\n  \"company_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a11c12f-8cb6-4b2d-8c89-82086f51f565",
+              "name": "Companies Retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Inc\",\n  \"jurisdiction_code\": \"GB\",\n  \"country_code\": \"GB\",\n  \"exclude_inactive\": \"true\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"index\": \"1\",\n    \"company_name\": \"ACME INC\",\n    \"company_number\": \"12345678\",\n    \"company_status\": \"Active\",\n    \"provider_id\": \"string\",\n    \"date_established\": \"1982-01-07\",\n    \"country_code\": \"GB\",\n    \"branch_status\": \"string\",\n    \"official_address\": {\n      \"address_line_1\": \"10 Main Street\",\n      \"address_line_2\": \"Apt. 101\",\n      \"address_line_3\": \"Main House\",\n      \"address_line_4\": \"string\",\n      \"city\": \"Test Town\",\n      \"region\": \"Test Country\",\n      \"country\": \"GB\",\n      \"post_code\": \"X9 9AA\",\n      \"full_address\": \"123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bc51a27-3986-40c2-b776-9442d378c6e1",
+              "name": "Company Entity Deleted/Not Found or Country Not Recognised",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Inc\",\n  \"jurisdiction_code\": \"GB\",\n  \"country_code\": \"GB\",\n  \"exclude_inactive\": \"true\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"5114e597-5de1-443b-b28f-912f9b61d882\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eaec7464-5c74-432c-a8c1-5845949038ec",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Inc\",\n  \"jurisdiction_code\": \"GB\",\n  \"country_code\": \"GB\",\n  \"exclude_inactive\": \"true\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"40a84628-ed55-4437-a53f-74dbbfc933c5\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c6fc8c9-9fd4-4e0f-b4f3-c0e898d96b99",
+              "name": "Insufficient Credits",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Inc\",\n  \"jurisdiction_code\": \"GB\",\n  \"country_code\": \"GB\",\n  \"exclude_inactive\": \"true\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InsufficientPermissions\",\n  \"status\": 403,\n  \"title\": \"Service not enabled\",\n  \"detail\": \"Service is not currently enabled.\",\n  \"correlation_id\": \"ea2adc39-2ef4-4aa0-a1bb-5a1732bf4a99\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c70522d2-c679-4bc7-bc10-b866aa1e9742",
+              "name": "No Search Results Returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Inc\",\n  \"jurisdiction_code\": \"GB\",\n  \"country_code\": \"GB\",\n  \"exclude_inactive\": \"true\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 4ec085e2-2335-48cb-a1c7-2e0548b7594d.\",\n  \"correlation_id\": \"8a4ae9e5-9083-4305-939c-574f3a41ec40\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bee3533c-3df6-4cba-8224-4efdf239f1bc",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Inc\",\n  \"jurisdiction_code\": \"GB\",\n  \"country_code\": \"GB\",\n  \"exclude_inactive\": \"true\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"ffc188eb-c7a4-48ef-92de-fc92a002a2ea\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a6a2505-d5b0-4572-85d1-c621b0004bb4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "company-registry-data",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Inc\",\n  \"jurisdiction_code\": \"GB\",\n  \"country_code\": \"GB\",\n  \"exclude_inactive\": \"true\",\n  \"company_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"12f7d835-67a3-4146-a5f9-74d106485fbc\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c994158d-5155-45e0-82aa-b4992a97827d",
+    "name": "Sikoia Adverse Media Company Registry API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Validation Checklists API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Validation Checklists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all validation checklists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/validation-checks/validation-types"
+          },
+          "docs": "### Returns a list of all validation checklists available.\r\n\r\nThis list includes all available checklists along with their `validation_type_id`, `validation_check_name`, `validation_description` and `entity_type`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Run a validation checklist",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/validation-checks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Runs a validation checklist against a specific case, person, company, or data source.\r\n\r\nThis endpoint automatically checks whether an entity passes all the rules in a specific validation checklist.\r\n\r\nTo proceed, ensure that `validation_type_id`, `entity_id` and `entity_type` are valid.\r\n\r\nTo run the checklist against a specific data source use the `check_params` filter and provide the `source_id` and `source_id_type` of the data source you want to use.\r\n\r\nA successful response will include"
+        },
+        {
+          "info": {
+            "name": "List all validation checklist requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/validation-checks",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "Entity Type"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Entity ID"
+              }
+            ]
+          },
+          "docs": "### List all validation checklist requests.\r\n\r\nReturns a list of all validation checklists requested for an entity.\r\n\r\nThe list includes the validation_instance_id for each request, which can be used to retrieve the validation check rules result using the GET `/v2/validation-checks/{validation_instance_id}` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve validation checklist result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/validation-checks/:validation_instance_id",
+            "params": [
+              {
+                "name": "validation_instance_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "### Returns an instance of a validation checklist.\r\n\r\nThis endpoint returns the validation check results associated with a specific `validation_instance_id`.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

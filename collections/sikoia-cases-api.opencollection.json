@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Cases API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/cases",
+            "params": [
+              {
+                "name": "case_type",
+                "value": "",
+                "type": "query",
+                "description": "Case Types"
+              },
+              {
+                "name": "stage",
+                "value": "",
+                "type": "query",
+                "description": "Case Stages"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Source"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "Owner"
+              },
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "query",
+                "description": "Owner Id"
+              },
+              {
+                "name": "keyword",
+                "value": "",
+                "type": "query",
+                "description": "Keywords"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all cases.\r\n\r\nThis list can be filtered using query parameters such as `case_type`, `stage`, `source`, `owner`, `owner_id` and `keyword`.\r\n\r\nThe `keyword` query parameter searches for matching strings within the Case's `name`, `reference` and `description` fields.\r\n\r\nSupport for multiple filters is available by separating them with a comma. For instance, to retrieve all approved and rejected cases, use the `stage` query parameter with the value `Approved,Rejected`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Create a case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/cases",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Creates a new case\r\n\r\nYou have the option to add companies and people at the point of case creation or at a later stage.\r\n\r\nWhen adding companies at the point of case creation, you can retrieve company registration data by setting `registry_search` to `true`, and ensuring that `company_name`, `company_number`, and `jurisdiction_code` are not empty.  If the company registration data cannot be found, the case is created with the provided company details. If the company registration data is fou"
+        },
+        {
+          "info": {
+            "name": "Retrieve a case",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/cases/:case_id",
+            "params": [
+              {
+                "name": "case_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the case"
+              }
+            ]
+          },
+          "docs": "### Retrieve a single case.\r\n\r\nReturns information about a case, including lists of the individual companies and people within it as well as their associated `company_id` or `person_id`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Update a case",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sikoia.com/v2/cases/:case_id",
+            "params": [
+              {
+                "name": "case_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the case"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Updates details for an existing case.\r\n\r\nWhile all fields are optional, the request must include at least one field.\r\n\r\nTo clear a field, send an empty string as the field value.\r\n"
+        },
+        {
+          "info": {
+            "name": "Delete a case",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sikoia.com/v2/cases/:case_id",
+            "params": [
+              {
+                "name": "case_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the case"
+              }
+            ]
+          },
+          "docs": "### Deletes a single case.\r\n\r\nThis also deletes all of the associated companies, people and documents within the case.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

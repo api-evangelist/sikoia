@@ -1,0 +1,1235 @@
+{
+  "item": [
+    {
+      "id": "fbf07cf5-dc23-4d94-b0e1-f4abd9539089",
+      "name": "Validation Checklists",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f7289b2-f23c-446e-97b6-cfe62594a7aa",
+          "name": "List all validation checklists",
+          "request": {
+            "name": "List all validation checklists",
+            "description": {
+              "content": "### Returns a list of all validation checklists available.\r\n\r\nThis list includes all available checklists along with their `validation_type_id`, `validation_check_name`, `validation_description` and `entity_type`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "validation-checks",
+                "validation-types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9eebf745-486d-49bd-9e35-807a88f3bd2a",
+              "name": "Checklist types",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    "validation-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n    \"validation_check_name\": \"Last 3 months of payslips\",\n    \"validation_description\": \"Checks if all payslips from the last 3 months have been provided\",\n    \"entity_type\": \"case\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44e47e3e-0939-459f-b675-916c2f28a03d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    "validation-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"185dd335-3a93-4e3a-8d37-e59bd5a14259\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "786e35da-9438-4e98-87f5-715dc0fe859f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    "validation-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"a76ae66e-9aee-4aae-93c1-c2ed14d36e1b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fac4c9ef-ca72-4cba-8984-6317ab864ee5",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    "validation-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"bfbb0cfa-0c8e-43a5-a87a-2ffe32a493d3\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65f75084-53e6-41e9-b16c-26bfc0e8a36d",
+          "name": "Run a validation checklist",
+          "request": {
+            "name": "Run a validation checklist",
+            "description": {
+              "content": "### Runs a validation checklist against a specific case, person, company, or data source.\r\n\r\nThis endpoint automatically checks whether an entity passes all the rules in a specific validation checklist.\r\n\r\nTo proceed, ensure that `validation_type_id`, `entity_id` and `entity_type` are valid.\r\n\r\nTo run the checklist against a specific data source use the `check_params` filter and provide the `source_id` and `source_id_type` of the data source you want to use.\r\n\r\nA successful response will include a `validation_instance_id` that can be used to check the status of the request.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "validation-checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"validation_type_id\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"<string>\",\n      \"source_category_type\": \"<string>\"\n    },\n    {\n      \"source_id\": \"<string>\",\n      \"source_category_type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd876bb3-e35e-4c67-8e61-cc471efd06c9",
+              "name": "The validation check is pending",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation_instance_id\": \"2ef5079a-b3de-44a5-b4ff-c534259e752c\",\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"status\": \"Pending\",\n  \"entity_id\": \"b3f6ed8f-bc57-4a23-801e-e744aecb7b03\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ],\n  \"datetime_requested\": \"2024-01-01T12:38:45.7110000+00:00\",\n  \"datetime_completed\": \"2024-01-02T12:22:07.7470000+00:00\",\n  \"message\": \"Validation Check request pending\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b2b848f-0304-4f2b-8592-b36a15663c92",
+              "name": "Entity Deleted/Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"d8c6e7b5-4ad6-4b22-a35c-0a107b7780e1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f517ab7e-0095-4acc-8ceb-c1116e043712",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"edf58a4d-b90f-4cdd-96d7-20c2d4dbbe9b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be3b6090-a445-48a7-ad73-1e75e4b5a76c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"3edfe4be-2ab6-4518-9a1d-c6b0d31edd3a\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f795060-d45b-4ad7-abae-6b4083f9702c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"e87eba1c-ee27-4469-9ac1-3dffe8ff577f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6adc7278-df23-4bc4-bc50-9e8b41d1e94e",
+          "name": "List all validation checklist requests",
+          "request": {
+            "name": "List all validation checklist requests",
+            "description": {
+              "content": "### List all validation checklist requests.\r\n\r\nReturns a list of all validation checklists requested for an entity.\r\n\r\nThe list includes the validation_instance_id for each request, which can be used to retrieve the validation check rules result using the GET `/v2/validation-checks/{validation_instance_id}` endpoint.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                ":entity_type",
+                ":entity_id",
+                "validation-checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_type",
+                  "description": "(Required) Entity Type"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_id",
+                  "description": "(Required) Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "035cf14f-1d18-4f33-8e57-bd561948e066",
+              "name": "Validation Check Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entity_id\": \"3345857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"validation_check_requests\": [\n    {\n      \"validation_instance_id\": \"2ef5079a-b3de-44a5-b4ff-c534259e752c\",\n      \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"status\": \"Complete\",\n      \"datetime_requested\": \"2024-01-29T12:21:52.9330000+00:00\",\n      \"datetime_completed\": \"2024-01-30T09:44:22.4660000+00:00\",\n      \"message\": \"Income Employer complete\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea334912-2cf2-44c1-9723-2556a8cab29b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"b52cb216-280c-4a8b-8505-49cb5e59463d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "355e9b3f-47fc-4003-871e-107c5a8d9589",
+              "name": "Entity not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 85d2cc51-4be8-473a-9ec6-60d7920b978e.\",\n  \"correlation_id\": \"c883325a-bd60-47c9-b053-4541e4e686ba\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48a2fff6-79c8-4ed4-8325-e609edbd09ee",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"fe491217-07f7-4d3b-8a06-2ecf6ef5af4e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1cf9ca1-aa21-493c-b014-326aca30f64a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "validation-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"376efd61-9519-41d5-8c22-55f6239e9f54\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "710add62-982c-4255-9811-5f7a3bb5d800",
+          "name": "Retrieve validation checklist result",
+          "request": {
+            "name": "Retrieve validation checklist result",
+            "description": {
+              "content": "### Returns an instance of a validation checklist.\r\n\r\nThis endpoint returns the validation check results associated with a specific `validation_instance_id`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "validation-checks",
+                ":validation_instance_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "validation_instance_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "48f8a3f3-d809-44f0-9fe3-316c05641c5f",
+              "name": "Validation Check",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    ":validation_instance_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "validation_instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation_instance_id\": \"2ef5079a-b3de-44a5-b4ff-c534259e752c\",\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"validation_check_name\": \"Last 3 months of payslips\",\n  \"status\": \"Complete\",\n  \"entity_id\": \"3345857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ],\n  \"datetime_requested\": \"2024-01-01T12:38:45.7110000+00:00\",\n  \"datetime_completed\": \"2024-01-02T12:22:07.7470000+00:00\",\n  \"message\": \"Validation Check request pending\",\n  \"rules\": [\n    {\n      \"rule_name\": \"Payslips span a 3 month period\",\n      \"decision\": \"Pass\",\n      \"recipient\": \"Sam Smith\",\n      \"message\": \"Validation Check Passed\",\n      \"sources\": [\n        {\n          \"source_id\": \"6f6b61c2-fe31-42be-b46c-20a0b9685aaf\",\n          \"source_category_type\": \"Document\",\n          \"source_uri\": \"https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf\",\n          \"date\": \"2025-01-25\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d580dc1-af77-4bcb-98cf-d4bc0812ae25",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    ":validation_instance_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "validation_instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"7f70212a-e64c-471b-8e3f-c962b0ece194\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "945149fd-4628-4c62-b265-605c9c9add4b",
+              "name": "Validation check instance ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    ":validation_instance_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "validation_instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id b7b98885-7e10-4eec-940b-2f60b51b6ef1.\",\n  \"correlation_id\": \"4dafab83-28a4-4545-875a-3f1e39753312\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fe9c930-8665-4c17-848b-832732055902",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    ":validation_instance_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "validation_instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"27b7cb17-34de-4679-bcf1-de2a1bd427d0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d8dd86b-fd58-4fbd-95bf-347259941bbd",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "validation-checks",
+                    ":validation_instance_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "validation_instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"ea5bf8d0-72ec-472c-946e-d8fa4ef2fd8a\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2c66d0d0-fe2c-465d-8d9d-2a8d80e66ba2",
+    "name": "Sikoia Adverse Media Validation Checklists API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

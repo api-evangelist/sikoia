@@ -1,0 +1,203 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Webhooks API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/webhooks"
+          },
+          "docs": "### Retrieves a list of all available webhooks.\r\n\r\nReturns a list of all webhooks affiliated with your organisation.\r\n\r\nThis list includes the `webhook_id`, which can be used to update or delete the webhook using the `GET/v2/webhooks/{webhook_id}` and `DELETE/v2/webhooks/{webhook_id}` endpoints.\r\n"
+        },
+        {
+          "info": {
+            "name": "Create a new webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Creates a webhook for one or more events.\r\n\r\nA webhook is an HTTP request that keeps your system informed about changes in the Sikoia Platform in real-time. Refer to our Guides section for additional information on webhooks.\r\nYou can retrieve a complete list of supported `event_types` by using the `GET/v2/webhooks/event-types` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/webhooks/:webhook_id",
+            "params": [
+              {
+                "name": "webhook_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook Id"
+              }
+            ]
+          },
+          "docs": "### Retrieves a webhook.\r\n\r\nReturns information about a webhook, including the `webhook_callback_url` and a list of associated `event_types`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Update a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sikoia.com/v2/webhooks/:webhook_id",
+            "params": [
+              {
+                "name": "webhook_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Updates details for an existing webhook.\r\n\r\nWhile all fields are optional, the request must include at least one field.\r\nTo clear a field, send an empty string as the field value.\r\n"
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sikoia.com/v2/webhooks/:webhook_id",
+            "params": [
+              {
+                "name": "webhook_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook Id"
+              }
+            ]
+          },
+          "docs": "### Deletes a single webhook.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all event types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/webhooks/event-types"
+          },
+          "docs": "### Retrieves a list of all available webhook event_types.\r\n\r\nThe list includes the name of all events that a webhook can subscribe to.\r\nRefer to our Guides section for additional information on webhooks.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all webhook requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/webhooks/:webhook_id/requests",
+            "params": [
+              {
+                "name": "webhook_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook Id"
+              },
+              {
+                "name": "after_request_id",
+                "value": "",
+                "type": "query",
+                "description": "Last Request Id Seen"
+              },
+              {
+                "name": "event_status",
+                "value": "",
+                "type": "query",
+                "description": "Event Status"
+              },
+              {
+                "name": "pagination_direction",
+                "value": "",
+                "type": "query",
+                "description": "Pagination Direction"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all requests with the most recent request provided first."
+        },
+        {
+          "info": {
+            "name": "Get a shared secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/webhooks/secrets"
+          },
+          "docs": "### Retrieves a single secret key used to sign all webhook requests.\r\n\r\nThis secret will be used to create a HMACSHA256 hash of every webhook request sent. The result will be Base64 encoded and sent under the `X-HMAC-SHA256-Signature` header in the request."
+        },
+        {
+          "info": {
+            "name": "Create a shared secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/webhooks/secrets"
+          },
+          "docs": "### Creates a new secret key to be used to sign all webhook requests.\r\n\r\nAll subsequent wehook requests sent will include a HMACSHA256 hash that has been Base64 encoded in the `X-HMAC-SHA256-Signature` header. Comparing this hashed value against a SHA256 hash of the request body (using the secret as a key) enables you to verify the payload has not been tampered with."
+        },
+        {
+          "info": {
+            "name": "Delete a shared secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sikoia.com/v2/webhooks/secrets"
+          },
+          "docs": "### Deletes a secret key used to sign webhook requests.\r\n\r\nPlease note that this action cannot be undone. Webhooks will continue to be sent without a secret - they will just not include the `X-HMAC-SHA256-Signature` header for verification purposes."
+        },
+        {
+          "info": {
+            "name": "Change a shared secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sikoia.com/v2/webhooks/secrets/rotate"
+          },
+          "docs": "### Changes the shared secret to a new secure value.\r\n\r\nGenerates a new secret used to create the `X-HMAC-SHA256-Signature` header on all webhook requests.  This new secret will be implemented on all requests sent after the date_updated timestamp included in the response."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

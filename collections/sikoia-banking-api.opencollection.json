@@ -1,0 +1,209 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Banking API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Banking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Open Banking connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/openbanking",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Creates a new Open Banking connection request.\r\n\r\nThis generates a URL that takes your end customer through a consent flow to connect their accounts.\r\n\r\nThe `country_code` is optional.  If it is included then your end customer will only be able to select a bank institution from that country.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Open Banking connection status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/openbanking/:bank_connection_id",
+            "params": [
+              {
+                "name": "bank_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Bank Connection Id"
+              }
+            ]
+          },
+          "docs": "### Returns an Open Banking connection status.\r\n\r\nThis endpoint returns the status of the Open Banking connection, revealing the state of the end customer consent flow.\r\n\r\nIt will also return a list of connected accounts once the connection has been successfully established.\r\n"
+        },
+        {
+          "info": {
+            "name": "Delete an Open Banking connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sikoia.com/v2/openbanking/:bank_connection_id",
+            "params": [
+              {
+                "name": "bank_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Bank Connection Id"
+              }
+            ]
+          },
+          "docs": "### Deletes an existing Open Banking connection\r\n\r\nThis also deletes all of the associated account, balance, and transaction data for the Open Banking connection.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all Open Banking connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/openbanking",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "Entity Type"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Entity ID"
+              },
+              {
+                "name": "completed",
+                "value": "",
+                "type": "query",
+                "description": "Return complete/incomplete/all OB Connections"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all open banking connections requested for an entity.\r\n\r\nThis list includes `bank_connection_id` and associated `account_connection_id`, which can be used to retrieve more detailed account data.\r\n\r\nInclude the query parameter completed with a value of `true` if you only want to retrieve completed connections.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/bankaccounts/:account_connection_id",
+            "params": [
+              {
+                "name": "account_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Account Connection Id"
+              }
+            ]
+          },
+          "docs": "### Returns detailed account data.\r\n\r\nFetches the account details for a specific `account_connection_id` covering accounts connected through open banking or those for which bank statements have been uploaded.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/bankaccounts",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "Entity Type"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Entity ID"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all bank accounts for an entity.\r\n\r\nProvides a comprehensive list of all bank accounts associated with an entity. This includes accounts connected through open banking or for which bank statements have been uploaded.\r\n\r\nThis list includes the account_connection_id for each account, which can be used to retrieve more detailed data from the following endpoints:\r\n*`GET /v2/bankaccounts/{account_connection_id}`\r\n*`GET /v2/bankaccounts/{account_connection_id}/balances`\r\n*`GET /v"
+        },
+        {
+          "info": {
+            "name": "Retrieve account balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/bankaccounts/:account_connection_id/balances",
+            "params": [
+              {
+                "name": "account_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Account Connection Id"
+              }
+            ]
+          },
+          "docs": "### Returns bank account balances.\r\n\r\nFetches the account balance details for a specific `account_connection_id` covering accounts connected through open banking or those for which bank statements have been uploaded.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/bankaccounts/:account_connection_id/transactions",
+            "params": [
+              {
+                "name": "account_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Account Connection Id"
+              }
+            ]
+          },
+          "docs": "### Returns detailed bank account transaction data.\r\n\r\nFetches a list off all available transactions for a specific `account_connection_id` covering accounts connected through open banking or those for which bank statements have been uploaded.\r\n"
+        },
+        {
+          "info": {
+            "name": "Refresh an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/bankaccounts/:account_connection_id/refresh",
+            "params": [
+              {
+                "name": "account_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Account Connection Id"
+              }
+            ]
+          },
+          "docs": "### Initiates a refresh of account data.\r\n\r\nTriggers an asynchronous refresh of the account details, balances and transactions for a specific Open Banking `account_connection_id`.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

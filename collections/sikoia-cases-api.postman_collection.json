@@ -1,0 +1,1808 @@
+{
+  "item": [
+    {
+      "id": "9b80b6cd-0f37-424d-b782-7d6abfe52983",
+      "name": "Cases",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3568b46c-68eb-4a65-9277-36da671241f7",
+          "name": "List all cases",
+          "request": {
+            "name": "List all cases",
+            "description": {
+              "content": "### Returns a list of all cases.\r\n\r\nThis list can be filtered using query parameters such as `case_type`, `stage`, `source`, `owner`, `owner_id` and `keyword`.\r\n\r\nThe `keyword` query parameter searches for matching strings within the Case's `name`, `reference` and `description` fields.\r\n\r\nSupport for multiple filters is available by separating them with a comma. For instance, to retrieve all approved and rejected cases, use the `stage` query parameter with the value `Approved,Rejected`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "case_type",
+                  "value": "<string>",
+                  "description": "Case Types"
+                },
+                {
+                  "disabled": false,
+                  "key": "stage",
+                  "value": "<string>",
+                  "description": "Case Stages"
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Source"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner",
+                  "value": "<string>",
+                  "description": "Owner"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner_id",
+                  "value": "<string>",
+                  "description": "Owner Id"
+                },
+                {
+                  "disabled": false,
+                  "key": "keyword",
+                  "value": "<string>",
+                  "description": "Keywords"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6413efc0-0161-484b-9567-58b03ea7b301",
+              "name": "List of cases",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keyword",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"case_id\": \"64cd8202-2db4-44d5-85be-79438d65eb7b\",\n    \"name\": \"Acme Ltd Loan Application\",\n    \"case_type\": \"Business\",\n    \"stage\": \"New\",\n    \"datetime_created\": \"2023-02-10T10:59:46.0000000+00:00\",\n    \"datetime_last_modified\": \"2023-02-12T01:04:21.0000000+00:00\",\n    \"reference\": \"LOAN03584\",\n    \"reference_customer_id\": \"CUST67044\",\n    \"reference_customer_name\": \"Building Society Ltd\",\n    \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n    \"source\": \"API\",\n    \"owner\": \"Cecilia Adams\",\n    \"ownership\": [\n      {\n        \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n        \"owner_type\": \"user\"\n      }\n    ],\n    \"number_of_companies\": \"2\",\n    \"number_of_persons\": \"5\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57245fa8-1222-49e4-9499-77f8f4703ad6",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keyword",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"9a518655-9572-43fa-b747-b282ca41365e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f42eea3-cd68-4c3a-a59e-c77d8011cc08",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keyword",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"b16595e7-e145-4656-bc54-0f6acbcf3dcd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3a4a802-e65f-4169-8bb1-c37408f3e697",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keyword",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"6df0d285-68aa-4132-b164-3212c2076e4e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc6aaac5-a75a-4333-9089-afc82ad8c22d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keyword",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"e8eae48b-e73b-4a2e-8a63-e750f96437f2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "139834f5-832c-425b-8b83-ebc503fcba04",
+          "name": "Create a case",
+          "request": {
+            "name": "Create a case",
+            "description": {
+              "content": "### Creates a new case\r\n\r\nYou have the option to add companies and people at the point of case creation or at a later stage.\r\n\r\nWhen adding companies at the point of case creation, you can retrieve company registration data by setting `registry_search` to `true`, and ensuring that `company_name`, `company_number`, and `jurisdiction_code` are not empty.  If the company registration data cannot be found, the case is created with the provided company details. If the company registration data is found, the `status`, `number_of_officers`, and `number_of_owners` are updated to reflect the registry data.\r\n\r\nAdditionally, you can choose to add all the company's (human) officers to the case by setting `add_directors` to `true`. Note that this flag is applicable only when `registry_search` is set to `true`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"case_type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"reference_customer_id\": \"<string>\",\n  \"reference_customer_name\": \"<string>\",\n  \"owner\": \"<string>\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"<string>\",\n      \"owner_type\": \"<string>\"\n    },\n    {\n      \"owner_id\": \"<string>\",\n      \"owner_type\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"source\": \"<string>\",\n  \"companies\": [\n    {\n      \"company_name\": \"<string>\",\n      \"company_number\": \"<string>\",\n      \"jurisdiction_code\": \"<string>\",\n      \"registry_search\": \"<boolean>\",\n      \"add_directors\": \"<boolean>\"\n    },\n    {\n      \"company_name\": \"<string>\",\n      \"company_number\": \"<string>\",\n      \"jurisdiction_code\": \"<string>\",\n      \"registry_search\": \"<boolean>\",\n      \"add_directors\": \"<boolean>\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"postal_address\": {\n        \"house_number\": \"<string>\",\n        \"building_name\": \"<string>\",\n        \"sub_building_name\": \"<string>\",\n        \"address_line_1\": \"<string>\",\n        \"address_line_2\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"city\": \"<string>\",\n        \"post_code\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"date_of_birth\": \"<string>\",\n      \"employer\": \"<string>\",\n      \"reference_person_id\": \"<string>\"\n    },\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"postal_address\": {\n        \"house_number\": \"<string>\",\n        \"building_name\": \"<string>\",\n        \"sub_building_name\": \"<string>\",\n        \"address_line_1\": \"<string>\",\n        \"address_line_2\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"city\": \"<string>\",\n        \"post_code\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"date_of_birth\": \"<string>\",\n      \"employer\": \"<string>\",\n      \"reference_person_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "008da1bf-1bd8-4fef-af0d-4da4d61e5ef0",
+              "name": "The created case",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"case_id\": \"64cd8202-2db4-44d5-85be-79438d65eb7b\",\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"datetime_created\": \"2023-02-10T10:59:46.0260000+00:00\",\n  \"datetime_last_modified\": \"2023-02-12T13:04:21.3260000+00:00\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"number_of_companies\": \"2\",\n  \"number_of_persons\": \"5\",\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"status\": \"Active\",\n      \"number_of_officers\": \"5\",\n      \"number_of_owners\": \"2\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"name\": \"Wilson Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt. 101\",\n        \"locality\": \"Test Country\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\",\n        \"summary_line\": \"123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"appointments\": \"string\",\n      \"reference_person_id\": \"Wilson5432\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1723888-b1e4-4d7b-80a0-b8e7ed4e63b3",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"582535be-c42a-4e5f-9efa-a121842cc6f8\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9ad9e89-6d85-413c-97a0-2777ff21071a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"2622efbf-488c-4824-91d8-01ccdd2010f2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db4bcbe9-16bc-4b0d-b1f3-d06bebb4e3f5",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"e1c426b8-6f38-47d9-8efd-76e29653e977\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b949a90-71f3-4a0c-9aeb-e623b1d6c903",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"844d74d3-d437-46db-8781-ee8f55e0676b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d436a697-e201-4cf5-bfdb-cddc67ac393e",
+          "name": "Retrieve a case",
+          "request": {
+            "name": "Retrieve a case",
+            "description": {
+              "content": "### Retrieve a single case.\r\n\r\nReturns information about a case, including lists of the individual companies and people within it as well as their associated `company_id` or `person_id`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":case_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "case_id",
+                  "description": "(Required) Sikoia ID for the case"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7d15b9c9-b595-4502-9ab2-33da1e44719e",
+              "name": "Retrieved Case",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"case_id\": \"64cd8202-2db4-44d5-85be-79438d65eb7b\",\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"datetime_created\": \"2023-02-10T10:59:46.0260000+00:00\",\n  \"datetime_last_modified\": \"2023-02-12T13:04:21.3260000+00:00\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"number_of_companies\": \"2\",\n  \"number_of_persons\": \"5\",\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"status\": \"Active\",\n      \"number_of_officers\": \"5\",\n      \"number_of_owners\": \"2\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"name\": \"Wilson Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt. 101\",\n        \"locality\": \"Test Country\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\",\n        \"summary_line\": \"123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"appointments\": \"string\",\n      \"reference_person_id\": \"Wilson5432\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c926530c-6736-4eab-99af-f12012e7abb3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"187f6c48-c248-4179-a1b5-f4114096690b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e83e32a5-a3fa-4de4-ab0e-c74060b48b62",
+              "name": "Case Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 29ae6bb5-0a12-4c6c-98c3-92d160fb34dc.\",\n  \"correlation_id\": \"dae3c74a-526d-4f0d-846a-5bdec0c569c3\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3afb12ab-c366-46c1-b2d6-c0e9ac81c15b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"5a2e5909-67e1-4406-aeb0-2cfac015a2ad\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdb0d439-0e72-47c8-9148-1ffececb68a3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"3126f0a6-7775-45d6-8082-b0281648be06\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8792e491-dda9-45b1-9f9e-443a5eaf4bbf",
+          "name": "Update a case",
+          "request": {
+            "name": "Update a case",
+            "description": {
+              "content": "### Updates details for an existing case.\r\n\r\nWhile all fields are optional, the request must include at least one field.\r\n\r\nTo clear a field, send an empty string as the field value.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":case_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "case_id",
+                  "description": "(Required) Sikoia ID for the case"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"reference_customer_id\": \"<string>\",\n  \"reference_customer_name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"source\": \"<string>\",\n  \"owner\": \"<string>\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"<string>\",\n      \"owner_type\": \"<string>\"\n    },\n    {\n      \"owner_id\": \"<string>\",\n      \"owner_type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a71dba4d-b626-4081-9024-e193f7e7b128",
+              "name": "Updated Case",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd 2nd Loan Application\",\n  \"stage\": \"Approved\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking for another loan\",\n  \"source\": \"API\",\n  \"owner\": \"Katerina Valentin\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"case_id\": \"64cd8202-2db4-44d5-85be-79438d65eb7b\",\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"datetime_created\": \"2023-02-10T10:59:46.0260000+00:00\",\n  \"datetime_last_modified\": \"2023-02-12T13:04:21.3260000+00:00\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"number_of_companies\": \"2\",\n  \"number_of_persons\": \"5\",\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"status\": \"Active\",\n      \"number_of_officers\": \"5\",\n      \"number_of_owners\": \"2\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"name\": \"Wilson Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt. 101\",\n        \"locality\": \"Test Country\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\",\n        \"summary_line\": \"123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"appointments\": \"string\",\n      \"reference_person_id\": \"Wilson5432\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c911617-7992-4afe-8914-d9c71bc7e1a6",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd 2nd Loan Application\",\n  \"stage\": \"Approved\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking for another loan\",\n  \"source\": \"API\",\n  \"owner\": \"Katerina Valentin\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"bdc39a61-17f3-4d27-958b-86abe1bda15b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df23dbad-621d-43f9-8a8d-4bfbf017af74",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd 2nd Loan Application\",\n  \"stage\": \"Approved\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking for another loan\",\n  \"source\": \"API\",\n  \"owner\": \"Katerina Valentin\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"fff255f3-be78-48d9-826a-6b394e52bb49\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffead15c-df51-464f-b4b5-abac6f543f6a",
+              "name": "Case Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd 2nd Loan Application\",\n  \"stage\": \"Approved\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking for another loan\",\n  \"source\": \"API\",\n  \"owner\": \"Katerina Valentin\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id cb74296c-3b8c-4005-933b-355219d150cc.\",\n  \"correlation_id\": \"0bbcff17-0ed8-4ee3-80f0-a30c0334f12e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6c7015e-f87a-4436-9388-cbc4072817d6",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd 2nd Loan Application\",\n  \"stage\": \"Approved\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking for another loan\",\n  \"source\": \"API\",\n  \"owner\": \"Katerina Valentin\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"1174d652-7f7f-4d9f-9e01-e56844de42f0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c49fceff-9d9a-4174-af8a-c9489a1afc11",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Ltd 2nd Loan Application\",\n  \"stage\": \"Approved\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking for another loan\",\n  \"source\": \"API\",\n  \"owner\": \"Katerina Valentin\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"7ae566db-bf25-4297-9db4-c9ea466ecfab\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8936bfb6-0d1b-4419-98cf-ee8e10be4639",
+          "name": "Delete a case",
+          "request": {
+            "name": "Delete a case",
+            "description": {
+              "content": "### Deletes a single case.\r\n\r\nThis also deletes all of the associated companies, people and documents within the case.\r\n\r\nPlease note that this action cannot be undone.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":case_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "case_id",
+                  "description": "(Required) Sikoia ID for the case"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dfccc619-9a30-475d-856c-e8eba1188e77",
+              "name": "Successfully deleted case",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31434195-ac60-48de-b88f-9a04e5021c57",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"1b8c07df-23c9-48c8-88bd-ffff6cdb37c9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d4057a6-d178-4bf6-ae9e-789486151a68",
+              "name": "Case Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id e3d720d8-8c4f-4737-85a5-382bd0be6105.\",\n  \"correlation_id\": \"9829fa7d-8a1d-4194-a82d-7fa94e907cf2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "278747a0-51a9-4d07-bf8f-d28aab1f3abe",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"9b1d1da1-d9b0-4a83-871c-6d4241a0cf0d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16d9e594-eff8-4c61-b046-39e3f8defe11",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"5569a5d0-dbfe-4fd0-81ad-822ab33ff2ad\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "92778413-2eb4-4a83-8a3e-2b2698d2b8b2",
+    "name": "Sikoia Adverse Media Cases API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1386 @@
+{
+  "item": [
+    {
+      "id": "3f1a5359-57be-489d-b0c6-339db4e64fae",
+      "name": "Income & Employer Verification",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bb7152f4-4f62-4125-a83d-0b20aeadea05",
+          "name": "Request income & employer verification",
+          "request": {
+            "name": "Request income & employer verification",
+            "description": {
+              "content": "### Requests an income and employer verification for a case, person, or company\r\n\r\nThis endpoint automatically verifies an entity’s income from various sources including documents and open banking connections.\r\n\r\nTo proceed, ensure that both `entity_id` and `entity_type` are valid and ensure that at least one income-related document or open banking connection has been attached to the entity.\r\n\r\nA successful response will include a `request_id` that can be used to check the status of the request.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "income-employer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92e82f6d-57d1-4a9b-b108-a34b08acb076",
+              "name": "The income request is pending",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"473078e-e392-4943-9ea9-efe7590eb503\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"8ef5079a-b3de-44a5-b4ff-c534259e752c\",\n  \"status\": \"Pending\",\n  \"entity_id\": \"b3f6ed8f-bc57-4a23-801e-e744aecb7b03\",\n  \"entity_type\": \"case\",\n  \"datetime_requested\": \"2024-01-01T12:38:45.7110000+00:00\",\n  \"datetime_completed\": \"2024-01-02T12:22:07.7470000+00:00\",\n  \"message\": \"Income request pending\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c80ca1dd-e507-468d-ae9f-0a4076504abf",
+              "name": "Entity Deleted/Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"473078e-e392-4943-9ea9-efe7590eb503\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"b10206b6-1f88-49ce-bae8-41a86d4a2652\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97891af0-e8a3-4100-a7d5-ac15024e9ca0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"473078e-e392-4943-9ea9-efe7590eb503\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"57fc27f4-fd09-484c-af3d-2226a31a70b4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a33b2eae-70d1-44c9-af03-3ff3a0852344",
+              "name": "Income Employer Service not enabled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"473078e-e392-4943-9ea9-efe7590eb503\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InsufficientPermissions\",\n  \"status\": 403,\n  \"title\": \"Service not enabled\",\n  \"detail\": \"Service is not currently enabled.\",\n  \"correlation_id\": \"051565d3-e71e-4354-ab7d-18a22f062488\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27e9fe1f-2fb6-4bce-9f01-a1792c1ec31e",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"473078e-e392-4943-9ea9-efe7590eb503\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"b77a6768-9b44-4c2d-b4dd-aac635537fcd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8f2f35a-7ad8-4e91-9c20-b38bef868b2f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_id\": \"473078e-e392-4943-9ea9-efe7590eb503\",\n  \"entity_type\": \"case\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"07e52f5f-f19e-4bb6-b191-d0b65d96ab6f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2cfc9f2-1e8e-4a1a-bc7d-957677d68a7f",
+          "name": "List all income & employer verifications",
+          "request": {
+            "name": "List all income & employer verifications",
+            "description": {
+              "content": "### This returns a list of all the income employer requests for the specified entity.\r\n\r\nReturns a list of all income & employer verifications requested for an entity.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve the income and employer verification using the GET `/v2/income-employer/{request_id}` endpoint.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                ":entity_type",
+                ":entity_id",
+                "income-employer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_type",
+                  "description": "(Required) Entity Type"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_id",
+                  "description": "(Required) Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bff8828a-afea-4a0b-bd59-5a9dd0ba895f",
+              "name": "Income Employer Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entity_id\": \"3345857d-fa2b-43ab-8b15-67e5fea8e896\",\n  \"entity_type\": \"case\",\n  \"income_employer_requests\": [\n    {\n      \"request_id\": \"w5f84a41-01cf-4d21-901d-124c5a7c743a\",\n      \"status\": \"Complete\",\n      \"datetime_requested\": \"2024-01-29T12:21:52.9330000+00:00\",\n      \"datetime_completed\": \"2024-01-30T09:44:22.4660000+00:00\",\n      \"message\": \"Income Employer complete\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16162c33-c9c4-43c0-bdaf-d95df5d0105a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"34c972c5-5c53-4967-8891-eb29cbb38372\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25534735-ca1c-4f00-b251-9ea2bfe136e2",
+              "name": "Entity not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id d9b5dedb-6541-405a-bd57-134ca39a4149.\",\n  \"correlation_id\": \"81bcd82c-5f87-447b-bdfa-2ec35ba67b70\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50ff2415-432c-4f95-a1bc-1a1e8365de8f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"3cb70b1c-c44e-4256-97a3-c9bd9713b6bd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cee6b6f7-d171-4559-9821-7342e5208f4a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "income-employer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) Entity Type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"6ed01b71-ad4c-497d-a06f-dc44f17f2e67\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "466e94d8-e5da-488d-a067-2ac9c965b4f5",
+          "name": "Retrieve income & employer verification",
+          "request": {
+            "name": "Retrieve income & employer verification",
+            "description": {
+              "content": "### Returns an income & employer verification.\r\n\r\nThis endpoint returns the income & employer verification associated with a specific `request_id`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "income-employer",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "410c5199-f509-4fa9-a515-cba4681b866e",
+              "name": "Income Employer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"8ef5079a-b3de-44a5-b4ff-c534259e752c\",\n  \"status\": \"Pending\",\n  \"entity_id\": \"b3f6ed8f-bc57-4a23-801e-e744aecb7b03\",\n  \"entity_type\": \"case\",\n  \"datetime_requested\": \"2024-01-01T12:38:45.7110000+00:00\",\n  \"datetime_completed\": \"2024-01-02T12:22:07.7470000+00:00\",\n  \"message\": \"Income request pending\",\n  \"data\": {\n    \"income_details\": [\n      {\n        \"income_recipient\": \"Sharon Smith\",\n        \"income_type\": \"Employment\",\n        \"income_source\": \"BUILDING HOME LTD\",\n        \"annual_gross_pay\": \"23657.04\",\n        \"monthly_gross_pay\": \"1971.42\",\n        \"monthly_deductions\": \"319.49\",\n        \"monthly_net_pay\": \"1561.93\",\n        \"pay_frequencies\": [\n          \"string\"\n        ],\n        \"national_insurance_number\": [\n          \"string\"\n        ],\n        \"national_insurance_letters\": [\n          \"string\"\n        ],\n        \"unique_taxpayer_references\": [\n          \"string\"\n        ],\n        \"job_titles\": [\n          \"string\"\n        ],\n        \"tax_codes\": [\n          \"string\"\n        ],\n        \"paye_references\": [\n          \"string\"\n        ],\n        \"employee_numbers\": [\n          \"string\"\n        ],\n        \"ytd_gross_pay\": \"22472.85\",\n        \"ytd_net_pay\": \"18070.33\",\n        \"ytd_tax_paid\": \"1100.63\",\n        \"ytd_ni_paid\": \"1100.63\",\n        \"ytd_pension_paid\": \"1100.63\",\n        \"ytd_other_deductions\": \"1100.63\",\n        \"additional_information\": {\n          \"bonuses\": [\n            {\n              \"amount\": \"222.22\",\n              \"date\": \"2024-01-01\"\n            }\n          ],\n          \"monthly_student_loan_deductions\": \"222.44\",\n          \"monthly_gross_pay_details\": [\n            {\n              \"category\": \"MonthlyBasicPay\",\n              \"amount\": \"222.44\"\n            }\n          ],\n          \"monthly_deductions_details\": [\n            {\n              \"category\": \"MonthlyIncomeTax\",\n              \"amount\": \"167.15\"\n            }\n          ],\n          \"average_income_items\": [\n            {\n              \"category\": \"PayFromAllEmployments\",\n              \"value\": \"1971.42\"\n            }\n          ],\n          \"average_tax_items\": [\n            {\n              \"category\": \"Tax\",\n              \"short_description\": \"Class 4 NIC\",\n              \"value\": \"1971.42\"\n            }\n          ]\n        },\n        \"income_source_addresses\": [\n          {\n            \"summary_line\": \"Flat 23, Sample Street, London\",\n            \"post_code\": \"SW4 4PL\"\n          }\n        ],\n        \"employee_addresses\": [\n          {\n            \"summary_line\": \"19, Sample Street, London\",\n            \"post_code\": \"SW1 1PN\"\n          }\n        ],\n        \"income_data_sources\": [\n          {\n            \"source_type\": \"Payslip\",\n            \"number_of_sources\": \"1\",\n            \"start_date\": \"2024-01-01\",\n            \"end_date\": \"2024-02-01\",\n            \"data_sources\": [\n              {\n                \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley\",\n                \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n                \"source_category_type\": \"Document\",\n                \"source_type\": \"Payslip\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"data_sources\": [\n      {\n        \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley\",\n        \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n        \"source_category_type\": \"Document\",\n        \"source_type\": \"Payslip\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53cc4fbf-bcd6-47b2-80ec-fa7b42128270",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"8b9df2bb-c107-4a12-b0b7-747882c21de5\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fce991d-6bf6-4092-bb3a-2850a264df30",
+              "name": "Request ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 03f4fd05-45d9-4d2e-ab62-694799e0ce00.\",\n  \"correlation_id\": \"e242fc86-f42d-4186-ad55-aa43fc3b6701\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "125f0c6c-6e5c-4a3f-9b95-ae326ccb3509",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"b21530fe-b761-48cc-991d-0d844828e809\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acc9a9f3-a69c-4101-ad6d-244d30ea573d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"0cac9510-4791-42bc-b1d7-9e5ba0dfb02d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79eda5ea-4cfe-4eb2-8367-44649f686418",
+          "name": "Retrieve detailed payslip, bank statement, tax documents and/or open banking connection data",
+          "request": {
+            "name": "Retrieve detailed payslip, bank statement, tax documents and/or open banking connection data",
+            "description": {
+              "content": "### Returns detailed data from individual payslips, bank statements, tax documents and/or open banking connections behind an income & employer verification.\r\n\r\nThis endpoint returns data from all the individual payslips, bank statements, tax documents and/or open banking connections used to generate a specific income & employer verification identified by a unique `request_id`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "income-employer",
+                ":request_id",
+                "additional-details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0661ed8b-d343-4a8f-8f81-45d01a3167b7",
+              "name": "Income Employer Additional Details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id",
+                    "additional-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"8ef5079a-b3de-44a5-b4ff-c534259e752c\",\n  \"status\": \"Pending\",\n  \"entity_id\": \"b3f6ed8f-bc57-4a23-801e-e744aecb7b03\",\n  \"entity_type\": \"case\",\n  \"datetime_requested\": \"2024-01-01T12:38:45.7110000+00:00\",\n  \"datetime_completed\": \"2024-01-02T12:22:07.7470000+00:00\",\n  \"message\": \"Income request pending\",\n  \"data\": [\n    {\n      \"income_recipient\": \"Sharon Smith\",\n      \"income_type\": \"Employment\",\n      \"income_source\": \"BUILDING HOME LTD\",\n      \"details\": [\n        {\n          \"source_type\": \"Payslip\",\n          \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n          \"data_source_id\": \"01951375-a680-77ce-b196-44d1feedc47c\",\n          \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley.pdf\",\n          \"income_source_data\": {\n            \"payslip_date\": \"2024-01-31\",\n            \"pay_period_start_date\": \"2024-01-01\",\n            \"pay_period_end_date\": \"2024-01-31\",\n            \"payment_date\": \"2024-01-31\",\n            \"start_date\": \"2024-01-01\",\n            \"end_date\": \"2024-04-01\",\n            \"pay_frequency\": \"Monthly\",\n            \"pay_period\": \"5\",\n            \"gross_pay\": \"1971.42\",\n            \"total_deductions\": \"319.49\",\n            \"net_pay\": \"Basic Pay\",\n            \"national_insurance_number\": \"QQ123456B\",\n            \"national_insurance_letter\": \"Q\",\n            \"unique_taxpayer_reference\": \"1234567890\",\n            \"tax_code\": \"1257L\",\n            \"paye_reference\": \"123/AB456\",\n            \"employee_name\": \"Sharon Smith\",\n            \"employer_name\": \"BUILDING HOME LTD\",\n            \"employee_number\": \"1234567890\",\n            \"job_title\": \"Customer Services Officer\",\n            \"income_source_address\": {\n              \"summary_line\": \"Flat 23, Sample Street, London\",\n              \"post_code\": \"SW4 4PL\"\n            },\n            \"employee_address\": {\n              \"summary_line\": \"19, Sample Street, London\",\n              \"post_code\": \"SW1 1PN\"\n            },\n            \"ytd_gross_pay\": \"7000.00\",\n            \"ytd_net_pay\": \"2600.00\",\n            \"ytd_tax_paid\": \"1100.00\",\n            \"ytd_ni_paid\": \"1100.00\",\n            \"ytd_pension_paid\": \"1100.00\",\n            \"ytd_other_deductions\": \"1100.00\",\n            \"detailed_pay_items\": [\n              {\n                \"category\": \"BasicPay\",\n                \"short_description\": \"January Salary\",\n                \"value\": \"1971.42\",\n                \"rate\": \"1\",\n                \"quantity\": \"1\"\n              }\n            ],\n            \"detailed_deduction_items\": [\n              {\n                \"category\": \"IncomeTax\",\n                \"short_description\": \"PAYE\",\n                \"value\": \"319.49\"\n              }\n            ],\n            \"tax_information\": {\n              \"summary\": {\n                \"employment_income\": \"21843.00\",\n                \"total_income\": \"48933.00\",\n                \"net_income\": \"47437.30\",\n                \"allowances_and_reliefs\": \"12570.00\",\n                \"tax_due\": \"3348.70\"\n              },\n              \"income\": {\n                \"income_from_employments\": \"21843.00\",\n                \"income_from_benefits\": 0,\n                \"allowable_expenses\": 0,\n                \"non_employment_income\": {\n                  \"share_schemes\": 0,\n                  \"profit_from_self_employment\": 0,\n                  \"profit_from_partnerships\": 0,\n                  \"interest_from_partnerships\": 0,\n                  \"dividends_from_partnerships\": 0,\n                  \"profit_from_uk_land_and_property\": \"14590.00\",\n                  \"foreign_income\": 0,\n                  \"foreign_dividends\": 0,\n                  \"foreign_savings\": 0,\n                  \"trusts_and_estates\": 0,\n                  \"interest_from_uk_banks\": 0,\n                  \"dividends_from_uk_companies\": \"12500.00\",\n                  \"uk_pensions_and_state_benefits\": 0,\n                  \"gains_on_life_insurance_policies\": 0,\n                  \"other_income\": 0,\n                  \"subtotal\": \"27090.00\"\n                },\n                \"total\": \"48933.00\"\n              },\n              \"tax_and_charges\": {\n                \"tax_charged_before_reliefs\": \"5560-10-01\",\n                \"tax_charged_after_reliefs\": \"3348.70\",\n                \"tax_relief_for_financing_costs\": \"-1959.40\",\n                \"other_tax_reductions_and_reliefs\": \"-252.00\",\n                \"national_insurance\": 0,\n                \"student_loan_repayments\": 0,\n                \"capital_gains_tax\": 0,\n                \"other_amounts_paid_via_tax\": 0,\n                \"total_tax_due\": \"3348.70\",\n                \"tax_deducted\": \"-1853.00\",\n                \"net_tax_due\": \"1495.70\"\n              },\n              \"payments\": {\n                \"tax_already_paid_for_this_year\": 0,\n                \"outstanding_from_last_year\": 0,\n                \"balancing_payment_for_this_year\": 0,\n                \"first_payment_on_account_for_next_year\": 0,\n                \"second_payment_on_account_for_next_year\": 0\n              }\n            }\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cff67cff-e4e7-4d15-b538-d733c2a387b2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id",
+                    "additional-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"7d2e0b5e-02dc-40f8-ab9b-56868b9b6665\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f34af9d-33eb-4a78-9c6a-754d1aea7234",
+              "name": "Request ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id",
+                    "additional-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id e2a97946-247e-4b1e-81f4-fa347d4455c8.\",\n  \"correlation_id\": \"c589cfd2-d403-49a4-81f7-ae678cc8582e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03078e58-857a-427b-9672-b6c3937b48e3",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id",
+                    "additional-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"e6c35586-4c0e-495c-9ee3-3656b8cc0275\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e279348-6a68-4e22-a411-8746854352a6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "income-employer",
+                    ":request_id",
+                    "additional-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"5c137f9e-769b-47f1-8fe4-b8697429b278\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f32cdcf2-0827-4818-b47e-cc3ef53e4805",
+    "name": "Sikoia Adverse Media Income & Employer Verification API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Companies & People API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Companies & People",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add entities to a case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/cases/:case_id/entities",
+            "params": [
+              {
+                "name": "case_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the case"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Adds companies and / or people to an existing case.\r\n\r\nThis endpoint behaves the same as the Create Case endpoint when adding companies and / or people.\r\n\r\nWhen adding companies, you can retrieve company registration data by setting `registry_search` to `true`, and ensuring that `company_name`, `company_number`, and `jurisdiction_code` are not empty. If the data cannot be found, the case is created with the provided company details. If the company registration data is found, the `status`, `n"
+        },
+        {
+          "info": {
+            "name": "Update entities in a case",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sikoia.com/v2/cases/:case_id/entities",
+            "params": [
+              {
+                "name": "case_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the case"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Updates existing companies and / or people in a case.\r\n\r\nAll fields are optional, except for `company_id` or `person_id`; however, the request must include at least one field.\r\n\r\nTo clear a field, simply send an empty string as the field value.\r\n"
+        },
+        {
+          "info": {
+            "name": "Delete entities in a case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/cases/:case_id/entities/delete",
+            "params": [
+              {
+                "name": "case_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the case"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Deletes companies and / or people from a case.\r\n\r\nAccepts a list of person and / or company IDs to delete from the case.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

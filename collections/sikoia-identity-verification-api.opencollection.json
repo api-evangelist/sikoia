@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Identity Verification API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Identity Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request IDV",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/identity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Requests an identity verification for a person.\r\n\r\nProvide the `person_id`, and optionally specify the `country_code` if you already know the country of issue for the document to be provided.\r\n\r\nThis returns Sikoia's `verification_url` and an IDV provider's `direct_url` (if the country is specified in the request). Both URLs can be used to commence the identity verification process.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all IDV requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/persons/:person_id/identity-verifications",
+            "params": [
+              {
+                "name": "person_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the person"
+              },
+              {
+                "name": "complete",
+                "value": "",
+                "type": "query",
+                "description": "Exclude incomplete requests from the list, defaults to false"
+              },
+              {
+                "name": "verification_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status. Can be comma-separated for multiple values."
+              }
+            ]
+          },
+          "docs": "### Returns a list of all identity verification requests for a person.\r\n\r\nThis endpoint provides a list of all identity verification requests created for a specific `person_id`.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve the identity verification result using the `GET /v2/identity/{request_id}` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve IDV result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/identity/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the request"
+              }
+            ]
+          },
+          "docs": "### Retrieve IDV status and result.\r\n\r\nThis endpoint provides the result of a specific IDV request identified by `request_id` in a structured format.\r\n\r\nThe information includes details on the verification status, the verified person, and the provided document.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1341 @@
+{
+  "item": [
+    {
+      "id": "e6425730-12be-44ff-8d52-27bf01d16f74",
+      "name": "Companies & People",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "933bda9d-c105-445d-b251-cc4a11dce834",
+          "name": "Add entities to a case",
+          "request": {
+            "name": "Add entities to a case",
+            "description": {
+              "content": "### Adds companies and / or people to an existing case.\r\n\r\nThis endpoint behaves the same as the Create Case endpoint when adding companies and / or people.\r\n\r\nWhen adding companies, you can retrieve company registration data by setting `registry_search` to `true`, and ensuring that `company_name`, `company_number`, and `jurisdiction_code` are not empty. If the data cannot be found, the case is created with the provided company details. If the company registration data is found, the `status`, `number_of_officers`, and `number_of_owners` are updated to reflect the registry data.\r\n\r\nAdditionally, you can choose to add all the company's (human) officers to the case by setting `add_directors` to `true`. Note that this flag is applicable only when `registry_search` is set to `true`.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":case_id",
+                "entities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "case_id",
+                  "description": "(Required) Sikoia ID for the case"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companies\": [\n    {\n      \"company_name\": \"<string>\",\n      \"company_number\": \"<string>\",\n      \"jurisdiction_code\": \"<string>\",\n      \"registry_search\": \"<boolean>\",\n      \"add_directors\": \"<boolean>\"\n    },\n    {\n      \"company_name\": \"<string>\",\n      \"company_number\": \"<string>\",\n      \"jurisdiction_code\": \"<string>\",\n      \"registry_search\": \"<boolean>\",\n      \"add_directors\": \"<boolean>\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"postal_address\": {\n        \"house_number\": \"<string>\",\n        \"building_name\": \"<string>\",\n        \"sub_building_name\": \"<string>\",\n        \"address_line_1\": \"<string>\",\n        \"address_line_2\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"city\": \"<string>\",\n        \"post_code\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"date_of_birth\": \"<string>\",\n      \"employer\": \"<string>\",\n      \"reference_person_id\": \"<string>\"\n    },\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"postal_address\": {\n        \"house_number\": \"<string>\",\n        \"building_name\": \"<string>\",\n        \"sub_building_name\": \"<string>\",\n        \"address_line_1\": \"<string>\",\n        \"address_line_2\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"city\": \"<string>\",\n        \"post_code\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"date_of_birth\": \"<string>\",\n      \"employer\": \"<string>\",\n      \"reference_person_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48097871-b9b5-4f96-b069-c7e8606a78a8",
+              "name": "Case with New Entities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"case_id\": \"64cd8202-2db4-44d5-85be-79438d65eb7b\",\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"datetime_created\": \"2023-02-10T10:59:46.0260000+00:00\",\n  \"datetime_last_modified\": \"2023-02-12T13:04:21.3260000+00:00\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"number_of_companies\": \"2\",\n  \"number_of_persons\": \"5\",\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"status\": \"Active\",\n      \"number_of_officers\": \"5\",\n      \"number_of_owners\": \"2\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"name\": \"Wilson Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt. 101\",\n        \"locality\": \"Test Country\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\",\n        \"summary_line\": \"123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"appointments\": \"string\",\n      \"reference_person_id\": \"Wilson5432\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95acb47b-d58c-427e-ad28-18f3dac2ebae",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"12ae3d33-4fd1-4641-8e3c-a03ad1b5c42b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a992dc6-526f-4b66-a358-07084d8a671c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"70657df9-f195-4800-bda3-a6c75f045e4d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "375c5b77-ec64-4a4f-8ab4-ec728c3ac80f",
+              "name": "Case Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id d7734fe3-71a7-4bce-a852-ca4bc24268ff.\",\n  \"correlation_id\": \"aa068a8a-47d8-4a41-8fcb-fbbbbb2b947c\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd722802-f889-4955-924d-77fb9a1a74b6",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"f5dc01bb-e320-4cdc-a993-56e34981453f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86d31476-a4e9-4483-8e81-a4beb28a29d6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"registry_search\": true,\n      \"add_directors\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"10ac4d01-4dd8-4935-8cb1-953a3e4706be\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f03982da-92d6-467a-aacc-30ccbe24b6fc",
+          "name": "Update entities in a case",
+          "request": {
+            "name": "Update entities in a case",
+            "description": {
+              "content": "### Updates existing companies and / or people in a case.\r\n\r\nAll fields are optional, except for `company_id` or `person_id`; however, the request must include at least one field.\r\n\r\nTo clear a field, simply send an empty string as the field value.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":case_id",
+                "entities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "case_id",
+                  "description": "(Required) Sikoia ID for the case"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companies\": [\n    {\n      \"company_id\": \"<uuid>\",\n      \"company_name\": \"<string>\",\n      \"company_number\": \"<string>\",\n      \"jurisdiction_code\": \"<string>\"\n    },\n    {\n      \"company_id\": \"<uuid>\",\n      \"company_name\": \"<string>\",\n      \"company_number\": \"<string>\",\n      \"jurisdiction_code\": \"<string>\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"<uuid>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"postal_address\": {\n        \"house_number\": \"<string>\",\n        \"building_name\": \"<string>\",\n        \"sub_building_name\": \"<string>\",\n        \"address_line_1\": \"<string>\",\n        \"address_line_2\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"city\": \"<string>\",\n        \"post_code\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"date_of_birth\": \"<date>\",\n      \"employer\": \"<string>\",\n      \"reference_person_id\": \"<string>\"\n    },\n    {\n      \"person_id\": \"<uuid>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"postal_address\": {\n        \"house_number\": \"<string>\",\n        \"building_name\": \"<string>\",\n        \"sub_building_name\": \"<string>\",\n        \"address_line_1\": \"<string>\",\n        \"address_line_2\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"city\": \"<string>\",\n        \"post_code\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"date_of_birth\": \"<date>\",\n      \"employer\": \"<string>\",\n      \"reference_person_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8781dadf-2597-4751-ada1-dc6fa8ac9a9e",
+              "name": "Case with Updated Entities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"case_id\": \"64cd8202-2db4-44d5-85be-79438d65eb7b\",\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"datetime_created\": \"2023-02-10T10:59:46.0260000+00:00\",\n  \"datetime_last_modified\": \"2023-02-12T13:04:21.3260000+00:00\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"number_of_companies\": \"2\",\n  \"number_of_persons\": \"5\",\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"status\": \"Active\",\n      \"number_of_officers\": \"5\",\n      \"number_of_owners\": \"2\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"name\": \"Wilson Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt. 101\",\n        \"locality\": \"Test Country\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\",\n        \"summary_line\": \"123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"appointments\": \"string\",\n      \"reference_person_id\": \"Wilson5432\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0372f03b-8692-433e-a88d-956edda9597f",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"8798afca-4df6-44dc-9633-e62cab611697\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "154e2db9-a485-4261-91d5-a0a5ff3cf8ed",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"6147d230-72bb-41c1-8e0e-d7bc6ca93700\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e86d081f-3533-4ce0-8547-4a79d3851819",
+              "name": "Case Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 91b32550-0b6c-415b-9451-2e0a09e13f1a.\",\n  \"correlation_id\": \"551a5561-1c8a-4f83-88de-3726c315b932\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce7ae414-84db-4c75-a9c2-21d35aaf8c29",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"47c2726c-23bf-4a8f-963f-0666604689ab\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c099db52-2311-46de-848d-f25094f6dc4c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\"\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt.101\",\n        \"locality\": \"Test County\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"reference_person_id\": \"Wilson5432\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"cad08426-bf63-446c-84f1-24cac1af8a70\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc03abee-cb84-45b4-898a-f3096161fb04",
+          "name": "Delete entities in a case",
+          "request": {
+            "name": "Delete entities in a case",
+            "description": {
+              "content": "### Deletes companies and / or people from a case.\r\n\r\nAccepts a list of person and / or company IDs to delete from the case.\r\n\r\nPlease note that this action cannot be undone.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":case_id",
+                "entities",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "case_id",
+                  "description": "(Required) Sikoia ID for the case"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"persons\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0de2264a-9947-47eb-98fe-ca0bf7c7fcd9",
+              "name": "Case with Deleted Entities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": \"[\\\"ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f\\\"]\",\n  \"persons\": \"[\\\"c28c88d6-7fb5-4c2f-a5a1-559cd2675293\\\"]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"case_id\": \"64cd8202-2db4-44d5-85be-79438d65eb7b\",\n  \"name\": \"Acme Ltd Loan Application\",\n  \"case_type\": \"Business\",\n  \"stage\": \"New\",\n  \"datetime_created\": \"2023-02-10T10:59:46.0260000+00:00\",\n  \"datetime_last_modified\": \"2023-02-12T13:04:21.3260000+00:00\",\n  \"reference\": \"LOAN03584\",\n  \"reference_customer_id\": \"CUST67044\",\n  \"reference_customer_name\": \"Building Society Ltd\",\n  \"description\": \"Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.\",\n  \"source\": \"API\",\n  \"owner\": \"Cecilia Adams\",\n  \"ownership\": [\n    {\n      \"owner_id\": \"6a9f8d73-29f4-4a6a-80dc-21b8cbecff75\",\n      \"owner_type\": \"user\"\n    }\n  ],\n  \"number_of_companies\": \"2\",\n  \"number_of_persons\": \"5\",\n  \"companies\": [\n    {\n      \"company_id\": \"a035d37a-dee1-4a4e-b098-168a6a1f4603\",\n      \"company_name\": \"Acme Limited\",\n      \"company_number\": \"77642080\",\n      \"jurisdiction_code\": \"GB\",\n      \"status\": \"Active\",\n      \"number_of_officers\": \"5\",\n      \"number_of_owners\": \"2\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ],\n  \"persons\": [\n    {\n      \"person_id\": \"8303ce21-3120-4981-9a19-560ef110502b\",\n      \"first_name\": \"Wilson\",\n      \"last_name\": \"Pascale\",\n      \"name\": \"Wilson Pascale\",\n      \"email\": \"wislon@acme.ltd.uk\",\n      \"postal_address\": {\n        \"house_number\": \"123\",\n        \"building_name\": \"Main House\",\n        \"sub_building_name\": \"string\",\n        \"address_line_1\": \"Main Street\",\n        \"address_line_2\": \"Apt. 101\",\n        \"locality\": \"Test Country\",\n        \"city\": \"Test Town\",\n        \"post_code\": \"X9 9AA\",\n        \"country\": \"GB\",\n        \"summary_line\": \"123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB\"\n      },\n      \"date_of_birth\": \"1985-06-12\",\n      \"employer\": \"Acme Limited\",\n      \"is_officer\": true,\n      \"appointments\": \"string\",\n      \"reference_person_id\": \"Wilson5432\",\n      \"media_adverse_requested\": true,\n      \"pep_sanction_requested\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bee06a5a-8c38-4494-bb75-50defbb8c49f",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": \"[\\\"ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f\\\"]\",\n  \"persons\": \"[\\\"c28c88d6-7fb5-4c2f-a5a1-559cd2675293\\\"]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"77429fb5-9be7-40d7-b689-459cd9600861\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee62b20c-767d-4dda-876c-da27dec29d20",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": \"[\\\"ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f\\\"]\",\n  \"persons\": \"[\\\"c28c88d6-7fb5-4c2f-a5a1-559cd2675293\\\"]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"5a6cb4f7-1ef9-40d4-9307-961ad146b764\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a818897-d77e-4c79-a9e3-0fc444a6be05",
+              "name": "Case Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": \"[\\\"ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f\\\"]\",\n  \"persons\": \"[\\\"c28c88d6-7fb5-4c2f-a5a1-559cd2675293\\\"]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 1f84f8ca-b1d1-4fe4-9729-b56c6f47e7f4.\",\n  \"correlation_id\": \"cdb6963a-754f-4716-8aba-2c05032bd48e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53495adb-02f2-4d8f-9c83-24581b8f2002",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": \"[\\\"ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f\\\"]\",\n  \"persons\": \"[\\\"c28c88d6-7fb5-4c2f-a5a1-559cd2675293\\\"]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"231373e9-557b-40c2-9c3a-5bc07e654d8f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f32bd77-959c-4e8d-beda-928d6bde0632",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":case_id",
+                    "entities",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "case_id",
+                      "description": "(Required) Sikoia ID for the case"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companies\": \"[\\\"ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f\\\"]\",\n  \"persons\": \"[\\\"c28c88d6-7fb5-4c2f-a5a1-559cd2675293\\\"]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"2374085c-c9e0-4afa-97f0-1d428ba480a7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c68550af-0cdf-456e-9b60-9a115e050c4a",
+    "name": "Sikoia Adverse Media Companies & People API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

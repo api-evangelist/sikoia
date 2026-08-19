@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Online Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Online Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request online data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/company-online-data",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Requests online data for a company.\r\n\r\nProvide the `company_id` and optionally specify the `company_name`. If the company_name is specified, it will override the company entity name.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all online data requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/companies/:company_id/online-data",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the Company"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all online data requests for a company.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-online-data/{request_id}` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve online data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/company-online-data/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the request"
+              }
+            ]
+          },
+          "docs": "### Returns online data for a company.\r\n\r\nThis endpoint returns the company online data associated with a specific `request_id`.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

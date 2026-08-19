@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media User Management API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/users"
+          },
+          "docs": "### Retrieves a list of all users.\r\n\r\nReturns a list of users affiliated with your organisation.\r\n\r\nRefer to our Guides section for additional information on users, user roles, and user permissions.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

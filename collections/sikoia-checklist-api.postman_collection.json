@@ -1,0 +1,350 @@
+{
+  "item": [
+    {
+      "id": "7809ca68-451f-465b-a32f-42cc8867e235",
+      "name": "Checklist",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "67f457de-b8fa-49e9-bd50-ee2584d49e5f",
+          "name": "Run a completeness and income insights check",
+          "request": {
+            "name": "Run a completeness and income insights check",
+            "description": {
+              "content": "### Check Completness and Income.\r\n\r\nThis endpoint executes a two-stage workflow: it first validates the entity against all completeness rules, \r\n\r\nthen automatically initiates income verification upon success.\r\n\r\nA successful response returns the combined data from both processes.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "completeness-income-checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"validation_type_id\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"<string>\",\n      \"source_category_type\": \"<string>\"\n    },\n    {\n      \"source_id\": \"<string>\",\n      \"source_category_type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cb953b49-e11b-4824-ad72-a604f3699419",
+              "name": "The validation check is completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "completeness-income-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"completness_verification\": {\n    \"validation_instance_id\": \"2ef5079a-b3de-44a5-b4ff-c534259e752c\",\n    \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n    \"validation_check_name\": \"Last 3 months of payslips\",\n    \"status\": \"Complete\",\n    \"entity_id\": \"3345857d-fa2b-43ab-8b15-67e5fea8e896\",\n    \"entity_type\": \"case\",\n    \"checklist_params\": [\n      {\n        \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n        \"source_category_type\": \"Document\"\n      }\n    ],\n    \"datetime_requested\": \"2024-01-01T12:38:45.7110000+00:00\",\n    \"datetime_completed\": \"2024-01-02T12:22:07.7470000+00:00\",\n    \"message\": \"Validation Check request pending\",\n    \"rules\": [\n      {\n        \"rule_name\": \"Payslips span a 3 month period\",\n        \"decision\": \"Pass\",\n        \"recipient\": \"Sam Smith\",\n        \"message\": \"Validation Check Passed\",\n        \"sources\": [\n          {\n            \"source_id\": \"6f6b61c2-fe31-42be-b46c-20a0b9685aaf\",\n            \"source_category_type\": \"Document\",\n            \"source_uri\": \"https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf\",\n            \"date\": \"2025-01-25\"\n          }\n        ]\n      }\n    ]\n  },\n  \"income_verification\": {\n    \"request_id\": \"8ef5079a-b3de-44a5-b4ff-c534259e752c\",\n    \"status\": \"Pending\",\n    \"entity_id\": \"b3f6ed8f-bc57-4a23-801e-e744aecb7b03\",\n    \"entity_type\": \"case\",\n    \"datetime_requested\": \"2024-01-01T12:38:45.7110000+00:00\",\n    \"datetime_completed\": \"2024-01-02T12:22:07.7470000+00:00\",\n    \"message\": \"Income request pending\",\n    \"data\": {\n      \"income_details\": [\n        {\n          \"income_recipient\": \"Sharon Smith\",\n          \"income_type\": \"Employment\",\n          \"income_source\": \"BUILDING HOME LTD\",\n          \"annual_gross_pay\": \"23657.04\",\n          \"monthly_gross_pay\": \"1971.42\",\n          \"monthly_deductions\": \"319.49\",\n          \"monthly_net_pay\": \"1561.93\",\n          \"pay_frequencies\": [\n            \"string\"\n          ],\n          \"national_insurance_number\": [\n            \"string\"\n          ],\n          \"national_insurance_letters\": [\n            \"string\"\n          ],\n          \"unique_taxpayer_references\": [\n            \"string\"\n          ],\n          \"job_titles\": [\n            \"string\"\n          ],\n          \"tax_codes\": [\n            \"string\"\n          ],\n          \"paye_references\": [\n            \"string\"\n          ],\n          \"employee_numbers\": [\n            \"string\"\n          ],\n          \"ytd_gross_pay\": \"22472.85\",\n          \"ytd_net_pay\": \"18070.33\",\n          \"ytd_tax_paid\": \"1100.63\",\n          \"ytd_ni_paid\": \"1100.63\",\n          \"ytd_pension_paid\": \"1100.63\",\n          \"ytd_other_deductions\": \"1100.63\",\n          \"additional_information\": {\n            \"bonuses\": [\n              {\n                \"amount\": \"222.22\",\n                \"date\": \"2024-01-01\"\n              }\n            ],\n            \"monthly_student_loan_deductions\": \"222.44\",\n            \"monthly_gross_pay_details\": [\n              {\n                \"category\": \"MonthlyBasicPay\",\n                \"amount\": \"222.44\"\n              }\n            ],\n            \"monthly_deductions_details\": [\n              {\n                \"category\": \"MonthlyIncomeTax\",\n                \"amount\": \"167.15\"\n              }\n            ],\n            \"average_income_items\": [\n              {\n                \"category\": \"PayFromAllEmployments\",\n                \"value\": \"1971.42\"\n              }\n            ],\n            \"average_tax_items\": [\n              {\n                \"category\": \"Tax\",\n                \"short_description\": \"Class 4 NIC\",\n                \"value\": \"1971.42\"\n              }\n            ]\n          },\n          \"income_source_addresses\": [\n            {\n              \"summary_line\": \"Flat 23, Sample Street, London\",\n              \"post_code\": \"SW4 4PL\"\n            }\n          ],\n          \"employee_addresses\": [\n            {\n              \"summary_line\": \"19, Sample Street, London\",\n              \"post_code\": \"SW1 1PN\"\n            }\n          ],\n          \"income_data_sources\": [\n            {\n              \"source_type\": \"Payslip\",\n              \"number_of_sources\": \"1\",\n              \"start_date\": \"2024-01-01\",\n              \"end_date\": \"2024-02-01\",\n              \"data_sources\": [\n                {\n                  \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley\",\n                  \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n                  \"source_category_type\": \"Document\",\n                  \"source_type\": \"Payslip\"\n                }\n              ]\n            }\n          ]\n        }\n      ],\n      \"data_sources\": [\n        {\n          \"source_name\": \"Stmt - current - Feb 2023 - J Smith and J Hayley\",\n          \"source_id\": \"4b9ac393-d34b-4a14-9ee3-88ce2d244e90\",\n          \"source_category_type\": \"Document\",\n          \"source_type\": \"Payslip\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4996c293-2234-4e5c-85fb-6f7126ea006f",
+              "name": "Entity Deleted/Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "completeness-income-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidRequest\",\n  \"status\": 400,\n  \"title\": \"Validation Errors\",\n  \"detail\": \"Entity Id is required.\",\n  \"correlation_id\": \"d28a74a4-82e8-49d5-a84a-95f73ccc4bf7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99cd2ae0-d7aa-4e4a-afc4-1a9ad59a428f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "completeness-income-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"be813fea-3ad6-4083-9e27-e693386dd73e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8441c9e-0fd7-4e8f-91ae-bd31440501d9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "completeness-income-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"7a771ccf-e2c3-48a1-8554-ddee03ee4343\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b603dc4-48d6-417c-9cfb-de13bee99620",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "completeness-income-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"validation_type_id\": \"a072e37a-dee1-4a4e-b098-168a6a1f4603\",\n  \"entity_id\": \"3f615611-3dc3-418b-bed5-a53c4390c97c\",\n  \"entity_type\": \"case\",\n  \"checklist_params\": [\n    {\n      \"source_id\": \"5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1\",\n      \"source_category_type\": \"Document\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"3bf2a265-4055-4342-baf8-c67273bc5b9f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c85d2638-e37a-4fbf-b3c8-9e0fe2de1a4c",
+    "name": "Sikoia Adverse Media Checklist API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

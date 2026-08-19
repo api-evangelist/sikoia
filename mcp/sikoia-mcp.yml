@@ -222,3 +222,9 @@ tools:
 - name: POST_v2-webhooks-secrets
   description: Create a shared secret
   source_operation: openapi/sikoia-openapi.yml#POST_v2-webhooks-secrets
+deployment:
+  mode: none
+  verified: derived
+  tools: 71
+  checked: '2026-08-12'
+  source: catalog MCP census

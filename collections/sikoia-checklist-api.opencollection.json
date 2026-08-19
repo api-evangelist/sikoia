@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Checklist API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Checklist",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run a completeness and income insights check",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/completeness-income-checks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Check Completness and Income.\r\n\r\nThis endpoint executes a two-stage workflow: it first validates the entity against all completeness rules, \r\n\r\nthen automatically initiates income verification upon success.\r\n\r\nA successful response returns the combined data from both processes.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

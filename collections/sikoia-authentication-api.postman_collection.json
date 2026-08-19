@@ -1,0 +1,284 @@
+{
+  "item": [
+    {
+      "id": "2cc03ae3-9fb9-42a4-8996-20026f80f199",
+      "name": "Authentication",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "27d7805d-7634-4485-ac43-3eba7cdf8acd",
+          "name": "Creates an access token",
+          "request": {
+            "name": "Creates an access token",
+            "description": {
+              "content": "### To generate an access token, make a request to one of the following:\r\n- Production Environment: `https://oauth2.sikoia.com` \r\n- Staging Environment: `https://oauth2-staging.sikoia.com`\r\n\r\n ### Ensure that the following parameters are provided: \r\n- `client_id:` See our Guides section for more information on how to obtain your `client_id`.\r\n- `client_secret:` See our Guides section for more information on how to obtain your `client_secret`.\r\n- `grant_type:` Set this parameter to client_credentials.\r\n- `scope:` Set this parameter to: \r\n- * Production Environment: `https://api.sikoia.com/.default`\r\n- * Staging Environment: `https://api-staging.sikoia.com/.default`\r\n\r\n The endpoint will return the access token in JSON Web Token (JWT) format, along with metadata indicating its expiry and validity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "token"
+              ],
+              "host": [
+                "oauth2",
+                "sikoia",
+                "com"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) The type of Oauth 2.0 grant. Must be set to `client_credentials`"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "(Required) The scope of the token. Must be set to `https://api.sikoia.com/.default` for production and `https://api-staging.sikoia.com/.default` for staging"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<uuid>",
+                  "description": "(Required) The client ID of your application"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "(Required) The client secret that you created for your application"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fbc28e65-11f0-4520-9d2c-d1fd12f08cfd",
+              "name": "Returns the access token in JWT format along with metadata about token expiry and validity",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "token"
+                  ],
+                  "host": [
+                    "oauth2",
+                    "sikoia",
+                    "com"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The type of Oauth 2.0 grant. Must be set to `client_credentials`",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The scope of the token. Must be set to `https://api.sikoia.com/.default` for production and `https://api-staging.sikoia.com/.default` for staging",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "https://api.sikoia.com/.default"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID of your application",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "e5ca26ec-f3a0-4d7f-bcf1-b6ebd5446aee"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret that you created for your application",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "Yoa8Q@of26stihrz3~JfP4Wz6TGby0fJFT2^UcU0"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"token_type\": \"Bearer\",\n  \"not_before\": 7965,\n  \"expires_in\": 6350,\n  \"expires_on\": 8333,\n  \"resource\": \"Audience of the token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28dc14d9-dee9-4819-8556-8ac2f986ae07",
+              "name": "Error response compliant with Oauth 2.0 specification",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "token"
+                  ],
+                  "host": [
+                    "oauth2",
+                    "sikoia",
+                    "com"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The type of Oauth 2.0 grant. Must be set to `client_credentials`",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The scope of the token. Must be set to `https://api.sikoia.com/.default` for production and `https://api-staging.sikoia.com/.default` for staging",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "https://api.sikoia.com/.default"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID of your application",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "e5ca26ec-f3a0-4d7f-bcf1-b6ebd5446aee"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret that you created for your application",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "Yoa8Q@of26stihrz3~JfP4Wz6TGby0fJFT2^UcU0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_request\",\n  \"error_description\": \"Invalid client secret is provided\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "23a8f058-3ae7-4af8-adb7-b601866138a8",
+    "name": "Sikoia Adverse Media Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

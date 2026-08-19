@@ -1,0 +1,708 @@
+{
+  "item": [
+    {
+      "id": "d8470bff-e384-4698-8ba7-47db4b2cef8b",
+      "name": "PEPs & Sanctions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3d151874-b12d-46a3-9abd-e059df96a2d5",
+          "name": "Request PEPs & Sanctions search",
+          "request": {
+            "name": "Request PEPs & Sanctions search",
+            "description": {
+              "content": "### Requests a PEPs & Sanctions search for an entity.\r\n\r\nCheck if the entity is listed in any Politically Exposed Persons (PEPs) or Sanctions lists.\r\n\r\n* If the `entity_type` is case, a `search_term` must be included.\r\n* If the `entity_type` is person or company, the search term is taken from the name on the entity. If the `search_term` is included, the entity data is overridden.\r\n* If `entity_type` is person, providing a `birth_date` enhances search accuracy.\r\n* Adjust the `fuzziness` level (ranging from 0-1) to control spelling variations. Lower levels yield fewer variations, while higher levels increase flexibility.\r\n\r\nThis endpoint returns the number of matches the entity has. For detailed match information, refer to the Sikoia Dashboard.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "peps-sanctions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"search_term\": \"<string>\",\n  \"birth_date\": \"<dateTime>\",\n  \"monitored\": \"<boolean>\",\n  \"fuzziness\": \"<float>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "60237192-cf4a-4040-98e5-05597474c581",
+              "name": "PEPs & Sanctions Search",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"search_term\": \"Acme Inc\",\n  \"entity_type\": \"company\",\n  \"entity_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"birth_date\": \"string\",\n  \"monitored\": \"true\",\n  \"fuzziness\": \"0.2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"e6b1b4d6-d5cf-426e-a4dc-d9c0264299df\",\n  \"search_ref\": \"1729289992-b91nmEFh\",\n  \"status\": \"Complete\",\n  \"entity_type\": \"company\",\n  \"entity_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"search_term\": \"Acme Inc\",\n  \"birthdate\": \"1950-08-08\",\n  \"monitored\": \"true\",\n  \"datetime_requested\": \"2024-02-12T16:02:06.9000000+00:00\",\n  \"total_matches\": \"9\",\n  \"search_certificate_uri\": \"https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfc04e76-43fb-481c-8dca-42bb14205cd6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"search_term\": \"Acme Inc\",\n  \"entity_type\": \"company\",\n  \"entity_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"birth_date\": \"string\",\n  \"monitored\": \"true\",\n  \"fuzziness\": \"0.2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"a83b5de5-68f0-4e96-a254-8a8a1392ed8b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcd391ae-a7dc-4921-a474-0bdd9abb62f0",
+              "name": "Details Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"search_term\": \"Acme Inc\",\n  \"entity_type\": \"company\",\n  \"entity_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"birth_date\": \"string\",\n  \"monitored\": \"true\",\n  \"fuzziness\": \"0.2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 2cd278b5-eb0d-4813-82ee-1755bfbaaa26.\",\n  \"correlation_id\": \"f574a91c-1ee3-47bb-afaf-0cbdd957d666\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d7f40ed-184a-4bac-a793-b0072ceba067",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"search_term\": \"Acme Inc\",\n  \"entity_type\": \"company\",\n  \"entity_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"birth_date\": \"string\",\n  \"monitored\": \"true\",\n  \"fuzziness\": \"0.2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"6c1018af-58c0-4bd5-a8b3-723237c8cf05\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae09bde1-7acb-46d5-9710-24ba7ad7f5d1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"search_term\": \"Acme Inc\",\n  \"entity_type\": \"company\",\n  \"entity_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n  \"birth_date\": \"string\",\n  \"monitored\": \"true\",\n  \"fuzziness\": \"0.2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"5c1b6b40-2c45-4bfd-9384-d487cdab5f16\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7906a160-68fb-4bb9-8e30-d9994298e24a",
+          "name": "List all PEPs & Sanctions searches",
+          "request": {
+            "name": "List all PEPs & Sanctions searches",
+            "description": {
+              "content": "### Returns a list of all PEPs & Sanctions searches for an entity.\r\n\r\nThe response returns the number of matches returned in each search.\r\nFor detailed match information, refer to the Sikoia Dashboard.\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                ":entity_type",
+                ":entity_id",
+                "peps-sanctions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_type",
+                  "description": "(Required) The type of entity (company, person, case)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_id",
+                  "description": "(Required) The company_id, person_id or case_id of the entity"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1229f8e-47bc-4bbd-a67b-544f841269d5",
+              "name": "Adverse Media Retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) The company_id, person_id or case_id of the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"request_id\": \"e6b1b4d6-d5cf-426e-a4dc-d9c0264299df\",\n    \"search_ref\": \"1729289992-b91nmEFh\",\n    \"status\": \"Complete\",\n    \"entity_type\": \"company\",\n    \"entity_id\": \"78662640-73fc-4fa9-8367-ef4660d35cee\",\n    \"search_term\": \"Acme Inc\",\n    \"birthdate\": \"1950-08-08\",\n    \"monitored\": \"true\",\n    \"datetime_requested\": \"2024-02-12T16:02:06.9000000+00:00\",\n    \"total_matches\": \"9\",\n    \"search_certificate_uri\": \"https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2015d55-5b10-46ef-be22-773af0a26c47",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) The company_id, person_id or case_id of the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"InvalidToken\",\n  \"status\": 401,\n  \"title\": \"Invalid Token\",\n  \"detail\": \"Invalid token\",\n  \"correlation_id\": \"584f3e31-8319-4ca8-8fed-659a59e34cee\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2465de37-6241-4384-ae63-a9e7830a5338",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) The company_id, person_id or case_id of the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ResourceNotFound\",\n  \"status\": 404,\n  \"title\": \"Resource Not Found\",\n  \"detail\": \"No resources found with id 06ed4634-9775-4c59-8fbf-326f1729ce2d.\",\n  \"correlation_id\": \"5089355a-3b89-490f-8143-8efedce5c609\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7899add-ef17-41a2-af42-abae65aa11f8",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) The company_id, person_id or case_id of the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"RateLimit\",\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"detail\": \"You've exceeded the maximum API request limit per minute. Please try again later.\",\n  \"correlation_id\": \"ca604701-282d-42a1-a684-fb4cfb6a8f70\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f000081-30eb-47ab-824a-77ebbc8e6e9a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":entity_type",
+                    ":entity_id",
+                    "peps-sanctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_type",
+                      "description": "(Required) The type of entity (company, person, case)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) The company_id, person_id or case_id of the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"ServerError\",\n  \"status\": 500,\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"Something has gone wrong, please try again\",\n  \"correlation_id\": \"a00d2b49-2fc3-43f8-9e42-d1fddb76a52b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sikoia.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3c2986c7-589a-4467-82ef-979b2fff31d3",
+    "name": "Sikoia Adverse Media PEPs & Sanctions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

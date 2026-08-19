@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Income & Employer Verification API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Income & Employer Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request income & employer verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/income-employer",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Requests an income and employer verification for a case, person, or company\r\n\r\nThis endpoint automatically verifies an entity’s income from various sources including documents and open banking connections.\r\n\r\nTo proceed, ensure that both `entity_id` and `entity_type` are valid and ensure that at least one income-related document or open banking connection has been attached to the entity.\r\n\r\nA successful response will include a `request_id` that can be used to check the status of the request."
+        },
+        {
+          "info": {
+            "name": "List all income & employer verifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/income-employer",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "Entity Type"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Entity ID"
+              }
+            ]
+          },
+          "docs": "### This returns a list of all the income employer requests for the specified entity.\r\n\r\nReturns a list of all income & employer verifications requested for an entity.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve the income and employer verification using the GET `/v2/income-employer/{request_id}` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve income & employer verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/income-employer/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "### Returns an income & employer verification.\r\n\r\nThis endpoint returns the income & employer verification associated with a specific `request_id`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve detailed payslip, bank statement, tax documents and/or open banking connection data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/income-employer/:request_id/additional-details",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "### Returns detailed data from individual payslips, bank statements, tax documents and/or open banking connections behind an income & employer verification.\r\n\r\nThis endpoint returns data from all the individual payslips, bank statements, tax documents and/or open banking connections used to generate a specific income & employer verification identified by a unique `request_id`.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

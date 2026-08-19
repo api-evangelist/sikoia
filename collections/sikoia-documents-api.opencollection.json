@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Documents API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a document to an entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/documents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Uploads a document to a `case`, `person`, or `company`.\r\n\r\nThe document must be base64 encoded and included as a string in the file field.\r\n\r\nEnsure that the `file_name` field includes the file extension.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/documents/:document_id",
+            "params": [
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the document"
+              }
+            ]
+          },
+          "docs": "### Returns a document.\r\n\r\nThe document is returned as a short lived URI.\r\n"
+        },
+        {
+          "info": {
+            "name": "Delete a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sikoia.com/v2/documents/:document_id",
+            "params": [
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the document"
+              }
+            ]
+          },
+          "docs": "### Deletes a document.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all documents for an entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/documents",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of entity (company, person, case)"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "The company_id, person_id or case_id of the entity"
+              }
+            ]
+          },
+          "docs": "### Returns a list of documents for an entity.\r\n\r\nThe list includes the `document_id` for each document, which can be used to retrieve or delete the file using the following endpoints:\r\n*`GET /v2/documents/{document_id}`\r\n*`DELETE /v2/documents/{document_id}`\r\n"
+        },
+        {
+          "info": {
+            "name": "List all integrity checklist requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/integrity-checks",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "Entity Type"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Entity ID"
+              }
+            ]
+          },
+          "docs": "### List all integrity checklist requests.\r\n\r\nReturns a list of all integrity checklists requested for an entity.\r\n\r\nThe list includes the document_id for each request, which can be used to retrieve the integrity check rules result using the GET `/v2/documents/{document_id}/integrity-checks` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve integrity checklist result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/documents/:document_id/integrity-checks",
+            "params": [
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "### Returns an instance of a integrity checklist.\r\n\r\nThis endpoint returns the integrity check results associated with a specific `document_id`.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

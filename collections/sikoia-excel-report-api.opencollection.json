@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Excel Report API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Excel Report",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve excel report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/excel-report",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "Entity Type"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Entity ID"
+              }
+            ]
+          },
+          "docs": "### Generates an Excel report with a summary of key data for the specified entity.\r\n\r\nThis endpoint returns a report containing data on income and employment verification, affordability insights, validation checklists, and integrity checks.\r\n\r\nThe only validation checklists that are included in the report, if you have requested them, are:\r\n- `Last 3 months of payslips`\r\n- `Last 3 months of bank transactions`\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

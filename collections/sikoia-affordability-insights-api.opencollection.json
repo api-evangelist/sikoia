@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Affordability Insights API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Affordability Insights",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request affordability insight",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/affordability-insights",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Request an affordability insights for a `case`, `person`, or `company` entity.\r\n\r\nBefore making the request, ensure that at least one data source with a status of `Complete` is associated with the entity.\r\nA successful response will include a `request_id` that can be used to check the status of the request.\r\n"
+        },
+        {
+          "info": {
+            "name": "List all affordability insight requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/:entity_type/:entity_id/affordability-insights",
+            "params": [
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of entity (company, person, case)"
+              },
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all affordability insights requested for an entity.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve the affordability insight using the `GET /v2/affordability-insights/{request_id}` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve affordability insight",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/affordability-insights/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the request"
+              }
+            ]
+          },
+          "docs": "### Returns an affordability insight.\r\n\r\nThis endpoint returns the affordability insight associated with a specific `request_id`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a monthly summary of transaction data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/affordability-insights/:request_id/transactions",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the request"
+              }
+            ]
+          },
+          "docs": "### Returns aggregated transaction data per month for an affordability insight.\r\n\r\nThis endpoint returns a monthly summary of all the transactions used to generate a specific affordability insight identified by a unique `request_id`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a full breakdown of all transaction data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/affordability-insights/:request_id/transaction-details",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the request"
+              }
+            ]
+          },
+          "docs": "### Returns all transactions for an affordability insight.\r\n\r\nThis endpoint returns all the transactions used to generate a specific affordability insight identified by a unique `request_id`.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

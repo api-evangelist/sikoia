@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sikoia Adverse Media Company Credit Report API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Company Credit Report",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request credit report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/company-credit-reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Requests a credit report for a company.\r\n\r\nYou can create a request with only the `company_id`, and the necessary data will be retrieved from the company entity. A 422 - Unprocessable Error will be raised if the company entity is missing `company_number` or `country_code`.\r\n\r\nAlternatively, you can override the company entity details by sending `company_number`, `company_name`, and `country_code` alongside the `company_id` in the request body. The credit report returned will be associated wi"
+        },
+        {
+          "info": {
+            "name": "List all credit report requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/companies/:company_id/credit-reports",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the Company"
+              }
+            ]
+          },
+          "docs": "### Returns a list of all credit reports requested for a company.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve detailed company credit report data using the `GET /v2/company-credit-reports/{request_id}` endpoint.\r\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve credit report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sikoia.com/v2/company-credit-reports/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Sikoia ID for the request"
+              }
+            ]
+          },
+          "docs": "### Returns a company credit report.\r\n\r\nThis endpoint returns the full company credit report associated with a specific `request_id`.\r\n"
+        },
+        {
+          "info": {
+            "name": "Resolve credit report picklist",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sikoia.com/v2/company-credit-reports/picklist",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Resolves a company credit report picklist.\r\n\r\nTo resolve a picklist, send the original `request_id` and the `picklist_index` to this endpoint.\r\n\r\nThis will create a new entry in the list of Credit Report requests for the company entity.\r\n\r\nYou can retrieve a list of all credit report requests for a company using the `GET /v2/companies/{company_id}/credit-reports` endpoint.\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
