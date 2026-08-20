@@ -34,6 +34,19 @@ created: '2026-07-17'
 modified: '2026-07-21'
 tags:
 - Company
+- Financial-Services
+- Identity Verification
+- KYC
+- KYB
+- Onboarding
+- Open Banking
+- Credit
+- Affordability
+- Fraud & AML
+- Document Verification
+- RegTech
+tags_raw:
+- Company
 - Financial Services
 - Identity Verification
 - KYC
@@ -310,6 +323,8 @@ apis:
   humanURL: https://docs.sikoia.com/docs/welcome
   baseURL: https://api.sikoia.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
