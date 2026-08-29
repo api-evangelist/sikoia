@@ -1,0 +1,67 @@
+slug: sikoia
+provider: Sikoia
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: PEPs & Sanctions
+  spec_file: sikoia-peps-sanctions-api-openapi.yml
+  capability_id: BC-1400.20
+  capability_id_l1: BC-1400
+  capability_name: Sanctions Screening Management
+  confidence: 0.85
+  evidence: POST /v2/peps-sanctions "Request PEPs & Sanctions search"; schema BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingRequest
+  reason: Explicit politically-exposed-person and sanctions list screening against an AML provider — name
+    screening and hit retrieval. Sanctions Screening Management is the closest fit; some of it also sits
+    under KYC PEP screening, hence 0.85 rather than 0.95.
+- tag: Adverse Media
+  spec_file: sikoia-adverse-media-api-openapi.yml
+  capability_id: BC-1400
+  capability_id_l1: BC-1400
+  capability_name: Financial Crime Management
+  confidence: 0.7
+  evidence: '"Request Adverse Media search"; schema "ComplyAdvantage.AntiMoneyLaunderingRequest"'
+  reason: Adverse media / AML screening searches against a screening provider, i.e. financial-crime screening
+    on customers and entities. L2 left null because adverse media sits between sanctions/PEP name screening
+    and KYC due diligence.
+- tag: Affordability Insights
+  spec_file: sikoia-affordability-insights-api-openapi.yml
+  capability_id: BC-1320.20
+  capability_id_l1: BC-1320
+  capability_name: Credit Underwriting & Decisioning Management
+  confidence: 0.7
+  evidence: '"Request affordability insight"; "Retrieve a monthly summary of transaction data"; schema
+    "AffordabilityInsights.Response.Mapped.Cashflow"'
+  reason: Derives cash-flow/affordability indicators from open banking transaction data for lending decisions,
+    which is the financial-spreading and decisioning input of credit underwriting for a lender-facing
+    verification platform.
+- tag: Cases
+  spec_file: sikoia-cases-api-openapi.yml
+  capability_id: BC-1300.20
+  capability_id_l1: BC-1300
+  capability_name: KYC & Customer Due Diligence Management
+  confidence: 0.7
+  evidence: 'vendor: "automates KYC/KYB and onboarding by grouping companies and people into cases"; schemas
+    "CaseManagement.Requests.CreateCaseRequest", "CaseCompanyRecord", "CasePersonRecord"'
+  reason: Cases group the companies and persons subject to verification, forming the container for KYC/KYB
+    due-diligence enrichment. Some ambiguity between onboarding and CDD sub-capabilities, hence 0.7.
+- tag: Company Registry
+  spec_file: sikoia-company-registry-api-openapi.yml
+  capability_id: BC-1300.20
+  capability_id_l1: BC-1300
+  capability_name: KYC & Customer Due Diligence Management
+  confidence: 0.7
+  evidence: POST /v2/company-registry-data "Request registry data"; POST /v2/company-registry-data/search
+    "Search for a company"; schemas PersonOfficer, Owners, Insolvency, Filing, Charge
+  reason: Retrieval of official company-registry data — officers, beneficial owners, insolvency, filings
+    — is the core evidence-gathering step of KYB/customer due diligence, which the vendor states it automates
+    ("automates KYC/KYB and onboarding ... company registry data").

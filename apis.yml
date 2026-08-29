@@ -346,6 +346,9 @@ apis:
   - type: APIReference
     url: https://docs.sikoia.com/reference/introduction-1
 common:
+- type: CapabilityMap
+  url: capabilities/sikoia-capability-edges.yml
+  name: Sikoia Business Capability Map
 - type: DeveloperPortal
   url: https://docs.sikoia.com/docs/welcome
 - type: Documentation
