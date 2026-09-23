@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media Companies & People API
+  title: Sikoia Companies & People API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,16 @@ paths:
       tags:
       - Companies & People
       summary: Add entities to a case
-      description: "### Adds companies and / or people to an existing case.\r\n\r\nThis endpoint behaves the same as the Create Case endpoint when adding companies and / or people.\r\n\r\nWhen adding companies, you can retrieve company registration data by setting `registry_search` to `true`, and ensuring that `company_name`, `company_number`, and `jurisdiction_code` are not empty. If the data cannot be found, the case is created with the provided company details. If the company registration data is found, the `status`, `number_of_officers`, and `number_of_owners` are updated to reflect the registry data.\r\n\r\nAdditionally, you can choose to add all the company's (human) officers to the case by setting `add_directors` to `true`. Note that this flag is applicable only when `registry_search` is set to `true`.\r\n"
+      description: '### Adds companies and / or people to an existing case.
+
+
+        This endpoint behaves the same as the Create Case endpoint when adding companies and / or people.
+
+
+        When adding companies, you can retrieve company registration data by setting `registry_search` to `true`, and ensuring that `company_name`, `company_number`, and `jurisdiction_code` are not empty. If the data cannot be found, the case is created with the provided company details. If the company registration data is found, the `status`, `number_of_officers`, and `number_of_owners` are updated to reflect the registry data.
+
+
+        Additionally, you can choose to add all the company''s (human) officers to the case by setting `add_directors` to `true`. Note that this flag is applicable only when `registry_search` is set to `true`.'
       operationId: POST_v2-cases-case_id-entities
       parameters:
       - name: case_id
@@ -185,7 +194,13 @@ paths:
       tags:
       - Companies & People
       summary: Update entities in a case
-      description: "### Updates existing companies and / or people in a case.\r\n\r\nAll fields are optional, except for `company_id` or `person_id`; however, the request must include at least one field.\r\n\r\nTo clear a field, simply send an empty string as the field value.\r\n"
+      description: '### Updates existing companies and / or people in a case.
+
+
+        All fields are optional, except for `company_id` or `person_id`; however, the request must include at least one field.
+
+
+        To clear a field, simply send an empty string as the field value.'
       operationId: PATCH_v2-cases-case_id-entities
       parameters:
       - name: case_id
@@ -347,7 +362,13 @@ paths:
       tags:
       - Companies & People
       summary: Delete entities in a case
-      description: "### Deletes companies and / or people from a case.\r\n\r\nAccepts a list of person and / or company IDs to delete from the case.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+      description: '### Deletes companies and / or people from a case.
+
+
+        Accepts a list of person and / or company IDs to delete from the case.
+
+
+        Please note that this action cannot be undone.'
       operationId: POST_v2-cases-case_id-entities-delete
       parameters:
       - name: case_id
@@ -485,82 +506,57 @@ paths:
                 correlation_id: 2374085c-c9e0-4afa-97f0-1d428ba480a7
 components:
   schemas:
-    SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesCompanyRequestModel:
-      title: Company
+    SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesPersonRequestModel:
+      title: Person
       required:
-      - company_id
+      - person_id
       type: object
       properties:
-        company_id:
+        person_id:
           type: string
-          description: Sikoia ID for the company
+          description: Sikoia ID for the person
           format: uuid
-          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
-        company_name:
-          type: string
-          description: The name of the company
-          nullable: true
+          example: 8303ce21-3120-4981-9a19-560ef110502b
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The person's first name
+          example: Wilson
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The person's last name
+          example: Pascale
+        email:
+          type:
+          - string
+          - 'null'
+          description: The person's email address
+          format: email
+          example: wislon@acme.ltd.uk
+        postal_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel'
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The person's date of birth
+          format: date
+          example: '1985-06-12'
+        employer:
+          type:
+          - string
+          - 'null'
+          description: The name of the person's employer
           example: Acme Limited
-        company_number:
-          type: string
-          description: The company registration number
-          nullable: true
-          example: '77642080'
-        jurisdiction_code:
-          pattern: ^\w{2}(_\w{2})?$
-          type: string
-          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
-          nullable: true
-          example: GB
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel:
-      title: Address
-      type: object
-      properties:
-        house_number:
-          type: string
-          description: The building or house number
-          nullable: true
-          example: '123'
-        building_name:
-          type: string
-          description: The building or house name
-          nullable: true
-          example: Main House
-        sub_building_name:
-          type: string
-          description: The name of the sub-building
-          nullable: true
-        address_line_1:
-          type: string
-          description: The first line of the postal address, typically used for the street address
-          nullable: true
-          example: Main Street
-        address_line_2:
-          type: string
-          description: The second line of the postal address, typically used for additional information such as apartment or suite number
-          nullable: true
-          example: Apt.101
-        locality:
-          type: string
-          description: The locality of the postal address
-          nullable: true
-          example: Test County
-        city:
-          type: string
-          description: The city of the postal address
-          nullable: true
-          example: Test Town
-        post_code:
-          type: string
-          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
-          nullable: true
-          example: X9 9AA
-        country:
-          type: string
-          description: Two letter ISO country code
-          nullable: true
-          example: GB
+        reference_person_id:
+          type:
+          - string
+          - 'null'
+          description: Your external reference for the ID of the person/applicant in the case
+          example: Wilson5432
       additionalProperties: false
     SikoiaSharedModels.CaseManagement.Responses.CompanyRecordResponseModel:
       title: Company
@@ -577,14 +573,16 @@ components:
           description: The name of the company
           example: Acme Limited
         company_number:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The company registration number
-          nullable: true
           example: '77642080'
         jurisdiction_code:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
-          nullable: true
           example: GB
         status:
           type: string
@@ -609,59 +607,6 @@ components:
         pep_sanction_requested:
           type: boolean
           deprecated: true
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel:
-      title: Address
-      type: object
-      properties:
-        house_number:
-          type: string
-          description: The building or house number
-          nullable: true
-          example: '123'
-        building_name:
-          type: string
-          description: The building or house name
-          nullable: true
-          example: Main House
-        sub_building_name:
-          type: string
-          description: The name of the sub-building
-          nullable: true
-        address_line_1:
-          type: string
-          description: The first line of the postal address, typically used for the street address.
-          nullable: true
-          example: Main Street
-        address_line_2:
-          type: string
-          description: The second line of the postal address, typically used for additional information such as apartment or suite number.
-          nullable: true
-          example: Apt. 101
-        locality:
-          type: string
-          description: The locality of the postal address.
-          nullable: true
-          example: Test Country
-        city:
-          type: string
-          description: The city of the postal address.
-          nullable: true
-          example: Test Town
-        post_code:
-          type: string
-          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
-          nullable: true
-          example: X9 9AA
-        country:
-          type: string
-          description: Two letter ISO country code
-          nullable: true
-          example: GB
-        summary_line:
-          type: string
-          nullable: true
-          example: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
       additionalProperties: false
     SikoiaCore.Common.SikoiaErrorResponse:
       title: Error Response
@@ -690,38 +635,190 @@ components:
           readOnly: true
       additionalProperties: false
       description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.CaseManagement.Responses.Owner:
+    SikoiaSharedModels.CaseManagement.Responses.PersonRecordResponseModel:
+      title: Person
       type: object
       properties:
-        owner_id:
-          type: string
-          description: The case owner id
-          nullable: true
-          example: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
-        owner_type:
-          enum:
-          - User
-          type: string
-          description: The type of owner. This should be set to 'user'
-          nullable: true
-          example: user
+        person_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the person
+          format: uuid
+          readOnly: true
+          example: 8303ce21-3120-4981-9a19-560ef110502b
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The person's first name
+          example: Wilson
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The person's last name
+          example: Pascale
+        name:
+          type:
+          - string
+          - 'null'
+          description: The person's full name
+          readOnly: true
+          example: Wilson Pascale
+        email:
+          type:
+          - string
+          - 'null'
+          description: The person's email address
+          format: email
+          example: wislon@acme.ltd.uk
+        postal_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel'
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The person's date of birth
+          format: date
+          example: '1985-06-12'
+        employer:
+          type:
+          - string
+          - 'null'
+          description: The name of the person's employer
+          example: Acme Limited
+        is_officer:
+          type: boolean
+          description: Whether the person is an officer of their employer
+          readOnly: true
+        appointments:
+          type:
+          - string
+          - 'null'
+        reference_person_id:
+          type:
+          - string
+          - 'null'
+          description: Your external reference for the ID of the person/applicant in the case
+          example: Wilson5432
+        media_adverse_requested:
+          type: boolean
+          deprecated: true
+        pep_sanction_requested:
+          type: boolean
+          deprecated: true
       additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.AddEntitiesToCaseRequest:
-      title: Add Entities
+    SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord:
+      title: Company
+      required:
+      - company_name
       type: object
       properties:
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord'
-          description: List of companies to add
-          nullable: true
-        persons:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord'
-          description: List of people to add
-          nullable: true
+        company_name:
+          minLength: 1
+          type: string
+          description: The name of the company
+          example: Acme Limited
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '77642080'
+        jurisdiction_code:
+          pattern: ^\w{2}(_\w{2})?$
+          type:
+          - string
+          - 'null'
+          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
+          example: GB
+        registry_search:
+          type: boolean
+          description: Search registries for the company details, defaults to `false`
+        add_directors:
+          type: boolean
+          description: Add directors to the list of people on the case, `registry_search` must be `true`, defaults to `false`
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord:
+      title: Person
+      required:
+      - first_name
+      - last_name
+      type: object
+      properties:
+        first_name:
+          minLength: 1
+          type: string
+          description: The person's first name
+          example: Wilson
+        last_name:
+          minLength: 1
+          type: string
+          description: The person's last name
+          example: Pascale
+        email:
+          type:
+          - string
+          - 'null'
+          description: The person's email address
+          format: email
+          example: wislon@acme.ltd.uk
+        postal_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel'
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The person's date of birth
+          example: '1985-06-12'
+        employer:
+          type:
+          - string
+          - 'null'
+          description: The name of the person's employer
+          example: Acme Limited
+        is_officer:
+          type: boolean
+          description: Whether the person is an officer of their employer
+          readOnly: true
+        reference_person_id:
+          type:
+          - string
+          - 'null'
+          description: Your external reference for the ID of the person/applicant in the case
+          example: Wilson5432
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesCompanyRequestModel:
+      title: Company
+      required:
+      - company_id
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: Sikoia ID for the company
+          format: uuid
+          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the company
+          example: Acme Limited
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '77642080'
+        jurisdiction_code:
+          pattern: ^\w{2}(_\w{2})?$
+          type:
+          - string
+          - 'null'
+          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
+          example: GB
       additionalProperties: false
     SikoiaSharedModels.CaseManagement.Responses.CaseResponse:
       title: Case Record
@@ -756,54 +853,63 @@ components:
           description: The stage of the case
           example: New
         datetime_created:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The time the case was created
-          nullable: true
           readOnly: true
           example: '2023-02-10T10:59:46.026Z'
         datetime_last_modified:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The time the case was last modified
-          nullable: true
           readOnly: true
           example: '2023-02-12T13:04:21.326Z'
         reference:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Your external reference for the case
-          nullable: true
           example: LOAN03584
         reference_customer_id:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Your external reference for the ID of the customer the case belongs to
-          nullable: true
           example: CUST67044
         reference_customer_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Your external reference for the name of the customer the case belongs to
-          nullable: true
           example: Building Society Ltd
         description:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The description for the case
-          nullable: true
           example: Acme Ltd looking to borrow money to fund a new fleet of delivery vehicles.
         source:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The source of the case, this defaults to `API`
-          nullable: true
           example: API
         owner:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The owner of the case
-          nullable: true
           example: Cecilia Adams
           deprecated: true
         ownership:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.Owner'
           description: The list of owners of the case
-          nullable: true
         number_of_companies:
           type: integer
           description: Number of companies in the case
@@ -817,238 +923,217 @@ components:
           readOnly: true
           example: '5'
         companies:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.CompanyRecordResponseModel'
-          nullable: true
         persons:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.PersonRecordResponseModel'
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord:
-      title: Company
-      required:
-      - company_name
-      type: object
-      properties:
-        company_name:
-          minLength: 1
-          type: string
-          description: The name of the company
-          example: Acme Limited
-        company_number:
-          type: string
-          description: The company registration number
-          nullable: true
-          example: '77642080'
-        jurisdiction_code:
-          pattern: ^\w{2}(_\w{2})?$
-          type: string
-          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
-          nullable: true
-          example: GB
-        registry_search:
-          type: boolean
-          description: Search registries for the company details, defaults to `false`
-        add_directors:
-          type: boolean
-          description: Add directors to the list of people on the case, `registry_search` must be `true`, defaults to `false`
       additionalProperties: false
     SikoiaSharedModels.CaseManagement.Requests.DeleteCaseEntityRequest:
       title: Delete Entities
       type: object
       properties:
         companies:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: List of company IDs to delete
           format: uuid
-          nullable: true
           example: '["ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f"]'
         persons:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: List of person IDs to delete
           format: uuid
-          nullable: true
           example: '["c28c88d6-7fb5-4c2f-a5a1-559cd2675293"]'
       additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesPersonRequestModel:
-      title: Person
-      required:
-      - person_id
+    SikoiaSharedModels.CaseManagement.Requests.AddEntitiesToCaseRequest:
+      title: Add Entities
       type: object
       properties:
-        person_id:
-          type: string
-          description: Sikoia ID for the person
-          format: uuid
-          example: 8303ce21-3120-4981-9a19-560ef110502b
-        first_name:
-          type: string
-          description: The person's first name
-          nullable: true
-          example: Wilson
-        last_name:
-          type: string
-          description: The person's last name
-          nullable: true
-          example: Pascale
-        email:
-          type: string
-          description: The person's email address
-          format: email
-          nullable: true
-          example: wislon@acme.ltd.uk
-        postal_address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel'
-        date_of_birth:
-          type: string
-          description: The person's date of birth
-          format: date
-          nullable: true
-          example: '1985-06-12'
-        employer:
-          type: string
-          description: The name of the person's employer
-          nullable: true
-          example: Acme Limited
-        reference_person_id:
-          type: string
-          description: Your external reference for the ID of the person/applicant in the case
-          nullable: true
-          example: Wilson5432
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord'
+          description: List of companies to add
+        persons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord'
+          description: List of people to add
       additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord:
-      title: Person
-      required:
-      - first_name
-      - last_name
+    SikoiaSharedModels.CaseManagement.Responses.Owner:
       type: object
       properties:
-        first_name:
-          minLength: 1
-          type: string
-          description: The person's first name
-          example: Wilson
-        last_name:
-          minLength: 1
-          type: string
-          description: The person's last name
-          example: Pascale
-        email:
-          type: string
-          description: The person's email address
-          format: email
-          nullable: true
-          example: wislon@acme.ltd.uk
-        postal_address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel'
-        date_of_birth:
-          type: string
-          description: The person's date of birth
-          nullable: true
-          example: '1985-06-12'
-        employer:
-          type: string
-          description: The name of the person's employer
-          nullable: true
-          example: Acme Limited
-        is_officer:
-          type: boolean
-          description: Whether the person is an officer of their employer
-          readOnly: true
-        reference_person_id:
-          type: string
-          description: Your external reference for the ID of the person/applicant in the case
-          nullable: true
-          example: Wilson5432
+        owner_id:
+          type:
+          - string
+          - 'null'
+          description: The case owner id
+          example: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+        owner_type:
+          enum:
+          - User
+          type:
+          - string
+          - 'null'
+          description: The type of owner. This should be set to 'user'
+          example: user
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel:
+      title: Address
+      type: object
+      properties:
+        house_number:
+          type:
+          - string
+          - 'null'
+          description: The building or house number
+          example: '123'
+        building_name:
+          type:
+          - string
+          - 'null'
+          description: The building or house name
+          example: Main House
+        sub_building_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the sub-building
+        address_line_1:
+          type:
+          - string
+          - 'null'
+          description: The first line of the postal address, typically used for the street address
+          example: Main Street
+        address_line_2:
+          type:
+          - string
+          - 'null'
+          description: The second line of the postal address, typically used for additional information such as apartment or suite number
+          example: Apt.101
+        locality:
+          type:
+          - string
+          - 'null'
+          description: The locality of the postal address
+          example: Test County
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city of the postal address
+          example: Test Town
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
+          example: X9 9AA
+        country:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code
+          example: GB
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel:
+      title: Address
+      type: object
+      properties:
+        house_number:
+          type:
+          - string
+          - 'null'
+          description: The building or house number
+          example: '123'
+        building_name:
+          type:
+          - string
+          - 'null'
+          description: The building or house name
+          example: Main House
+        sub_building_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the sub-building
+        address_line_1:
+          type:
+          - string
+          - 'null'
+          description: The first line of the postal address, typically used for the street address.
+          example: Main Street
+        address_line_2:
+          type:
+          - string
+          - 'null'
+          description: The second line of the postal address, typically used for additional information such as apartment or suite number.
+          example: Apt. 101
+        locality:
+          type:
+          - string
+          - 'null'
+          description: The locality of the postal address.
+          example: Test Country
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city of the postal address.
+          example: Test Town
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
+          example: X9 9AA
+        country:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code
+          example: GB
+        summary_line:
+          type:
+          - string
+          - 'null'
+          example: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
       additionalProperties: false
     SikoiaSharedModels.CaseManagement.Requests.UpdateCaseEntitiesRequest:
       title: Update Entities
       type: object
       properties:
         companies:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesCompanyRequestModel'
           description: List of companies to update
-          nullable: true
         persons:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesPersonRequestModel'
           description: List of people to update
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Responses.PersonRecordResponseModel:
-      title: Person
-      type: object
-      properties:
-        person_id:
-          type: string
-          description: Sikoia ID for the person
-          format: uuid
-          nullable: true
-          readOnly: true
-          example: 8303ce21-3120-4981-9a19-560ef110502b
-        first_name:
-          type: string
-          description: The person's first name
-          nullable: true
-          example: Wilson
-        last_name:
-          type: string
-          description: The person's last name
-          nullable: true
-          example: Pascale
-        name:
-          type: string
-          description: The person's full name
-          nullable: true
-          readOnly: true
-          example: Wilson Pascale
-        email:
-          type: string
-          description: The person's email address
-          format: email
-          nullable: true
-          example: wislon@acme.ltd.uk
-        postal_address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel'
-        date_of_birth:
-          type: string
-          description: The person's date of birth
-          format: date
-          nullable: true
-          example: '1985-06-12'
-        employer:
-          type: string
-          description: The name of the person's employer
-          nullable: true
-          example: Acme Limited
-        is_officer:
-          type: boolean
-          description: Whether the person is an officer of their employer
-          readOnly: true
-        appointments:
-          type: string
-          nullable: true
-        reference_person_id:
-          type: string
-          description: Your external reference for the ID of the person/applicant in the case
-          nullable: true
-          example: Wilson5432
-        media_adverse_requested:
-          type: boolean
-          deprecated: true
-        pep_sanction_requested:
-          type: boolean
-          deprecated: true
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

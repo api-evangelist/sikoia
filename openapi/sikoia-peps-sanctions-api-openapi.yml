@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media PEPs & Sanctions API
+  title: Sikoia PEPs & Sanctions API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,22 @@ paths:
       tags:
       - PEPs & Sanctions
       summary: Request PEPs & Sanctions search
-      description: "### Requests a PEPs & Sanctions search for an entity.\r\n\r\nCheck if the entity is listed in any Politically Exposed Persons (PEPs) or Sanctions lists.\r\n\r\n* If the `entity_type` is case, a `search_term` must be included.\r\n* If the `entity_type` is person or company, the search term is taken from the name on the entity. If the `search_term` is included, the entity data is overridden.\r\n* If `entity_type` is person, providing a `birth_date` enhances search accuracy.\r\n* Adjust the `fuzziness` level (ranging from 0-1) to control spelling variations. Lower levels yield fewer variations, while higher levels increase flexibility.\r\n\r\nThis endpoint returns the number of matches the entity has. For detailed match information, refer to the Sikoia Dashboard.\r\n"
+      description: '### Requests a PEPs & Sanctions search for an entity.
+
+
+        Check if the entity is listed in any Politically Exposed Persons (PEPs) or Sanctions lists.
+
+
+        * If the `entity_type` is case, a `search_term` must be included.
+
+        * If the `entity_type` is person or company, the search term is taken from the name on the entity. If the `search_term` is included, the entity data is overridden.
+
+        * If `entity_type` is person, providing a `birth_date` enhances search accuracy.
+
+        * Adjust the `fuzziness` level (ranging from 0-1) to control spelling variations. Lower levels yield fewer variations, while higher levels increase flexibility.
+
+
+        This endpoint returns the number of matches the entity has. For detailed match information, refer to the Sikoia Dashboard.'
       operationId: POST_v2-peps-sanctions
       requestBody:
         description: ''
@@ -110,7 +125,12 @@ paths:
       tags:
       - PEPs & Sanctions
       summary: List all PEPs & Sanctions searches
-      description: "### Returns a list of all PEPs & Sanctions searches for an entity.\r\n\r\nThe response returns the number of matches returned in each search.\r\nFor detailed match information, refer to the Sikoia Dashboard.\r\n"
+      description: '### Returns a list of all PEPs & Sanctions searches for an entity.
+
+
+        The response returns the number of matches returned in each search.
+
+        For detailed match information, refer to the Sikoia Dashboard.'
       operationId: GET_v2-entity_type-entity_id-peps-sanctions
       parameters:
       - name: entity_type
@@ -200,6 +220,78 @@ paths:
                 correlation_id: a00d2b49-2fc3-43f8-9e42-d1fddb76a52b
 components:
   schemas:
+    SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingResponse:
+      title: Anti Money Laundering Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: e6b1b4d6-d5cf-426e-a4dc-d9c0264299df
+        search_ref:
+          type:
+          - string
+          - 'null'
+          description: Data provider’s search ID
+          example: 1729289992-b91nmEFh
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Complete` `Failed`)
+          example: Complete
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: company
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        search_term:
+          type:
+          - string
+          - 'null'
+          description: The name of the entity
+          example: Acme Inc
+        birthdate:
+          type:
+          - string
+          - 'null'
+          description: The date of birth of the person
+          example: '1950-08-08'
+        monitored:
+          type: boolean
+          description: Indicates if search should be automatically updated when new data is found. Set to `true` by default
+          example: 'true'
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          example: '2024-02-12T16:02:06.9Z'
+        total_matches:
+          type: integer
+          description: The total number of potential matches found
+          format: int32
+          example: '9'
+        search_certificate_uri:
+          type:
+          - string
+          - 'null'
+          description: The URI of the Search Certificate
+          example: https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D
+      additionalProperties: false
     SikoiaCore.Common.SikoiaErrorResponse:
       title: Error Response
       type: object
@@ -235,9 +327,10 @@ components:
       type: object
       properties:
         search_term:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The name of the entity
-          nullable: true
           example: Acme Inc
         entity_type:
           minLength: 1
@@ -254,83 +347,22 @@ components:
           description: The `company_id`, `person_id` or `case_id` of the entity
           example: 78662640-73fc-4fa9-8367-ef4660d35cee
         birth_date:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The date of birth of the person
           format: date-time
-          nullable: true
         monitored:
           type: boolean
           description: Indicates if search should be automatically updated when new data is found.Set to `true` by default
           example: 'true'
         fuzziness:
-          type: number
+          type:
+          - number
+          - 'null'
           description: Float to control for spelling variations
           format: float
-          nullable: true
           example: '0.2'
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingResponse:
-      title: Anti Money Laundering Response
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Sikoia ID for the request
-          nullable: true
-          example: e6b1b4d6-d5cf-426e-a4dc-d9c0264299df
-        search_ref:
-          type: string
-          description: Data provider’s search ID
-          nullable: true
-          example: 1729289992-b91nmEFh
-        status:
-          type: string
-          description: The status of the request(`Complete` `Failed`)
-          nullable: true
-          example: Complete
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type: string
-          description: The type of entity
-          nullable: true
-          example: company
-        entity_id:
-          type: string
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          nullable: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        search_term:
-          type: string
-          description: The name of the entity
-          nullable: true
-          example: Acme Inc
-        birthdate:
-          type: string
-          description: The date of birth of the person
-          nullable: true
-          example: '1950-08-08'
-        monitored:
-          type: boolean
-          description: Indicates if search should be automatically updated when new data is found. Set to `true` by default
-          example: 'true'
-        datetime_requested:
-          type: string
-          description: The time the request was made
-          nullable: true
-          example: '2024-02-12T16:02:06.9Z'
-        total_matches:
-          type: integer
-          description: The total number of potential matches found
-          format: int32
-          example: '9'
-        search_certificate_uri:
-          type: string
-          description: The URI of the Search Certificate
-          nullable: true
-          example: https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

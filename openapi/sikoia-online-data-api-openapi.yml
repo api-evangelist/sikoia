@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media Online Data API
+  title: Sikoia Online Data API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,10 @@ paths:
       tags:
       - Online Data
       summary: Request online data
-      description: "### Requests online data for a company.\r\n\r\nProvide the `company_id` and optionally specify the `company_name`. If the company_name is specified, it will override the company entity name.\r\n"
+      description: '### Requests online data for a company.
+
+
+        Provide the `company_id` and optionally specify the `company_name`. If the company_name is specified, it will override the company entity name.'
       operationId: POST_v2-company-online-data
       requestBody:
         content:
@@ -113,7 +116,10 @@ paths:
       tags:
       - Online Data
       summary: List all online data requests
-      description: "### Returns a list of all online data requests for a company.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-online-data/{request_id}` endpoint.\r\n"
+      description: '### Returns a list of all online data requests for a company.
+
+
+        The list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-online-data/{request_id}` endpoint.'
       operationId: GET_v2-companies-company_id-online-data
       parameters:
       - name: company_id
@@ -190,7 +196,10 @@ paths:
       tags:
       - Online Data
       summary: Retrieve online data
-      description: "### Returns online data for a company.\r\n\r\nThis endpoint returns the company online data associated with a specific `request_id`.\r\n"
+      description: '### Returns online data for a company.
+
+
+        This endpoint returns the company online data associated with a specific `request_id`.'
       operationId: GET_v2-company-online-data-request_id
       parameters:
       - name: request_id
@@ -268,97 +277,35 @@ paths:
                 correlation_id: 46c8dc43-1952-4c3c-8bef-88280b6e6f1f
 components:
   schemas:
-    SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataResponse:
-      title: Online Data Response
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Phone:
+      title: Phone
       type: object
       properties:
-        request_id:
-          type: string
-          description: Sikoia ID for the request
-          format: uuid
-          readOnly: true
-          example: 98aacc2c-5bcd-43da-8425-cbd17034e826
-        status:
-          type: string
-          description: The status of the request(`Complete` `Failed`)
-          nullable: true
-          example: Complete
-        company_id:
-          type: string
-          description: Sikoia ID for the Company
-          format: uuid
-          readOnly: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type: string
-          description: The type of entity
-          nullable: true
-          example: company
-        datetime_requested:
-          type: string
-          description: The time the request was made
-          nullable: true
-          readOnly: true
-          example: '2024-02-12T15:34:25.485Z'
-        message:
-          type: string
-          description: Additional detail about the request
-          nullable: true
-        company_name:
-          type: string
-          description: The name of the company
-          nullable: true
-          example: Acme Inc
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Email:
-      title: Email
-      type: object
-      properties:
-        email_type:
-          type: string
-          description: The Email Type (e.g. Work vs Private)
-          nullable: true
-          example: Work
+        number_type:
+          type:
+          - string
+          - 'null'
+          description: The Number Type (e.g. Work vs Private)
         date_from:
-          type: string
-          description: Creation Date of the Email
-          nullable: true
-          example: '2020-01-01T00:00:00Z'
+          type:
+          - string
+          - 'null'
+          description: Creation Date of the Number
         date_to:
-          type: string
-          description: Deleteion Date of the Email
-          nullable: true
-          example: '2024-05-03T00:00:00Z'
-        email_address:
-          type: string
-          description: The Email Address
-          nullable: true
-          example: info@acmeinc.com
-        email_domain:
-          type: string
-          description: The Email Domain
-          nullable: true
-          example: acme.com
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.OnlineData.Request.OnlineDataRequest:
-      title: Online Data Request
-      required:
-      - company_id
-      type: object
-      properties:
-        company_id:
-          minLength: 1
-          pattern: ^(?:\{{0,1}(?:[0-9a-fA-F]){8}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){12}\}{0,1})$
-          type: string
-          description: Sikoia ID for the Company
-        company_name:
-          type: string
-          description: The legal name of the company
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: Deleteion Date of the Number
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: The Country Code of the Number
+        full_number:
+          type:
+          - string
+          - 'null'
+          description: The Full Number
       additionalProperties: false
     SikoiaCore.Common.SikoiaErrorResponse:
       title: Error Response
@@ -387,82 +334,133 @@ components:
           readOnly: true
       additionalProperties: false
       description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.BusinessSupport.OnlineData.Request.OnlineDataRequest:
+      title: Online Data Request
+      required:
+      - company_id
+      type: object
+      properties:
+        company_id:
+          minLength: 1
+          pattern: ^(?:\{{0,1}(?:[0-9a-fA-F]){8}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){12}\}{0,1})$
+          type: string
+          description: Sikoia ID for the Company
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineData:
+      title: Online Data
+      type: object
+      properties:
+        website_url:
+          type:
+          - string
+          - 'null'
+          description: The Website URL
+          example: https://www.acmeinc.com
+        phones:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Phone'
+          description: The Company Phones
+          example: '[]'
+        emails:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Email'
+          description: The Company Emails
+          example: ''
+        online_accounts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineAccount'
+          description: The Company Online Accounts
+          example: ''
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Email:
+      title: Email
+      type: object
+      properties:
+        email_type:
+          type:
+          - string
+          - 'null'
+          description: The Email Type (e.g. Work vs Private)
+          example: Work
+        date_from:
+          type:
+          - string
+          - 'null'
+          description: Creation Date of the Email
+          example: '2020-01-01T00:00:00Z'
+        date_to:
+          type:
+          - string
+          - 'null'
+          description: Deleteion Date of the Email
+          example: '2024-05-03T00:00:00Z'
+        email_address:
+          type:
+          - string
+          - 'null'
+          description: The Email Address
+          example: info@acmeinc.com
+        email_domain:
+          type:
+          - string
+          - 'null'
+          description: The Email Domain
+          example: acme.com
+      additionalProperties: false
     SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineAccount:
       title: Online Account
       type: object
       properties:
         provider_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Name of the Account Provider (e.g. LinkedIn)
-          nullable: true
           example: Facebook
         provider_url:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The URL of the Account Provider
-          nullable: true
           example: https://www.facebook.com/
         account_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Account Name (if any)
-          nullable: true
           example: John Doe
         account_url:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Account URL
-          nullable: true
           example: https://www.facebook.com/AcmeInc
         date_from:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Creation Date of the Account
-          nullable: true
           example: '2020-01-01T00:00:00Z'
         date_to:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Deletion Date of the Account
-          nullable: true
           example: '2024-05-03T00:00:00Z'
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Phone:
-      title: Phone
-      type: object
-      properties:
-        number_type:
-          type: string
-          description: The Number Type (e.g. Work vs Private)
-          nullable: true
-        date_from:
-          type: string
-          description: Creation Date of the Number
-          nullable: true
-        date_to:
-          type: string
-          description: Deleteion Date of the Number
-          nullable: true
-        country_code:
-          type: string
-          description: The Country Code of the Number
-          nullable: true
-        full_number:
-          type: string
-          description: The Full Number
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataListResponse:
-      title: Online Data List Response
-      type: object
-      properties:
-        company_id:
-          type: string
-          description: Sikoia ID for the Company
-          format: uuid
-          readOnly: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        online_data_requests:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataOrchestrationResponse'
-          description: The list of all online data requests for the company
-          nullable: true
       additionalProperties: false
     SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataOrchestrationResponse:
       title: Online Data Orchestration Response
@@ -475,94 +473,142 @@ components:
           readOnly: true
           example: 98aacc2c-5bcd-43da-8425-cbd17034e826
         status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The status of the request(`Complete` `Failed`)
-          nullable: true
           example: Complete
         datetime_requested:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The time the request was made
-          nullable: true
           readOnly: true
           example: '2024-02-12T15:34:25.485Z'
         message:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Additional detail about the request
-          nullable: true
         company_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The name of the company
-          nullable: true
           example: Acme Inc
       additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineData:
-      title: Online Data
-      type: object
-      properties:
-        website_url:
-          type: string
-          description: The Website URL
-          nullable: true
-          example: https://www.acmeinc.com
-        phones:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Phone'
-          description: The Company Phones
-          nullable: true
-          example: '[]'
-        emails:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.Email'
-          description: The Company Emails
-          nullable: true
-          example: ''
-        online_accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineAccount'
-          description: The Company Online Accounts
-          nullable: true
-          example: ''
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineDataMappedResponse:
-      title: Online Data Mapped Response
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataResponse:
+      title: Online Data Response
       type: object
       properties:
         request_id:
           type: string
           description: Sikoia ID for the request
           format: uuid
-          nullable: true
           readOnly: true
           example: 98aacc2c-5bcd-43da-8425-cbd17034e826
         status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The status of the request(`Complete` `Failed`)
-          nullable: true
           example: Complete
         company_id:
           type: string
           description: Sikoia ID for the Company
           format: uuid
-          nullable: true
           readOnly: true
           example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: company
         datetime_requested:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The time the request was made
-          nullable: true
           readOnly: true
           example: '2024-02-12T15:34:25.485Z'
         message:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Additional detail about the request
-          nullable: true
         company_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The name of the company
-          nullable: true
+          example: Acme Inc
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataListResponse:
+      title: Online Data List Response
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        online_data_requests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.OnlineDataOrchestrationResponse'
+          description: The list of all online data requests for the company
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineDataMappedResponse:
+      title: Online Data Mapped Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          format: uuid
+          readOnly: true
+          example: 98aacc2c-5bcd-43da-8425-cbd17034e826
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Complete` `Failed`)
+          example: Complete
+        company_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          readOnly: true
+          example: '2024-02-12T15:34:25.485Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the company
           example: Acme Inc
         data:
           $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.OnlineData.Response.Mapped.OnlineData'

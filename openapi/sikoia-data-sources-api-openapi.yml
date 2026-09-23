@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media Data Sources API
+  title: Sikoia Data Sources API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,11 @@ paths:
       tags:
       - Data Sources
       summary: List data sources for an entity
-      description: "### Returns a list of all data sources for an entity.\r\nProvides a list of all data sources attached to an entity which might be used to generate Sikoia Insights and their status. Possible statuses include: Provided, Pending, Complete, Failed.\r\nOnly data sources with a status of 'Complete' will be used to generate Affordability Insights or Income & Employer Verifications."
+      description: '### Returns a list of all data sources for an entity.
+
+        Provides a list of all data sources attached to an entity which might be used to generate Sikoia Insights and their status. Possible statuses include: Provided, Pending, Complete, Failed.
+
+        Only data sources with a status of ''Complete'' will be used to generate Affordability Insights or Income & Employer Verifications.'
       operationId: GET_v2-entity_type-entity_id-insight-data-sources
       parameters:
       - name: entity_type
@@ -113,84 +117,6 @@ paths:
                 correlation_id: string
 components:
   schemas:
-    SikoiaSharedModels.Global.Enums.PathEntityTypeEnum:
-      enum:
-      - Companies
-      - Persons
-      - Cases
-      type: string
-    SikoiaSharedModels.Global.DataSources.DataSource:
-      title: Data Source
-      type: object
-      properties:
-        source_name:
-          type: string
-          description: An optional field containing the name of the data source, such as a file name (e.g. a payslip). If the source has no name (e.g. an open banking connection), this field is null.
-          nullable: true
-          readOnly: true
-          example: Stmt - current - Feb 2023 - J Smith and J Hayley
-        source_id:
-          type: string
-          description: The identifier for the root source of the data, such as a document ID for files (e.g. payslips) or an account connection ID for a successful open banking connection.
-          format: uuid
-          readOnly: true
-          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
-        data_source_id:
-          type: string
-          description: A unique identifier for a specific data source within a document, such as an individual payslip in a multi-payslip file or an individual bank statement in a multi-statement document.
-          format: uuid
-          readOnly: true
-          example: 01951375-a680-77ce-b196-44d1feedc47c
-        source_category_type:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Enums.SourceCategoryType'
-        source_type:
-          $ref: '#/components/schemas/SikoiaSharedModels.Global.DataSources.Enums.DataSourceType'
-        status:
-          $ref: '#/components/schemas/SikoiaSharedModels.Global.DataSources.Enums.DataSourceStatus'
-        message:
-          type: string
-          description: An optional field providing additional context about the status.
-          nullable: true
-          readOnly: true
-          example: Some message explaining what's happened
-        recipient:
-          type: string
-          description: An optional field populated when the data source includes a named individual, such as the person on a payslip or bank statement.
-          nullable: true
-          readOnly: true
-          example: Jane Smith
-        source_date:
-          type: string
-          description: The date associated with the document's data, such as the tax year date on an SA302 form, the payment date on a payslip, or the issuance date of the document.
-          nullable: true
-          readOnly: true
-          example: '2023-02-01'
-        source_uris:
-          type: array
-          items:
-            type: string
-          description: One or more URLs that provide access to additional information about the data source, such as a link to retrieve an uploaded bank statement.
-          readOnly: true
-          example: '["https://api.sikoia.com/v2/documents/4b9ac393-d34b-4a14-9ee3-88ce2d244e90"]'
-        start_date:
-          type: string
-          description: Optional. The starting date, applicable for data sources that span a period, such as a monthly bank statement or an open banking connection.
-          nullable: true
-          readOnly: true
-          example: '2023-02-01'
-        end_date:
-          type: string
-          description: Optional. The ending date, applicable for data sources that span a period, such as a monthly bank statement or an open banking connection.
-          nullable: true
-          readOnly: true
-          example: '2023-03-01'
-        provided_date:
-          type: string
-          description: The date the data source (e.g. a document) was originally uploaded or created.
-          format: date-time
-          readOnly: true
-          example: '2023-02-10T10:59:46.0000000+00:00'
-      additionalProperties: false
     SikoiaCore.Common.SikoiaErrorResponse:
       title: Error Response
       type: object
@@ -218,23 +144,84 @@ components:
           readOnly: true
       additionalProperties: false
       description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.Global.DataSources.Enums.DataSourceStatus:
-      title: Data Source Statuses
-      enum:
-      - Provided
-      - Pending
-      - Complete
-      - Failed
-      - Excluded
-      type: string
-      description: Indicates the current state of the data source e.g. is it still being processed, has a failure been encountered etc
-    SikoiaSharedModels.EndUser.IncomeEmployer.Enums.SourceCategoryType:
-      title: Source Category Types
-      enum:
-      - Document
-      - OpenBanking
-      type: string
-      description: The name of the base source of data e.g. a document or open banking
+    SikoiaSharedModels.Global.DataSources.DataSource:
+      title: Data Source
+      type: object
+      properties:
+        source_name:
+          type:
+          - string
+          - 'null'
+          description: An optional field containing the name of the data source, such as a file name (e.g. a payslip). If the source has no name (e.g. an open banking connection), this field is null.
+          readOnly: true
+          example: Stmt - current - Feb 2023 - J Smith and J Hayley
+        source_id:
+          type: string
+          description: The identifier for the root source of the data, such as a document ID for files (e.g. payslips) or an account connection ID for a successful open banking connection.
+          format: uuid
+          readOnly: true
+          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
+        data_source_id:
+          type: string
+          description: A unique identifier for a specific data source within a document, such as an individual payslip in a multi-payslip file or an individual bank statement in a multi-statement document.
+          format: uuid
+          readOnly: true
+          example: 01951375-a680-77ce-b196-44d1feedc47c
+        source_category_type:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Enums.SourceCategoryType'
+        source_type:
+          $ref: '#/components/schemas/SikoiaSharedModels.Global.DataSources.Enums.DataSourceType'
+        status:
+          $ref: '#/components/schemas/SikoiaSharedModels.Global.DataSources.Enums.DataSourceStatus'
+        message:
+          type:
+          - string
+          - 'null'
+          description: An optional field providing additional context about the status.
+          readOnly: true
+          example: Some message explaining what's happened
+        recipient:
+          type:
+          - string
+          - 'null'
+          description: An optional field populated when the data source includes a named individual, such as the person on a payslip or bank statement.
+          readOnly: true
+          example: Jane Smith
+        source_date:
+          type:
+          - string
+          - 'null'
+          description: The date associated with the document's data, such as the tax year date on an SA302 form, the payment date on a payslip, or the issuance date of the document.
+          readOnly: true
+          example: '2023-02-01'
+        source_uris:
+          type: array
+          items:
+            type: string
+          description: One or more URLs that provide access to additional information about the data source, such as a link to retrieve an uploaded bank statement.
+          readOnly: true
+          example: '["https://api.sikoia.com/v2/documents/4b9ac393-d34b-4a14-9ee3-88ce2d244e90"]'
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: Optional. The starting date, applicable for data sources that span a period, such as a monthly bank statement or an open banking connection.
+          readOnly: true
+          example: '2023-02-01'
+        end_date:
+          type:
+          - string
+          - 'null'
+          description: Optional. The ending date, applicable for data sources that span a period, such as a monthly bank statement or an open banking connection.
+          readOnly: true
+          example: '2023-03-01'
+        provided_date:
+          type: string
+          description: The date the data source (e.g. a document) was originally uploaded or created.
+          format: date-time
+          readOnly: true
+          example: '2023-02-10T10:59:46.0000000+00:00'
+      additionalProperties: false
     SikoiaSharedModels.Global.DataSources.Insight:
       title: Insight
       type: object
@@ -261,6 +248,23 @@ components:
           description: All available data sources for a given entity
           readOnly: true
       additionalProperties: false
+    SikoiaSharedModels.Global.DataSources.Enums.DataSourceStatus:
+      title: Data Source Statuses
+      enum:
+      - Provided
+      - Pending
+      - Complete
+      - Failed
+      - Excluded
+      type: string
+      description: Indicates the current state of the data source e.g. is it still being processed, has a failure been encountered etc
+    SikoiaSharedModels.EndUser.IncomeEmployer.Enums.SourceCategoryType:
+      title: Source Category Types
+      enum:
+      - Document
+      - OpenBanking
+      type: string
+      description: The name of the base source of data e.g. a document or open banking
     SikoiaSharedModels.Global.DataSources.Enums.DataSourceType:
       title: Data Source Types
       enum:
@@ -291,6 +295,12 @@ components:
       - BankAccount
       type: string
       description: The specific type of data that was identified such as a Payslip or SA302 or Bank Account
+    SikoiaSharedModels.Global.Enums.PathEntityTypeEnum:
+      enum:
+      - Companies
+      - Persons
+      - Cases
+      type: string
   securitySchemes:
     authorizationHeader:
       type: http

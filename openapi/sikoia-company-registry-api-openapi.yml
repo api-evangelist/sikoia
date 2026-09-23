@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media Company Registry API
+  title: Sikoia Company Registry API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,16 @@ paths:
       tags:
       - Company Registry
       summary: Request registry data
-      description: "### Requests registry data for a company.\r\n\r\nYou can create a request with only the `company_id`, and the necessary data will be retrieved from the company entity. If the company entity is missing `company_number` or `country_code`, a 422 - Unprocessable error will be raised.\r\n\r\nAlternatively, you can override the company entity details by sending `company_number`, `company_name`, and `country_code` alongside the `company_id` in the request body.  \r\n\r\nIf it is not possible to identify a single company in the relevant registry based on the data provided, the response will have a status of `TooManyResults`. You can resolve this picklist using the `POST /v2/company-registry-data/picklist endpoint`.\r\n"
+      description: '### Requests registry data for a company.
+
+
+        You can create a request with only the `company_id`, and the necessary data will be retrieved from the company entity. If the company entity is missing `company_number` or `country_code`, a 422 - Unprocessable error will be raised.
+
+
+        Alternatively, you can override the company entity details by sending `company_number`, `company_name`, and `country_code` alongside the `company_id` in the request body.
+
+
+        If it is not possible to identify a single company in the relevant registry based on the data provided, the response will have a status of `TooManyResults`. You can resolve this picklist using the `POST /v2/company-registry-data/picklist endpoint`.'
       operationId: POST_v2-company-registry-data
       requestBody:
         content:
@@ -129,7 +138,10 @@ paths:
       tags:
       - Company Registry
       summary: List all registry data requests
-      description: "### Returns a list of all registry data requests for a company.\r\n\r\nThe list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-registry-data/{request_id}` endpoint.\r\n"
+      description: '### Returns a list of all registry data requests for a company.
+
+
+        The list includes the `request_id` for each request, which can be used to retrieve detailed registry data using the `GET /v2/company-registry-data/{request_id}` endpoint.'
       operationId: GET_v2-companies-company_id-registry-data
       parameters:
       - name: company_id
@@ -208,7 +220,10 @@ paths:
       tags:
       - Company Registry
       summary: Retrieve registry data
-      description: "### Returns detailed company registry data\r\n\r\nThis endpoint returns the full registry data associated with a specific request_id.\r\n"
+      description: '### Returns detailed company registry data
+
+
+        This endpoint returns the full registry data associated with a specific request_id.'
       operationId: GET_v2-company-registry-data-request_id
       parameters:
       - name: request_id
@@ -479,7 +494,16 @@ paths:
       tags:
       - Company Registry
       summary: Resolve registry picklist
-      description: "### Resolves a company registry data picklist.\r\n\r\nTo resolve a picklist, send the original `request_id` and the `picklist_index` to this endpoint.\r\n\r\nThis will create a new entry in the list of registry data requests for the company entity.\r\n\r\nYou can retrieve a list of all registry data requests for a company using the `GET /v2/companies/{company_id}/registry-data` endpoint.\r\n"
+      description: '### Resolves a company registry data picklist.
+
+
+        To resolve a picklist, send the original `request_id` and the `picklist_index` to this endpoint.
+
+
+        This will create a new entry in the list of registry data requests for the company entity.
+
+
+        You can retrieve a list of all registry data requests for a company using the `GET /v2/companies/{company_id}/registry-data` endpoint.'
       operationId: POST_v2-company-registry-data-picklist
       requestBody:
         content:
@@ -571,7 +595,16 @@ paths:
       tags:
       - Company Registry
       summary: Search for a company
-      description: "### Searches for a company in business registries.\r\n\r\nSearch using the `company_name` and at least one of `jurisdiction_code` or `country_code`.  If both codes are specified, jurisdiction_code takes priority.\r\n\r\nYou can exclude inactive companies from results by setting `exclude_inactive` to `true`.\r\n\r\nIf your search is associated with a specific company entity instead of a standalone search, include the `company_id` in the request.  Keep in mind that even when using a `company_id`, the search data is transient and won't be stored against the company.\r\n\r\n"
+      description: '### Searches for a company in business registries.
+
+
+        Search using the `company_name` and at least one of `jurisdiction_code` or `country_code`. If both codes are specified, jurisdiction_code takes priority.
+
+
+        You can exclude inactive companies from results by setting `exclude_inactive` to `true`.
+
+
+        If your search is associated with a specific company entity instead of a standalone search, include the `company_id` in the request. Keep in mind that even when using a `company_id`, the search data is transient and won''t be stored against the company.'
       operationId: POST_v2-company-registry-data-search
       parameters:
       - name: items_per_page
@@ -694,166 +727,222 @@ paths:
                 correlation_id: 12f7d835-67a3-4146-a5f9-74d106485fbc
 components:
   schemas:
+    SikoiaSharedModels.Company.External.Response.Mapped.NextAccounts:
+      title: Next Accounts
+      type: object
+      properties:
+        overdue:
+          type:
+          - boolean
+          - 'null'
+          description: Is Next Accounts Overdue?
+        period_start:
+          type:
+          - string
+          - 'null'
+          description: Start Period for Next Accounts
+        period_end:
+          type:
+          - string
+          - 'null'
+          description: End Period for Next Accounts
+        due_date:
+          type:
+          - string
+          - 'null'
+          description: Due Date for Next Accounts
+          readOnly: true
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.Details:
+      title: Details
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: The Details Type
+        description:
+          type:
+          - string
+          - 'null'
+          description: The Details Description
+      additionalProperties: false
     SikoiaSharedModels.Company.External.Response.Mapped.CompanySearchMappedResponse:
       title: Company Search Response
       type: object
       properties:
         index:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: The index of the company
           format: int32
-          nullable: true
           example: '1'
         company_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The legal name of the company
-          nullable: true
           example: ACME INC
         company_number:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The company registration number
-          nullable: true
           example: '12345678'
         company_status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The operational status of the company
-          nullable: true
           example: Active
         provider_id:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The data provider’s ID for the company
-          nullable: true
         date_established:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The date the company was established
-          nullable: true
           example: '1982-01-07'
         country_code:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Two letter ISO country code, e.g. GB
-          nullable: true
           example: GB
         branch_status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The branch status of the company
-          nullable: true
         official_address:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
       additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.SecuredDetails:
-      title: Secured Details
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of Secured Details
-          nullable: true
-        description:
-          type: string
-          description: Description of Secured Details
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.Owners:
-      title: Owners
-      type: object
-      properties:
-        people:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.PersonOwner'
-          description: The List of People
-          nullable: true
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanyOwner'
-          description: The List of Companies
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.Charge:
-      title: Charge
-      type: object
-      properties:
-        charge_code:
-          type: string
-          description: The Charge Code
-          nullable: true
-        status:
-          type: string
-          description: The Status
-          nullable: true
-        created_on:
-          type: string
-          description: Charge Created On
-          nullable: true
-        delivered_on:
-          type: string
-          description: Charge Delivered On
-          nullable: true
-        satisfied_on:
-          type: string
-          description: Charge Satisfied On
-          nullable: true
-        details:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Details'
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Transaction'
-          description: List of Transactions
-          nullable: true
-        classification:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Classification'
-        persons_entitled:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.PersonEntitled'
-          description: Persons Entitled
-          nullable: true
-        secured_details:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.SecuredDetails'
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Request.ResolvePicklistRequest:
-      title: Resolve Picklist Request
+    SikoiaSharedModels.Company.External.Request.RegistryDataRequest:
+      title: Registry Data Request
       required:
-      - picklist_index
-      - request_id
+      - company_id
       type: object
       properties:
-        request_id:
+        company_id:
           minLength: 1
           type: string
-          description: Sikoia ID for the request
-          example: cfed4c7f-37e8-4657-b185-7cf572d0b019
-        picklist_index:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          description: Picklist index of the company you wish to select
-          format: int32
-          example: '1'
+          description: Sikoia ID for the Company
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '12345678'
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+          example: Acme Inc
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
       additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.Transaction:
-      title: Transaction
+    SikoiaSharedModels.Company.External.Response.RegistryDataListResponse:
+      title: Registry Data List Response
       type: object
       properties:
-        filing_type:
+        company_id:
           type: string
-          description: The Filing Type of a Transaction
-          nullable: true
-        delivered_on:
-          type: string
-          description: Transaction Delivered On
-          nullable: true
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        registry_data_requests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.RegistryDataOrchestrationResponse'
+          description: The list of all registry data requests for the company
       additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.PersonEntitled:
-      title: Person Entitled
+    SikoiaSharedModels.Company.External.Response.Mapped.CompanyOwner:
+      title: Company Owner
       type: object
       properties:
+        source_id:
+          type:
+          - string
+          - 'null'
+          description: The Source ID
+          readOnly: true
         name:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Company Owner
+        type:
+          type:
+          - string
+          - 'null'
+          description: The Type of the Company Owner
+        date_from:
+          type:
+          - string
+          - 'null'
+          description: The Date From
+        date_to:
+          type:
+          - string
+          - 'null'
+          description: The Date To
+        natures_of_control:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of Natures of Control
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Request.CompanySearchRequest:
+      title: Company Search
+      required:
+      - company_name
+      type: object
+      properties:
+        company_name:
+          minLength: 1
           type: string
-          description: Name of the Entitled Person
-          nullable: true
+          description: The legal name of the company
+          example: Acme Inc
+        jurisdiction_code:
+          type:
+          - string
+          - 'null'
+          description: The jurisdiction of the company as an ISO 3166-2 code, e.g.US_DE
+          example: GB
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
+        exclude_inactive:
+          type: boolean
+          description: Exclude inactive companies from the search, defaults to `false`
+          example: 'true'
+        company_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the Company
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
       additionalProperties: false
     SikoiaCore.Common.SikoiaErrorResponse:
       title: Error Response
@@ -882,521 +971,106 @@ components:
           readOnly: true
       additionalProperties: false
       description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.Company.External.Response.Mapped.PersonOwner:
-      title: Person Owner
+    SikoiaSharedModels.Company.External.Response.Mapped.PersonEntitled:
+      title: Person Entitled
       type: object
       properties:
-        source_id:
-          type: string
-          description: The Source ID
-          nullable: true
-          readOnly: true
-        first_name:
-          type: string
-          description: The Firstname of the Owner
-          nullable: true
-        surname:
-          type: string
-          description: The Surname of the Owner
-          nullable: true
-        full_name:
-          type: string
-          description: The Full Name of the Owner
-          nullable: true
-        type:
-          type: string
-          description: The Type of the Owner
-          nullable: true
-        date_from:
-          type: string
-          description: The Date From
-          nullable: true
-        date_to:
-          type: string
-          description: The Date To
-          nullable: true
-        natures_of_control:
-          type: array
-          items:
-            type: string
-          description: List of Natures of Control
-          nullable: true
-        date_of_birth:
-          type: string
-          description: The Date of Birth of the Owner
-          nullable: true
-          readOnly: true
-        birth_year:
-          type: integer
-          description: The Year of Birth of the Owner
-          format: int32
-          nullable: true
-        birth_month:
-          type: integer
-          description: The Month of Birth of the Owner
-          format: int32
-          nullable: true
-        birth_day:
-          type: integer
-          description: The Day of Birth of the Owner
-          format: int32
-          nullable: true
-        nationality:
-          type: string
-          description: The Nationality of the Owner
-          nullable: true
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.Filing:
-      title: Filing
-      type: object
-      properties:
-        category:
-          type: string
-          description: The Filing Category
-          nullable: true
-        description:
-          type: string
-          description: The Filing Description
-          nullable: true
-        type:
-          type: string
-          description: Filing Type
-          nullable: true
-        filing_date:
-          type: string
-          description: Filing Date
-          nullable: true
-          readOnly: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.NextAccounts:
-      title: Next Accounts
-      type: object
-      properties:
-        overdue:
-          type: boolean
-          description: Is Next Accounts Overdue?
-          nullable: true
-        period_start:
-          type: string
-          description: Start Period for Next Accounts
-          nullable: true
-        period_end:
-          type: string
-          description: End Period for Next Accounts
-          nullable: true
-        due_date:
-          type: string
-          description: Due Date for Next Accounts
-          nullable: true
-          readOnly: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.CompanyOfficer:
-      title: Company Officer
-      type: object
-      properties:
-        source_id:
-          type: string
-          description: The Source ID
-          nullable: true
-          readOnly: true
-        officer_role:
-          type: string
-          description: The Role of the Officer
-          nullable: true
-        date_appointed:
-          type: string
-          description: The Date when Officer was Appointed
-          nullable: true
-        date_resigned:
-          type: string
-          description: The Date when Officer Resigned
-          nullable: true
-        status:
-          type: string
-          description: The Status
-          nullable: true
         name:
-          type: string
-          description: The Name of the Company Officer
-          nullable: true
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
-        occupation:
-          type: string
-          description: The Occupation of the Officer
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Request.RegistryDataRequest:
-      title: Registry Data Request
-      required:
-      - company_id
-      type: object
-      properties:
-        company_id:
-          minLength: 1
-          type: string
-          description: Sikoia ID for the Company
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        company_number:
-          type: string
-          description: The company registration number
-          nullable: true
-          example: '12345678'
-        company_name:
-          type: string
-          description: The legal name of the company
-          nullable: true
-          example: Acme Inc
-        country_code:
-          type: string
-          description: Two letter ISO country code, e.g. GB
-          nullable: true
-          example: GB
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.SummaryInfo:
-      title: Information Summary
-      type: object
-      properties:
-        has_insolvency_history:
-          type: boolean
-          description: Insolvency History
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.RegistryDataMappedResponse:
-      title: Registry Data Mapped Response
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Sikoia ID for the request
-          format: uuid
-          nullable: true
-          readOnly: true
-        status:
-          type: string
-          description: The status of the request(`Complete` `Failed` `TooManyResults`)
-          nullable: true
-        company_id:
-          type: string
-          description: Sikoia ID for the Company
-          format: uuid
-          nullable: true
-          readOnly: true
-        datetime_requested:
-          type: string
-          description: The time the request was made
-          nullable: true
-          readOnly: true
-        message:
-          type: string
-          description: Additional detail about the request
-          nullable: true
-        company_number:
-          type: string
-          description: The company registration number
-          nullable: true
-        company_name:
-          type: string
-          description: The legal name of the company
-          nullable: true
-        country_code:
-          type: string
-          description: Two letter ISO country code, e.g. GB
-          nullable: true
-        data:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.RegistryData'
-        picklist:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanySearchMappedResponse'
-          description: Company search response
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.RegistryDataListResponse:
-      title: Registry Data List Response
-      type: object
-      properties:
-        company_id:
-          type: string
-          description: Sikoia ID for the Company
-          format: uuid
-          readOnly: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        registry_data_requests:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.RegistryDataOrchestrationResponse'
-          description: The list of all registry data requests for the company
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: Name of the Entitled Person
       additionalProperties: false
     SikoiaSharedModels.Company.External.Response.Mapped.RelatedCompany:
       title: Related Company
       type: object
       properties:
         company_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Name of the Related Company
-          nullable: true
         company_number:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Company Number
-          nullable: true
         country_code:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Country Code
-          nullable: true
         generic_legal_form:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Generic Legal Form
-          nullable: true
       additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.IndustryCode:
-      title: Industry Code
-      type: object
-      properties:
-        code:
-          type: string
-          description: The Industry Code
-          nullable: true
-        description:
-          type: string
-          description: The Industry Description
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress:
-      title: Official Address
-      type: object
-      properties:
-        address_line_1:
-          type: string
-          description: The First Line of Address
-          nullable: true
-          example: 10 Main Street
-        address_line_2:
-          type: string
-          description: The Second Line of Address
-          nullable: true
-          example: Apt. 101
-        address_line_3:
-          type: string
-          description: The Third Line of Address
-          nullable: true
-          example: Main House
-        address_line_4:
-          type: string
-          description: The Fourth Line of Address
-          nullable: true
-        city:
-          type: string
-          description: The Name of the City
-          nullable: true
-          example: Test Town
-        region:
-          type: string
-          description: The Name of the Region
-          nullable: true
-          example: Test Country
-        country:
-          type: string
-          description: The Name of the Country
-          nullable: true
-          example: GB
-        post_code:
-          type: string
-          description: The PostCode of the Address
-          nullable: true
-          example: X9 9AA
-        full_address:
-          type: string
-          description: The Full Address
-          nullable: true
-          example: 123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.PersonOfficer:
-      title: Person Officer
-      type: object
-      properties:
-        source_id:
-          type: string
-          description: The Source ID
-          format: uuid
-          nullable: true
-          readOnly: true
-        officer_role:
-          type: string
-          description: The Role of the Officer
-          nullable: true
-        date_appointed:
-          type: string
-          description: The Date when Officer was Appointed
-          nullable: true
-        date_resigned:
-          type: string
-          description: The Date when Officer Resigned
-          nullable: true
-        status:
-          type: string
-          description: The Status
-          nullable: true
-        tax_id:
-          type: string
-          description: The Tax ID
-          nullable: true
-        first_name:
-          type: string
-          description: The Firstname of the Officer
-          nullable: true
-        surname:
-          type: string
-          description: The Surname of the Officer
-          nullable: true
-        full_name:
-          type: string
-          description: The Full Name of the Officer
-          nullable: true
-        date_of_birth:
-          type: string
-          description: The Date of Birth of the Officer
-          nullable: true
-          readOnly: true
-        birth_year:
-          type: integer
-          description: The Year of Birth
-          format: int32
-          nullable: true
-        birth_month:
-          type: integer
-          description: The Month of Birth
-          format: int32
-          nullable: true
-        birth_day:
-          type: integer
-          description: The Day of Birth
-          format: int32
-          nullable: true
-        nationality:
-          type: string
-          description: The Day of Birth
-          nullable: true
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
-        occupation:
-          type: string
-          description: The Occupation of the Officer
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Request.CompanySearchRequest:
-      title: Company Search
-      required:
-      - company_name
-      type: object
-      properties:
-        company_name:
-          minLength: 1
-          type: string
-          description: The legal name of the company
-          example: Acme Inc
-        jurisdiction_code:
-          type: string
-          description: The jurisdiction of the company as an ISO 3166-2 code, e.g.US_DE
-          nullable: true
-          example: GB
-        country_code:
-          type: string
-          description: Two letter ISO country code, e.g. GB
-          nullable: true
-          example: GB
-        exclude_inactive:
-          type: boolean
-          description: Exclude inactive companies from the search, defaults to `false`
-          example: 'true'
-        company_id:
-          type: string
-          description: Sikoia ID for the Company
-          nullable: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.Details:
-      title: Details
+    SikoiaSharedModels.Company.External.Response.Mapped.Insolvency:
+      title: Insolvency
       type: object
       properties:
         type:
-          type: string
-          description: The Details Type
-          nullable: true
-        description:
-          type: string
-          description: The Details Description
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: Type of Insolvency
+        dates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.InsolvencyDate'
+          description: List of Insolvency Dates
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.Officers:
+      title: Officers
+      type: object
+      properties:
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.PersonOfficer'
+          description: The List of People
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanyOfficer'
+          description: The List of Companies
       additionalProperties: false
     SikoiaSharedModels.Company.External.Response.Mapped.Classification:
       title: Classification
       type: object
       properties:
         type:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Classification Type
-          nullable: true
         description:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Classification Description
-          nullable: true
       additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.RegistryDataResponse:
-      title: Registry Data Response
+    SikoiaSharedModels.Company.External.Response.Mapped.SecuredDetails:
+      title: Secured Details
       type: object
       properties:
-        request_id:
-          type: string
-          description: Sikoia ID for the request
-          format: uuid
-          readOnly: true
-          example: 276c102b-85d3-4e86-a69d-de1b2ba72150
-        status:
-          type: string
-          description: The status of the request(`Complete` `Failed` `TooManyResults`)
-          nullable: true
-          example: Complete
-        company_id:
-          type: string
-          description: Sikoia ID for the Company
-          format: uuid
-          readOnly: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        datetime_requested:
-          type: string
-          description: The time the request was made
-          nullable: true
-          readOnly: true
-          example: '2024-02-12T13:18:28.978Z'
-        message:
-          type: string
-          description: Additional detail about the request
-          nullable: true
-        company_number:
-          type: string
-          description: The company registration number
-          nullable: true
-          example: '12345678'
-        company_name:
-          type: string
-          description: The legal name of the company
-          nullable: true
-          example: Acme Inc
-        country_code:
-          type: string
-          description: Two letter ISO country code, e.g. GB
-          nullable: true
-          example: GB
-        picklist:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanySearchMappedResponse'
-          description: If the response status is “TooManyResults”, this object will list the potential matches for the company
-          nullable: true
-          example: '[]'
+        type:
+          type:
+          - string
+          - 'null'
+          description: Type of Secured Details
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of Secured Details
       additionalProperties: false
     SikoiaSharedModels.Company.External.Response.RegistryDataOrchestrationResponse:
       title: Registry Data Orchestration Response
@@ -1409,236 +1083,691 @@ components:
           readOnly: true
           example: 276c102b-85d3-4e86-a69d-de1b2ba72150
         status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The status of the request(`Complete` `Failed` `TooManyResults`)
-          nullable: true
           example: Complete
         datetime_requested:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The time the request was made
-          nullable: true
           readOnly: true
           example: '2024-02-12T13:18:28.978Z'
         message:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Additional detail about the request
-          nullable: true
         company_number:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The company registration number
-          nullable: true
           example: '12345678'
         company_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The legal name of the company
-          nullable: true
           example: Acme Inc
         country_code:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Two letter ISO country code, e.g. GB
-          nullable: true
           example: GB
       additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.InsolvencyDate:
-      title: Insolvency Date
+    SikoiaSharedModels.Company.External.Response.Mapped.RegistryDataMappedResponse:
+      title: Registry Data Mapped Response
       type: object
       properties:
-        date:
-          type: string
-          description: Date of Insolvency
-          nullable: true
-        type:
-          type: string
-          description: Type of Insolvency Date
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.CompanyOwner:
-      title: Company Owner
-      type: object
-      properties:
-        source_id:
-          type: string
-          description: The Source ID
-          nullable: true
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          format: uuid
           readOnly: true
-        name:
-          type: string
-          description: The Name of the Company Owner
-          nullable: true
-        type:
-          type: string
-          description: The Type of the Company Owner
-          nullable: true
-        date_from:
-          type: string
-          description: The Date From
-          nullable: true
-        date_to:
-          type: string
-          description: The Date To
-          nullable: true
-        natures_of_control:
-          type: array
-          items:
-            type: string
-          description: List of Natures of Control
-          nullable: true
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.Insolvency:
-      title: Insolvency
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of Insolvency
-          nullable: true
-        dates:
-          type: array
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.InsolvencyDate'
-          description: List of Insolvency Dates
-          nullable: true
-      additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.PreviousCompanyName:
-      title: Previous Company Name
-      type: object
-      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Complete` `Failed` `TooManyResults`)
+        company_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
         company_name:
-          type: string
-          description: Name of a Company
-          nullable: true
-        date_from:
-          type: string
-          description: From Date
-          nullable: true
-        date_to:
-          type: string
-          description: To Date
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+        data:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.RegistryData'
+        picklist:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanySearchMappedResponse'
+          description: Company search response
       additionalProperties: false
     SikoiaSharedModels.Company.External.Response.Mapped.RegistryData:
       title: Registry Data
       type: object
       properties:
         company_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The legal name of the company
-          nullable: true
         company_number:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The company registration number
-          nullable: true
         status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: "The Sikoia standardised company status. Possible values are:\n- **Active**: The company is actively trading.\n- **Restricted**: The company is not dissolved, but it's not trading normally. This includes companies in Administration, Liquidation or Dormant. Companies whose filings have some irregularity will also have this status.\n- **Closed**: The company has been dissolved. Merged companies will also have this status. \n- **Other**: The registry status could not be mapped to any of the above. \n"
-          nullable: true
         registry_status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Registry Status
-          nullable: true
         registry_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Registry Name
-          nullable: true
         registry_url:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Registry URL
-          nullable: true
         data_provider:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Data Provider
-          nullable: true
         generic_legal_form:
-          type: string
+          type:
+          - string
+          - 'null'
           description: "The Sikoia standardised legal form. Possible values are:\n- **Public Company**: A company whose ownership is distributed amongst general public shareholders through publicly-traded stock shares.\n- **Limited Company**: A private company whose owners are legally responsible for its debts only to the extent of the amount of capital they invested.\n- **Partnership**: A business owned by two or more people who share profits and losses.\n- **Investment Company**: A regulated entity that pools and manages investors' capital, investing in securities and other financial instruments.\n- **Cooperative**: A business owned and operated by its members for their mutual benefit.\n- **Sole Proprietorship**: A type of business owned and operated by a single person.\n- **Government Entity**: A legal entity created by a government to carry out a specific function or service.\n- **Other**: The registry legal form could not be mapped to any of the above. \n"
-          nullable: true
         registry_legal_form:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Registry Legal Form
-          nullable: true
         country_code:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Country Code
-          nullable: true
         date_established:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Established Date
-          nullable: true
           readOnly: true
         date_dissolved:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The Dissolved Date
-          nullable: true
           readOnly: true
         official_address:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
         summary_info:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.SummaryInfo'
         special_characteristics:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: List of Special Characteristic
-          nullable: true
         previous_company_names:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.PreviousCompanyName'
           description: List of Previous Company Name
-          nullable: true
         accounts:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Accounts'
         industry_codes:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.IndustryCode'
           description: List of Industry Codes
-          nullable: true
         officers:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Officers'
         owners:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Owners'
         filings:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Filing'
           description: List of Filings
-          nullable: true
         charges:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Charge'
           description: List of Charges
-          nullable: true
         insolvencies:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Insolvency'
           description: List of Insolvencies
-          nullable: true
         controlling_entity:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.RelatedCompany'
         foreign_controlling_entity:
           $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.RelatedCompany'
       additionalProperties: false
-    SikoiaSharedModels.Company.External.Response.Mapped.Officers:
-      title: Officers
+    SikoiaSharedModels.Company.External.Response.Mapped.Owners:
+      title: Owners
       type: object
       properties:
         people:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.PersonOfficer'
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.PersonOwner'
           description: The List of People
-          nullable: true
         companies:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanyOfficer'
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanyOwner'
           description: The List of Companies
-          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.PersonOwner:
+      title: Person Owner
+      type: object
+      properties:
+        source_id:
+          type:
+          - string
+          - 'null'
+          description: The Source ID
+          readOnly: true
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The Firstname of the Owner
+        surname:
+          type:
+          - string
+          - 'null'
+          description: The Surname of the Owner
+        full_name:
+          type:
+          - string
+          - 'null'
+          description: The Full Name of the Owner
+        type:
+          type:
+          - string
+          - 'null'
+          description: The Type of the Owner
+        date_from:
+          type:
+          - string
+          - 'null'
+          description: The Date From
+        date_to:
+          type:
+          - string
+          - 'null'
+          description: The Date To
+        natures_of_control:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of Natures of Control
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The Date of Birth of the Owner
+          readOnly: true
+        birth_year:
+          type:
+          - integer
+          - 'null'
+          description: The Year of Birth of the Owner
+          format: int32
+        birth_month:
+          type:
+          - integer
+          - 'null'
+          description: The Month of Birth of the Owner
+          format: int32
+        birth_day:
+          type:
+          - integer
+          - 'null'
+          description: The Day of Birth of the Owner
+          format: int32
+        nationality:
+          type:
+          - string
+          - 'null'
+          description: The Nationality of the Owner
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.SummaryInfo:
+      title: Information Summary
+      type: object
+      properties:
+        has_insolvency_history:
+          type:
+          - boolean
+          - 'null'
+          description: Insolvency History
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.InsolvencyDate:
+      title: Insolvency Date
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          description: Date of Insolvency
+        type:
+          type:
+          - string
+          - 'null'
+          description: Type of Insolvency Date
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress:
+      title: Official Address
+      type: object
+      properties:
+        address_line_1:
+          type:
+          - string
+          - 'null'
+          description: The First Line of Address
+          example: 10 Main Street
+        address_line_2:
+          type:
+          - string
+          - 'null'
+          description: The Second Line of Address
+          example: Apt. 101
+        address_line_3:
+          type:
+          - string
+          - 'null'
+          description: The Third Line of Address
+          example: Main House
+        address_line_4:
+          type:
+          - string
+          - 'null'
+          description: The Fourth Line of Address
+        city:
+          type:
+          - string
+          - 'null'
+          description: The Name of the City
+          example: Test Town
+        region:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Region
+          example: Test Country
+        country:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Country
+          example: GB
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The PostCode of the Address
+          example: X9 9AA
+        full_address:
+          type:
+          - string
+          - 'null'
+          description: The Full Address
+          example: 123 Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Request.ResolvePicklistRequest:
+      title: Resolve Picklist Request
+      required:
+      - picklist_index
+      - request_id
+      type: object
+      properties:
+        request_id:
+          minLength: 1
+          type: string
+          description: Sikoia ID for the request
+          example: cfed4c7f-37e8-4657-b185-7cf572d0b019
+        picklist_index:
+          type: integer
+          description: Picklist index of the company you wish to select
+          format: int32
+          example: '1'
+          exclusiveMinimum: 0
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.Transaction:
+      title: Transaction
+      type: object
+      properties:
+        filing_type:
+          type:
+          - string
+          - 'null'
+          description: The Filing Type of a Transaction
+        delivered_on:
+          type:
+          - string
+          - 'null'
+          description: Transaction Delivered On
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.IndustryCode:
+      title: Industry Code
+      type: object
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: The Industry Code
+        description:
+          type:
+          - string
+          - 'null'
+          description: The Industry Description
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.Filing:
+      title: Filing
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: The Filing Category
+        description:
+          type:
+          - string
+          - 'null'
+          description: The Filing Description
+        type:
+          type:
+          - string
+          - 'null'
+          description: Filing Type
+        filing_date:
+          type:
+          - string
+          - 'null'
+          description: Filing Date
+          readOnly: true
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.RegistryDataResponse:
+      title: Registry Data Response
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Sikoia ID for the request
+          format: uuid
+          readOnly: true
+          example: 276c102b-85d3-4e86-a69d-de1b2ba72150
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Complete` `Failed` `TooManyResults`)
+          example: Complete
+        company_id:
+          type: string
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          readOnly: true
+          example: '2024-02-12T13:18:28.978Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '12345678'
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+          example: Acme Inc
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
+        picklist:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.CompanySearchMappedResponse'
+          description: If the response status is “TooManyResults”, this object will list the potential matches for the company
+          example: '[]'
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.PreviousCompanyName:
+      title: Previous Company Name
+      type: object
+      properties:
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: Name of a Company
+        date_from:
+          type:
+          - string
+          - 'null'
+          description: From Date
+        date_to:
+          type:
+          - string
+          - 'null'
+          description: To Date
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.CompanyOfficer:
+      title: Company Officer
+      type: object
+      properties:
+        source_id:
+          type:
+          - string
+          - 'null'
+          description: The Source ID
+          readOnly: true
+        officer_role:
+          type:
+          - string
+          - 'null'
+          description: The Role of the Officer
+        date_appointed:
+          type:
+          - string
+          - 'null'
+          description: The Date when Officer was Appointed
+        date_resigned:
+          type:
+          - string
+          - 'null'
+          description: The Date when Officer Resigned
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+        name:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Company Officer
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
+        occupation:
+          type:
+          - string
+          - 'null'
+          description: The Occupation of the Officer
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.PersonOfficer:
+      title: Person Officer
+      type: object
+      properties:
+        source_id:
+          type:
+          - string
+          - 'null'
+          description: The Source ID
+          format: uuid
+          readOnly: true
+        officer_role:
+          type:
+          - string
+          - 'null'
+          description: The Role of the Officer
+        date_appointed:
+          type:
+          - string
+          - 'null'
+          description: The Date when Officer was Appointed
+        date_resigned:
+          type:
+          - string
+          - 'null'
+          description: The Date when Officer Resigned
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+        tax_id:
+          type:
+          - string
+          - 'null'
+          description: The Tax ID
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The Firstname of the Officer
+        surname:
+          type:
+          - string
+          - 'null'
+          description: The Surname of the Officer
+        full_name:
+          type:
+          - string
+          - 'null'
+          description: The Full Name of the Officer
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The Date of Birth of the Officer
+          readOnly: true
+        birth_year:
+          type:
+          - integer
+          - 'null'
+          description: The Year of Birth
+          format: int32
+        birth_month:
+          type:
+          - integer
+          - 'null'
+          description: The Month of Birth
+          format: int32
+        birth_day:
+          type:
+          - integer
+          - 'null'
+          description: The Day of Birth
+          format: int32
+        nationality:
+          type:
+          - string
+          - 'null'
+          description: The Day of Birth
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.OfficialAddress'
+        occupation:
+          type:
+          - string
+          - 'null'
+          description: The Occupation of the Officer
       additionalProperties: false
     SikoiaSharedModels.Company.External.Response.Mapped.Accounts:
       title: Accounts
@@ -1654,21 +1783,75 @@ components:
       type: object
       properties:
         made_up_to:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Last Accounts Made Up To
-          nullable: true
         period_start:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Period Start for Last Accounts
-          nullable: true
         period_end:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Period End for Last Accounts
-          nullable: true
         type:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Type
-          nullable: true
+      additionalProperties: false
+    SikoiaSharedModels.Company.External.Response.Mapped.Charge:
+      title: Charge
+      type: object
+      properties:
+        charge_code:
+          type:
+          - string
+          - 'null'
+          description: The Charge Code
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+        created_on:
+          type:
+          - string
+          - 'null'
+          description: Charge Created On
+        delivered_on:
+          type:
+          - string
+          - 'null'
+          description: Charge Delivered On
+        satisfied_on:
+          type:
+          - string
+          - 'null'
+          description: Charge Satisfied On
+        details:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Details'
+        transactions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Transaction'
+          description: List of Transactions
+        classification:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.Classification'
+        persons_entitled:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.PersonEntitled'
+          description: Persons Entitled
+        secured_details:
+          $ref: '#/components/schemas/SikoiaSharedModels.Company.External.Response.Mapped.SecuredDetails'
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media Webhooks API
+  title: Sikoia Webhooks API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,12 @@ paths:
       tags:
       - Webhooks
       summary: Create a new webhook
-      description: "### Creates a webhook for one or more events.\r\n\r\nA webhook is an HTTP request that keeps your system informed about changes in the Sikoia Platform in real-time. Refer to our Guides section for additional information on webhooks.\r\nYou can retrieve a complete list of supported `event_types` by using the `GET/v2/webhooks/event-types` endpoint.\r\n"
+      description: '### Creates a webhook for one or more events.
+
+
+        A webhook is an HTTP request that keeps your system informed about changes in the Sikoia Platform in real-time. Refer to our Guides section for additional information on webhooks.
+
+        You can retrieve a complete list of supported `event_types` by using the `GET/v2/webhooks/event-types` endpoint.'
       operationId: POST_v2-webhooks
       requestBody:
         content:
@@ -105,7 +110,13 @@ paths:
       tags:
       - Webhooks
       summary: List all webhooks
-      description: "### Retrieves a list of all available webhooks.\r\n\r\nReturns a list of all webhooks affiliated with your organisation.\r\n\r\nThis list includes the `webhook_id`, which can be used to update or delete the webhook using the `GET/v2/webhooks/{webhook_id}` and `DELETE/v2/webhooks/{webhook_id}` endpoints.\r\n"
+      description: '### Retrieves a list of all available webhooks.
+
+
+        Returns a list of all webhooks affiliated with your organisation.
+
+
+        This list includes the `webhook_id`, which can be used to update or delete the webhook using the `GET/v2/webhooks/{webhook_id}` and `DELETE/v2/webhooks/{webhook_id}` endpoints.'
       operationId: GET_v2-webhooks
       responses:
         '200':
@@ -165,7 +176,10 @@ paths:
       tags:
       - Webhooks
       summary: Retrieve a webhook
-      description: "### Retrieves a webhook.\r\n\r\nReturns information about a webhook, including the `webhook_callback_url` and a list of associated `event_types`.\r\n"
+      description: '### Retrieves a webhook.
+
+
+        Returns information about a webhook, including the `webhook_callback_url` and a list of associated `event_types`.'
       operationId: GET_v2-webhooks-webhook_id
       parameters:
       - name: webhook_id
@@ -242,7 +256,12 @@ paths:
       tags:
       - Webhooks
       summary: Update a webhook
-      description: "### Updates details for an existing webhook.\r\n\r\nWhile all fields are optional, the request must include at least one field.\r\nTo clear a field, send an empty string as the field value.\r\n"
+      description: '### Updates details for an existing webhook.
+
+
+        While all fields are optional, the request must include at least one field.
+
+        To clear a field, send an empty string as the field value.'
       operationId: PATCH_v2-webhooks-webhook_id
       parameters:
       - name: webhook_id
@@ -341,7 +360,10 @@ paths:
       tags:
       - Webhooks
       summary: Delete a webhook
-      description: "### Deletes a single webhook.\r\n\r\nPlease note that this action cannot be undone.\r\n"
+      description: '### Deletes a single webhook.
+
+
+        Please note that this action cannot be undone.'
       operationId: DELETE_v2-webhooks-webhook_id
       parameters:
       - name: webhook_id
@@ -407,7 +429,12 @@ paths:
       tags:
       - Webhooks
       summary: List all event types
-      description: "### Retrieves a list of all available webhook event_types.\r\n\r\nThe list includes the name of all events that a webhook can subscribe to.\r\nRefer to our Guides section for additional information on webhooks.\r\n"
+      description: '### Retrieves a list of all available webhook event_types.
+
+
+        The list includes the name of all events that a webhook can subscribe to.
+
+        Refer to our Guides section for additional information on webhooks.'
       operationId: GET_v2-webhooks-event-types
       responses:
         '200':
@@ -560,7 +587,10 @@ paths:
       tags:
       - Webhooks
       summary: Get a shared secret
-      description: "### Retrieves a single secret key used to sign all webhook requests.\r\n\r\nThis secret will be used to create a HMACSHA256 hash of every webhook request sent. The result will be Base64 encoded and sent under the `X-HMAC-SHA256-Signature` header in the request."
+      description: '### Retrieves a single secret key used to sign all webhook requests.
+
+
+        This secret will be used to create a HMACSHA256 hash of every webhook request sent. The result will be Base64 encoded and sent under the `X-HMAC-SHA256-Signature` header in the request.'
       operationId: GET_v2-webhooks-secrets
       responses:
         '200':
@@ -625,7 +655,10 @@ paths:
       tags:
       - Webhooks
       summary: Create a shared secret
-      description: "### Creates a new secret key to be used to sign all webhook requests.\r\n\r\nAll subsequent wehook requests sent will include a HMACSHA256 hash that has been Base64 encoded in the `X-HMAC-SHA256-Signature` header. Comparing this hashed value against a SHA256 hash of the request body (using the secret as a key) enables you to verify the payload has not been tampered with."
+      description: '### Creates a new secret key to be used to sign all webhook requests.
+
+
+        All subsequent wehook requests sent will include a HMACSHA256 hash that has been Base64 encoded in the `X-HMAC-SHA256-Signature` header. Comparing this hashed value against a SHA256 hash of the request body (using the secret as a key) enables you to verify the payload has not been tampered with.'
       operationId: POST_v2-webhooks-secrets
       responses:
         '201':
@@ -690,7 +723,10 @@ paths:
       tags:
       - Webhooks
       summary: Delete a shared secret
-      description: "### Deletes a secret key used to sign webhook requests.\r\n\r\nPlease note that this action cannot be undone. Webhooks will continue to be sent without a secret - they will just not include the `X-HMAC-SHA256-Signature` header for verification purposes."
+      description: '### Deletes a secret key used to sign webhook requests.
+
+
+        Please note that this action cannot be undone. Webhooks will continue to be sent without a secret - they will just not include the `X-HMAC-SHA256-Signature` header for verification purposes.'
       operationId: DELETE_v2-webhooks-secrets
       responses:
         '204':
@@ -748,7 +784,10 @@ paths:
       tags:
       - Webhooks
       summary: Change a shared secret
-      description: "### Changes the shared secret to a new secure value.\r\n\r\nGenerates a new secret used to create the `X-HMAC-SHA256-Signature` header on all webhook requests.  This new secret will be implemented on all requests sent after the date_updated timestamp included in the response."
+      description: '### Changes the shared secret to a new secure value.
+
+
+        Generates a new secret used to create the `X-HMAC-SHA256-Signature` header on all webhook requests. This new secret will be implemented on all requests sent after the date_updated timestamp included in the response.'
       operationId: PATCH_v2-webhooks-secrets-rotate
       responses:
         '200':
@@ -835,9 +874,10 @@ components:
           description: The absolute HTTPS URL that a POST request will be made to when the webhook is triggered
           example: https://yourdomain.com/webhook/
         external_ref:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Optional value if you need to associate a webhook instance with a reference in your system
-          nullable: true
           example: IntRef001
         event_types:
           minItems: 1
@@ -859,12 +899,7 @@ components:
           readOnly: true
           example: '2024-01-18T12:37:35.0000000+00:00'
       additionalProperties: false
-    MicroserviceUserManagement.Domain.Model.Common.PaginationDirection:
-      enum:
-      - Forward
-      - Backward
-      type: string
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse400:
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
       properties:
@@ -872,23 +907,23 @@ components:
           type: string
           description: The error type
           readOnly: true
-          example: InvalidRequest
+          example: ServerError
         status:
           type: integer
           description: HTTP status code of the error
           format: HttpCode
           readOnly: true
-          example: '400'
+          example: '500'
         title:
           type: string
           description: A short description of the error
           readOnly: true
-          example: Validation Errors
+          example: Internal Server Error
         detail:
           type: string
           description: More details about what went wrong
           readOnly: true
-          example: Entity Id is required.
+          example: Something has gone wrong, please try again
         correlation_id:
           type: string
           description: Correlation ID, please include this in any support tickets raised
@@ -926,35 +961,6 @@ components:
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
       additionalProperties: false
-    MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData:
-      type: object
-      properties:
-        next_page_url:
-          type: string
-          description: A pre-formatted URL containing the location of the next ordered page of data
-          nullable: true
-          readOnly: true
-          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Forward
-        previous_page_url:
-          type: string
-          description: A pre-formatted URL containing the location of the previous ordered page of data
-          nullable: true
-          readOnly: true
-          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Backward
-        page_size:
-          type: integer
-          description: The maxium number of items that may be returned in a given page (the actual number may be equal to or less than)
-          format: int32
-          readOnly: true
-          example: '25'
-        page_count:
-          type: integer
-          description: ' Number of records in the current page (will be less than or equal to page_size)'
-          format: int32
-          readOnly: true
-          example: '5'
-      additionalProperties: false
-      description: Basic structure for keyset pagination results
     MicroserviceUserManagement.Resources.SikoiaErrorResponse409:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
@@ -986,26 +992,62 @@ components:
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
       additionalProperties: false
-    MicroserviceUserManagement.Resources.External.WebhookRequestAttempt:
+    MicroserviceUserManagement.Resources.External.WebhookEventType:
       type: object
       properties:
-        attempt_id:
+        event_name:
           type: string
-          description: The unique identifier of each attempt to send a request
-          format: uuid
-          example: 8b1391e4-7ace-41a2-a04b-55decffb9fe5
-        datetime_created:
-          type: string
-          description: The date and time a request was attempted
-          format: date-time
-          example: '2024-01-18T12:37:35.0000000+00:00'
-        http_response_code:
-          type: integer
-          description: The HTTP response code we received back from a given request attempt
-          format: int32
-          example: '200'
+          description: The unique name of an event you can subscribe to notifications for
+          readOnly: true
+          example: DocumentProcessing.Completed
+        event_types:
+          type: array
+          items: {}
+          description: The event types that exist hierarchically under this current event type
+          readOnly: true
+          example: '[{"event_name":"BankStatementProcessing.Completed", "event_types":[{"event_name":"ExampleBankStatementProcessing.Completed", "event_types":[]}]}]'
       additionalProperties: false
-      description: Represents each attempt made to deliver a webhook request to a callback URL
+    MicroserviceUserManagement.Resources.External.PaginatedWebhookRequestsResponse:
+      type: object
+      properties:
+        pagination_meta_data:
+          $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData'
+        webhook_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookRequest'
+          description: All known requests made for a given webhook limited to the page size specified in pagination_meta_data.page_size
+          readOnly: true
+      additionalProperties: false
+      description: An ordered (most recent first) subset of webhook requests
+    MicroserviceUserManagement.Domain.Model.Webhooks.WebhookEventStatusCode:
+      enum:
+      - NotRequested
+      - Pending
+      - Complete
+      - Failed
+      type: string
+    MicroserviceUserManagement.Domain.Model.Common.PaginationDirection:
+      enum:
+      - Forward
+      - Backward
+      type: string
+    MicroserviceUserManagement.Resources.External.WebhookEventGroup:
+      type: object
+      properties:
+        event_group_name:
+          type: string
+          description: The unique name that groups together a related hierarchy of event types
+          readOnly: true
+          example: Document Lifecycle
+        event_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookEventType'
+          description: The top most 'coarse' event types under a given group
+          readOnly: true
+          example: '[{"event_group_name":"Document Lifecycle","event_types":[{"event_name":"DocumentProcessing.Completed","event_types":[{"event_name":"BankStatementProcessing.Completed","event_types":[]}]}]}]'
+      additionalProperties: false
     MicroserviceUserManagement.Resources.SikoiaErrorResponse429:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
@@ -1037,39 +1079,57 @@ components:
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
       additionalProperties: false
-    MicroserviceUserManagement.Resources.External.WebhookUpdate:
+    MicroserviceUserManagement.Resources.External.WebhookRequestAttempt:
       type: object
       properties:
-        webhook_name:
+        attempt_id:
           type: string
-          description: The user friendly, case sensitive, name for a webhook - it does not have to be unique
-          nullable: true
-          example: Bank Statement Hook
-        webhook_callback_url:
+          description: The unique identifier of each attempt to send a request
+          format: uuid
+          example: 8b1391e4-7ace-41a2-a04b-55decffb9fe5
+        datetime_created:
           type: string
-          description: The absolute HTTPS URL that a POST request will be made to when the webhook is triggered
-          nullable: true
-          example: https://yourdomain.com/webhook/
-        external_ref:
-          type: string
-          description: Optional value if you need to associate a webhook instance with a reference in your system
-          nullable: true
-          example: IntRef001
-        event_types:
-          type: array
-          items:
-            type: string
-          description: Supported events a webhook can subscribe to
-          nullable: true
-          example: '["BankStatementProcessing.Completed"]'
+          description: The date and time a request was attempted
+          format: date-time
+          example: '2024-01-18T12:37:35.0000000+00:00'
+        http_response_code:
+          type: integer
+          description: The HTTP response code we received back from a given request attempt
+          format: int32
+          example: '200'
       additionalProperties: false
-    MicroserviceUserManagement.Domain.Model.Webhooks.WebhookEventStatusCode:
-      enum:
-      - NotRequested
-      - Pending
-      - Complete
-      - Failed
-      type: string
+      description: Represents each attempt made to deliver a webhook request to a callback URL
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse400:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: InvalidRequest
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '400'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Validation Errors
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Entity Id is required.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
     MicroserviceUserManagement.Resources.External.WebhookRequest:
       type: object
       properties:
@@ -1095,10 +1155,11 @@ components:
           description: The URL that the request was made to
           example: https://yourdomain.com/webhook/
         datetime_created:
-          type: string
+          type:
+          - string
+          - 'null'
           description: An optional value that indicates when a webhook was successfully received at a given callback url
           format: date-time
-          nullable: true
           readOnly: true
           example: '2024-01-18T12:37:35.0000000+00:00'
         event_data:
@@ -1116,69 +1177,6 @@ components:
           example: '[{"attempt_id":"8b1391e4-7ace-41a2-a04b-55decffb9fe5","requested_on":"2024-01-18T12:37:35.053Z","http_response_code":200}]'
       additionalProperties: false
       description: Represents a historic request made after a webhook was triggered by event in the Sikoia platform
-    MicroserviceUserManagement.Resources.External.WebhookSecret:
-      type: object
-      properties:
-        shared_key:
-          type: string
-          description: The UTF8 encoded value used as the key in the SHA256 hash.
-          readOnly: true
-        date_created:
-          type: string
-          description: 'The timestamp for when the secret started being used to add a HMACSHA256 header to all webhook requests. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          description: 'The timestamp for when the key last changed. If a key is rotated this will be different to the date_created. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
-          format: date-time
-          readOnly: true
-      additionalProperties: false
-      description: The current secret used as the shared key for the HMACSHA256 header.
-    MicroserviceUserManagement.Resources.External.WebhookEventType:
-      type: object
-      properties:
-        event_name:
-          type: string
-          description: The unique name of an event you can subscribe to notifications for
-          readOnly: true
-          example: DocumentProcessing.Completed
-        event_types:
-          type: array
-          items: {}
-          description: The event types that exist hierarchically under this current event type
-          readOnly: true
-          example: '[{"event_name":"BankStatementProcessing.Completed", "event_types":[{"event_name":"ExampleBankStatementProcessing.Completed", "event_types":[]}]}]'
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.External.WebhookEventGroup:
-      type: object
-      properties:
-        event_group_name:
-          type: string
-          description: The unique name that groups together a related hierarchy of event types
-          readOnly: true
-          example: Document Lifecycle
-        event_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookEventType'
-          description: The top most 'coarse' event types under a given group
-          readOnly: true
-          example: '[{"event_group_name":"Document Lifecycle","event_types":[{"event_name":"DocumentProcessing.Completed","event_types":[{"event_name":"BankStatementProcessing.Completed","event_types":[]}]}]}]'
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.External.PaginatedWebhookRequestsResponse:
-      type: object
-      properties:
-        pagination_meta_data:
-          $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData'
-        webhook_requests:
-          type: array
-          items:
-            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookRequest'
-          description: All known requests made for a given webhook limited to the page size specified in pagination_meta_data.page_size
-          readOnly: true
-      additionalProperties: false
-      description: An ordered (most recent first) subset of webhook requests
     MicroserviceUserManagement.Resources.SikoiaErrorResponse404:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
@@ -1210,36 +1208,85 @@ components:
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
       additionalProperties: false
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+    MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData:
       type: object
       properties:
-        type:
-          type: string
-          description: The error type
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: A pre-formatted URL containing the location of the next ordered page of data
           readOnly: true
-          example: ServerError
-        status:
+          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Forward
+        previous_page_url:
+          type:
+          - string
+          - 'null'
+          description: A pre-formatted URL containing the location of the previous ordered page of data
+          readOnly: true
+          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Backward
+        page_size:
           type: integer
-          description: HTTP status code of the error
-          format: HttpCode
+          description: The maxium number of items that may be returned in a given page (the actual number may be equal to or less than)
+          format: int32
           readOnly: true
-          example: '500'
-        title:
+          example: '25'
+        page_count:
+          type: integer
+          description: ' Number of records in the current page (will be less than or equal to page_size)'
+          format: int32
+          readOnly: true
+          example: '5'
+      additionalProperties: false
+      description: Basic structure for keyset pagination results
+    MicroserviceUserManagement.Resources.External.WebhookSecret:
+      type: object
+      properties:
+        shared_key:
           type: string
-          description: A short description of the error
+          description: The UTF8 encoded value used as the key in the SHA256 hash.
           readOnly: true
-          example: Internal Server Error
-        detail:
+        date_created:
           type: string
-          description: More details about what went wrong
+          description: 'The timestamp for when the secret started being used to add a HMACSHA256 header to all webhook requests. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
           readOnly: true
-          example: Something has gone wrong, please try again
-        correlation_id:
+        date_updated:
           type: string
-          description: Correlation ID, please include this in any support tickets raised
+          description: 'The timestamp for when the key last changed. If a key is rotated this will be different to the date_created. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
           readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+      description: The current secret used as the shared key for the HMACSHA256 header.
+    MicroserviceUserManagement.Resources.External.WebhookUpdate:
+      type: object
+      properties:
+        webhook_name:
+          type:
+          - string
+          - 'null'
+          description: The user friendly, case sensitive, name for a webhook - it does not have to be unique
+          example: Bank Statement Hook
+        webhook_callback_url:
+          type:
+          - string
+          - 'null'
+          description: The absolute HTTPS URL that a POST request will be made to when the webhook is triggered
+          example: https://yourdomain.com/webhook/
+        external_ref:
+          type:
+          - string
+          - 'null'
+          description: Optional value if you need to associate a webhook instance with a reference in your system
+          example: IntRef001
+        event_types:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Supported events a webhook can subscribe to
+          example: '["BankStatementProcessing.Completed"]'
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

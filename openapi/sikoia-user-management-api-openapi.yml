@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media User Management API
+  title: Sikoia User Management API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,13 @@ paths:
       tags:
       - User Management
       summary: List all users
-      description: "### Retrieves a list of all users.\r\n\r\nReturns a list of users affiliated with your organisation.\r\n\r\nRefer to our Guides section for additional information on users, user roles, and user permissions.\r\n"
+      description: '### Retrieves a list of all users.
+
+
+        Returns a list of users affiliated with your organisation.
+
+
+        Refer to our Guides section for additional information on users, user roles, and user permissions.'
       operationId: GET_v2-users
       responses:
         '200':
@@ -82,6 +88,37 @@ paths:
                 correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
 components:
   schemas:
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: ServerError
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '500'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Internal Server Error
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Something has gone wrong, please try again
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
     MicroserviceUserManagement.Resources.SikoiaErrorResponse401:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
@@ -113,6 +150,24 @@ components:
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
       additionalProperties: false
+    MicroserviceUserManagement.Resources.External.Role:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The role assigned to the user
+          readOnly: true
+          example: Admin
+        description:
+          type:
+          - string
+          - 'null'
+          description: A description of the role assigned to the user
+          readOnly: true
+          example: Admin Role
+      additionalProperties: false
     MicroserviceUserManagement.Resources.External.User:
       type: object
       properties:
@@ -123,19 +178,22 @@ components:
           readOnly: true
           example: 592d6b22-a5d4-4226-b5a3-c374cf1a38fe
         first_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The user’s first name
-          nullable: true
           example: John
         last_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The user’s last name
-          nullable: true
           example: Smith
         email:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The user’s email address
-          nullable: true
           example: john.smith@acme.com
         account_date_created:
           type: string
@@ -150,10 +208,11 @@ components:
           readOnly: true
           example: '2024-01-19T03:06:41.0000000+00:00'
         roles:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.Role'
-          nullable: true
       additionalProperties: false
     MicroserviceUserManagement.Resources.SikoiaErrorResponse429:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
@@ -180,53 +239,6 @@ components:
           description: More details about what went wrong
           readOnly: true
           example: You've exceeded the maximum API request limit per minute. Please try again later.
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.External.Role:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The role assigned to the user
-          nullable: true
-          readOnly: true
-          example: Admin
-        description:
-          type: string
-          description: A description of the role assigned to the user
-          nullable: true
-          readOnly: true
-          example: Admin Role
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-          example: ServerError
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-          example: '500'
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-          example: Internal Server Error
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-          example: Something has gone wrong, please try again
         correlation_id:
           type: string
           description: Correlation ID, please include this in any support tickets raised

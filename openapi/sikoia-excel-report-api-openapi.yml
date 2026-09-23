@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Sikoia Adverse Media Excel Report API
+  title: Sikoia Excel Report API
   termsOfService: https://sikoia.com/About/Terms
   version: '1.0'
 servers:
@@ -23,7 +23,17 @@ paths:
       tags:
       - Excel Report
       summary: Retrieve excel report
-      description: "### Generates an Excel report with a summary of key data for the specified entity.\r\n\r\nThis endpoint returns a report containing data on income and employment verification, affordability insights, validation checklists, and integrity checks.\r\n\r\nThe only validation checklists that are included in the report, if you have requested them, are:\r\n- `Last 3 months of payslips`\r\n- `Last 3 months of bank transactions`\r\n"
+      description: '### Generates an Excel report with a summary of key data for the specified entity.
+
+
+        This endpoint returns a report containing data on income and employment verification, affordability insights, validation checklists, and integrity checks.
+
+
+        The only validation checklists that are included in the report, if you have requested them, are:
+
+        - `Last 3 months of payslips`
+
+        - `Last 3 months of bank transactions`'
       operationId: GET_v2-entity_type-entity_id-excel-report
       parameters:
       - name: entity_type
