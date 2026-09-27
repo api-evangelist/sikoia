@@ -367,61 +367,6 @@ paths:
                 correlation_id: ea5bf8d0-72ec-472c-946e-d8fa4ef2fd8a
 components:
   schemas:
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource:
-      type: object
-      properties:
-        source_id:
-          type:
-          - string
-          - 'null'
-          description: The identifier for the root source of the data, such as a document ID for files (e.g. payslips) or an account connection ID for a successful open banking connection.
-          example: 6f6b61c2-fe31-42be-b46c-20a0b9685aaf
-        source_category_type:
-          type:
-          - string
-          - 'null'
-          description: The category of the data source, such as `Document` or `OpenBanking`.
-          example: Document
-        source_uri:
-          type:
-          - string
-          - 'null'
-          description: The URI of the data source, such as the URI to call in order to retrieve the original document.
-          example: https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf
-        date:
-          type:
-          - string
-          - 'null'
-          description: The date of the data source.
-          example: '2025-01-25'
-      additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestInstance:
       title: Validation Check Request Instance
       type: object
@@ -494,39 +439,6 @@ components:
           description: The type of entity.
           example: case
       additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Request.CheckListValidationRequest:
-      type: object
-      properties:
-        validation_type_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
-          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity.
-          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity.
-          example: case
-        checklist_params:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
-          description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
-      additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse:
       type: object
       properties:
@@ -561,6 +473,39 @@ components:
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource'
           description: The data sources used for evaluating the rule.
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Request.CheckListValidationRequest:
+      type: object
+      properties:
+        validation_type_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
+        checklist_params:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
+          description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
       additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckInstanceResponse:
       title: Validation Check Instance Response
@@ -639,6 +584,61 @@ components:
             $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse'
           description: A list of rules to be evaluated as part of the check.
       additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestListResponse:
+      title: Validation Check Request Instances Response
+      type: object
+      properties:
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
+        validation_check_requests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestInstance'
+          description: A list of validation check instance requests for the entity.
+      additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Response.RequestValidationCheckResponse:
       title: Request Validation Check Instance Response
       type: object
@@ -703,34 +703,6 @@ components:
           description: An optional field providing additional context about the status of the check.
           example: Validation Check request pending
       additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestListResponse:
-      title: Validation Check Request Instances Response
-      type: object
-      properties:
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity.
-          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity.
-          example: case
-        validation_check_requests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestInstance'
-          description: A list of validation check instance requests for the entity.
-      additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter:
       type: object
       properties:
@@ -746,6 +718,34 @@ components:
           - 'null'
           description: Type of source
           example: Document
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource:
+      type: object
+      properties:
+        source_id:
+          type:
+          - string
+          - 'null'
+          description: The identifier for the root source of the data, such as a document ID for files (e.g. payslips) or an account connection ID for a successful open banking connection.
+          example: 6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+        source_category_type:
+          type:
+          - string
+          - 'null'
+          description: The category of the data source, such as `Document` or `OpenBanking`.
+          example: Document
+        source_uri:
+          type:
+          - string
+          - 'null'
+          description: The URI of the data source, such as the URI to call in order to retrieve the original document.
+          example: https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+        date:
+          type:
+          - string
+          - 'null'
+          description: The date of the data source.
+          example: '2025-01-25'
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

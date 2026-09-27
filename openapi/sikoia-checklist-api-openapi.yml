@@ -205,79 +205,115 @@ paths:
                 correlation_id: 3bf2a265-4055-4342-baf8-c67273bc5b9f
 components:
   schemas:
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data:
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse:
       type: object
       properties:
-        income_details:
+        rule_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the rule, such as 'Payslips span a 3 month period'.
+          example: Payslips span a 3 month period
+        decision:
+          type:
+          - string
+          - 'null'
+          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
+          example: Pass
+        recipient:
+          type:
+          - string
+          - 'null'
+          description: The name of the recipient
+          example: Sam Smith
+        message:
+          type:
+          - string
+          - 'null'
+          description: An optional field providing additional context regarding the status of the rule evaluation.
+          example: Validation Check Passed
+        sources:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerDetail'
-          description: A list of income employment details, where each item represents an 'income recipient' and 'income source' pair.
-        data_sources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource'
-          description: Income Employment Sources
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource'
+          description: The data sources used for evaluating the rule.
       additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem:
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource:
       type: object
       properties:
-        category:
+        source_name:
           type:
           - string
           - 'null'
-          description: The category of the tax item(`Tax` `TaxOverpaid` `Surcharges` `Interest` `Penalties` `Subtotal` `PaymentsForThisYear` `OtherAdjustments` `Total`)
-          example: Tax
-        short_description:
+          description: Optional. The name of the data source (e.g. a file name like 'payslip') or null if no specific name is provided (e.g. for banking connections).
+          readOnly: true
+          example: Stmt - current - Feb 2023 - J Smith and J Hayley
+        source_id:
+          type: string
+          description: The ID of the primary data source, such as a document ID for files (e.g. payslips) or an account ID for an open banking connection.
+          readOnly: true
+          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
+        source_category_type:
+          type: string
+          description: The category of the data source, such as `Document` or `OpenBanking`.
+          readOnly: true
+          example: Document
+        source_type:
           type:
           - string
           - 'null'
-          description: The category of the tax item.
-          example: Class 4 NIC
-        value:
+          description: The specific type of data identified, such as `Payslip`, `BankStatement`, `BankAccount`, `SA302`, `TaxOverview`.
+          readOnly: true
+          example: Payslip
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AdditionalInformation:
+      type: object
+      properties:
+        bonuses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Bonus'
+          description: Any income received as bonuses, in addition to regular pay. Only available for payslips.
+        monthly_student_loan_deductions:
           type:
           - number
           - 'null'
-          description: The average value of the tax item across the tax documents provided.
+          description: The total monthly deductions for student loan repayments. Only available for payslips.
           format: double
-          example: '1971.42'
-      additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Request.CheckListValidationRequest:
-      type: object
-      properties:
-        validation_type_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
-          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity.
-          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity.
-          example: case
-        checklist_params:
+          example: '222.44'
+          deprecated: true
+        monthly_gross_pay_details:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
-          description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem'
+          description: Contains detailed breakdown of the monthly gross pay. Only available for payslips.
+        monthly_deductions_details:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DeductionItem'
+          description: Contains a detailed breakdown of the monthly deductions from pay. Only available for payslips.
+        average_income_items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem'
+          description: Contains a list of the income items averaged across the SA302s provided. Only available for SA302s.
+        average_tax_items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem'
+          description: Contains a list of the tax items averaged across the SA302s provided. Only available for tax documents.
       additionalProperties: false
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Bonus:
       type: object
@@ -296,60 +332,56 @@ components:
           description: The date the bonus was paid or awarded.
           example: '2024-01-01'
       additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource:
+    SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter:
       type: object
       properties:
         source_id:
           type:
           - string
           - 'null'
-          description: The identifier for the root source of the data, such as a document ID for files (e.g. payslips) or an account connection ID for a successful open banking connection.
-          example: 6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+          description: Unique identifier for source
+          example: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
         source_category_type:
           type:
           - string
           - 'null'
-          description: The category of the data source, such as `Document` or `OpenBanking`.
+          description: Type of source
           example: Document
-        source_uri:
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem:
+      type: object
+      properties:
+        category:
           type:
           - string
           - 'null'
-          description: The URI of the data source, such as the URI to call in order to retrieve the original document.
-          example: https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf
-        date:
+          description: Sikoia’s categorisation of the pay type(`MonthlyBonusPay` `MonthlyBasicPay` `MonthlyArrears` `MonthlyPensionPay` `MonthlySalarySacrifice` `MonthlyCommissionPay` `MonthlyParentalPay` `MonthlySickPay` `MonthlyOvertimePay` `MonthlyShiftAllowancePay` `MonthlyHolidayPay` `MonthlyCarAllowancePay` `MonthlyOtherBenefitsInKind` `MonthlyHealthcareBenefitPay` `MonthlyOtherGrossPay`)
+          example: MonthlyBasicPay
+        amount:
           type:
-          - string
+          - number
           - 'null'
-          description: The date of the data source.
-          example: '2025-01-25'
+          description: The amount of pay for the specified category.
+          format: double
+          example: '222.44'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data:
+      type: object
+      properties:
+        income_details:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerDetail'
+          description: A list of income employment details, where each item represents an 'income recipient' and 'income source' pair.
+        data_sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource'
+          description: Income Employment Sources
       additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckInstanceResponse:
       title: Validation Check Instance Response
@@ -428,22 +460,89 @@ components:
             $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse'
           description: A list of rules to be evaluated as part of the check.
       additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter:
+    SikoiaSharedModels.EventProcessor.Checklist.Request.CheckListValidationRequest:
       type: object
       properties:
-        source_id:
+        validation_type_id:
           type:
           - string
           - 'null'
-          description: Unique identifier for source
-          example: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
-        source_category_type:
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        entity_id:
           type:
           - string
           - 'null'
-          description: Type of source
-          example: Document
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
+        checklist_params:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
+          description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
       additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: The category of the tax item(`Tax` `TaxOverpaid` `Surcharges` `Interest` `Penalties` `Subtotal` `PaymentsForThisYear` `OtherAdjustments` `Total`)
+          example: Tax
+        short_description:
+          type:
+          - string
+          - 'null'
+          description: The category of the tax item.
+          example: Class 4 NIC
+        value:
+          type:
+          - number
+          - 'null'
+          description: The average value of the tax item across the tax documents provided.
+          format: double
+          example: '1971.42'
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DeductionItem:
       type: object
       properties:
@@ -460,6 +559,75 @@ components:
           description: The amount of the deduction for the specified category.
           format: double
           example: '167.15'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerMappedResponse:
+      title: Income Employer Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: The unique Sikoia identifier for the request.
+          example: 8ef5079a-b3de-44a5-b4ff-c534259e752c
+        status:
+          type:
+          - string
+          - 'null'
+          description: The current status of the request, which can be `Pending`, `Complete`, or `Failed`.
+          example: Pending
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          example: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was initiated.
+          example: '2024-01-01T12:38:45.711Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was completed.
+          example: '2024-01-02T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional details or context about the request.
+          example: Income request pending
+        data:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeSourceAddress:
+      type: object
+      properties:
+        summary_line:
+          type:
+          - string
+          - 'null'
+          description: The address of the employer, as stated on the payslip.
+          example: Flat 23, Sample Street, London
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The postcode of the employer, as stated on the payslip.
+          example: SW4 4PL
       additionalProperties: false
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerDetail:
       type: object
@@ -632,58 +800,74 @@ components:
             $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeDataSource'
           description: The sources of income used to generate this 'income recipient' and 'income source' pair, such as `Payslip` or `BankStatement`.
       additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerMappedResponse:
-      title: Income Employer Response
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem:
       type: object
       properties:
-        request_id:
+        category:
           type:
           - string
           - 'null'
-          description: The unique Sikoia identifier for the request.
-          example: 8ef5079a-b3de-44a5-b4ff-c534259e752c
-        status:
+          description: The category of the income item(`PayFromAllEmployments` `BenefitsAndExpenses` `AllowableExpenses` `TotalEmploymentIncome` `ShareSchemes` `SelfEmployment` `InterestFromPartnerships` `DividendsFromPartnerships` `PropertyIncome` `ForeignIncome` `ForeignDividends` `ForeignSavings` `ForeignLifeInsurance` `TrustsAndEstates` `UkInterest` `UkDividends` `UkPensionsAndBenefits` `UkLifeInsurance` `OtherIncome` `TotalIncomeReceived` `RetirementAnnuityDeduction` `ForeignTaxOnEstatesDeduction` `IncomeTaxRelief` `AnnuityDeduction` `GiftsToCharity` `PersonalAllowance` `MarriageAllowanceTransfer` `BlindPersonAllowance` `TotalDeductionsApplied` `TotalTaxableIncome`)
+          example: PayFromAllEmployments
+        value:
+          type:
+          - number
+          - 'null'
+          description: The average value of the income item across the SA302s provided.
+          format: double
+          example: '1971.42'
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource:
+      type: object
+      properties:
+        source_id:
           type:
           - string
           - 'null'
-          description: The current status of the request, which can be `Pending`, `Complete`, or `Failed`.
-          example: Pending
-        entity_id:
+          description: The identifier for the root source of the data, such as a document ID for files (e.g. payslips) or an account connection ID for a successful open banking connection.
+          example: 6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+        source_category_type:
           type:
           - string
           - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity.
-          example: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
+          description: The category of the data source, such as `Document` or `OpenBanking`.
+          example: Document
+        source_uri:
           type:
           - string
           - 'null'
-          description: The type of entity.
-          example: case
-        datetime_requested:
+          description: The URI of the data source, such as the URI to call in order to retrieve the original document.
+          example: https://api.sikoia.com/v2/documents/6f6b61c2-fe31-42be-b46c-20a0b9685aaf
+        date:
           type:
           - string
           - 'null'
-          description: The date and time when the request was initiated.
-          example: '2024-01-01T12:38:45.711Z'
-        datetime_completed:
+          description: The date of the data source.
+          example: '2025-01-25'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployeeAddress:
+      type: object
+      properties:
+        summary_line:
           type:
           - string
           - 'null'
-          description: The date and time when the request was completed.
-          example: '2024-01-02T12:22:07.747Z'
-        message:
+          description: The address of the employer, as stated on the payslip.
+          example: 19, Sample Street, London
+        post_code:
           type:
           - string
           - 'null'
-          description: Additional details or context about the request.
-          example: Income request pending
-        data:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data'
+          description: The postcode of the employer, as stated on the payslip.
+          example: SW1 1PN
+      additionalProperties: false
+    MicroserviceEventProcessor.Application.Models.Response.CompletnessAndIncomeResponse:
+      type: object
+      properties:
+        completness_verification:
+          $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckInstanceResponse'
+        income_verification:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerMappedResponse'
       additionalProperties: false
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeDataSource:
       type: object
@@ -719,190 +903,6 @@ components:
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource'
           description: A list of the individual data sources used, such as 'payslip documents'.
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AdditionalInformation:
-      type: object
-      properties:
-        bonuses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Bonus'
-          description: Any income received as bonuses, in addition to regular pay. Only available for payslips.
-        monthly_student_loan_deductions:
-          type:
-          - number
-          - 'null'
-          description: The total monthly deductions for student loan repayments. Only available for payslips.
-          format: double
-          example: '222.44'
-          deprecated: true
-        monthly_gross_pay_details:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem'
-          description: Contains detailed breakdown of the monthly gross pay. Only available for payslips.
-        monthly_deductions_details:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DeductionItem'
-          description: Contains a detailed breakdown of the monthly deductions from pay. Only available for payslips.
-        average_income_items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem'
-          description: Contains a list of the income items averaged across the SA302s provided. Only available for SA302s.
-        average_tax_items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem'
-          description: Contains a list of the tax items averaged across the SA302s provided. Only available for tax documents.
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource:
-      type: object
-      properties:
-        source_name:
-          type:
-          - string
-          - 'null'
-          description: Optional. The name of the data source (e.g. a file name like 'payslip') or null if no specific name is provided (e.g. for banking connections).
-          readOnly: true
-          example: Stmt - current - Feb 2023 - J Smith and J Hayley
-        source_id:
-          type: string
-          description: The ID of the primary data source, such as a document ID for files (e.g. payslips) or an account ID for an open banking connection.
-          readOnly: true
-          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
-        source_category_type:
-          type: string
-          description: The category of the data source, such as `Document` or `OpenBanking`.
-          readOnly: true
-          example: Document
-        source_type:
-          type:
-          - string
-          - 'null'
-          description: The specific type of data identified, such as `Payslip`, `BankStatement`, `BankAccount`, `SA302`, `TaxOverview`.
-          readOnly: true
-          example: Payslip
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployeeAddress:
-      type: object
-      properties:
-        summary_line:
-          type:
-          - string
-          - 'null'
-          description: The address of the employer, as stated on the payslip.
-          example: 19, Sample Street, London
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The postcode of the employer, as stated on the payslip.
-          example: SW1 1PN
-      additionalProperties: false
-    MicroserviceEventProcessor.Application.Models.Response.CompletnessAndIncomeResponse:
-      type: object
-      properties:
-        completness_verification:
-          $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckInstanceResponse'
-        income_verification:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerMappedResponse'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem:
-      type: object
-      properties:
-        category:
-          type:
-          - string
-          - 'null'
-          description: Sikoia’s categorisation of the pay type(`MonthlyBonusPay` `MonthlyBasicPay` `MonthlyArrears` `MonthlyPensionPay` `MonthlySalarySacrifice` `MonthlyCommissionPay` `MonthlyParentalPay` `MonthlySickPay` `MonthlyOvertimePay` `MonthlyShiftAllowancePay` `MonthlyHolidayPay` `MonthlyCarAllowancePay` `MonthlyOtherBenefitsInKind` `MonthlyHealthcareBenefitPay` `MonthlyOtherGrossPay`)
-          example: MonthlyBasicPay
-        amount:
-          type:
-          - number
-          - 'null'
-          description: The amount of pay for the specified category.
-          format: double
-          example: '222.44'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem:
-      type: object
-      properties:
-        category:
-          type:
-          - string
-          - 'null'
-          description: The category of the income item(`PayFromAllEmployments` `BenefitsAndExpenses` `AllowableExpenses` `TotalEmploymentIncome` `ShareSchemes` `SelfEmployment` `InterestFromPartnerships` `DividendsFromPartnerships` `PropertyIncome` `ForeignIncome` `ForeignDividends` `ForeignSavings` `ForeignLifeInsurance` `TrustsAndEstates` `UkInterest` `UkDividends` `UkPensionsAndBenefits` `UkLifeInsurance` `OtherIncome` `TotalIncomeReceived` `RetirementAnnuityDeduction` `ForeignTaxOnEstatesDeduction` `IncomeTaxRelief` `AnnuityDeduction` `GiftsToCharity` `PersonalAllowance` `MarriageAllowanceTransfer` `BlindPersonAllowance` `TotalDeductionsApplied` `TotalTaxableIncome`)
-          example: PayFromAllEmployments
-        value:
-          type:
-          - number
-          - 'null'
-          description: The average value of the income item across the SA302s provided.
-          format: double
-          example: '1971.42'
-      additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse:
-      type: object
-      properties:
-        rule_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the rule, such as 'Payslips span a 3 month period'.
-          example: Payslips span a 3 month period
-        decision:
-          type:
-          - string
-          - 'null'
-          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
-          example: Pass
-        recipient:
-          type:
-          - string
-          - 'null'
-          description: The name of the recipient
-          example: Sam Smith
-        message:
-          type:
-          - string
-          - 'null'
-          description: An optional field providing additional context regarding the status of the rule evaluation.
-          example: Validation Check Passed
-        sources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource'
-          description: The data sources used for evaluating the rule.
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeSourceAddress:
-      type: object
-      properties:
-        summary_line:
-          type:
-          - string
-          - 'null'
-          description: The address of the employer, as stated on the payslip.
-          example: Flat 23, Sample Street, London
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The postcode of the employer, as stated on the payslip.
-          example: SW4 4PL
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

@@ -46,7 +46,7 @@ created: '2026-07-17'
 modified: '2026-07-21'
 tags:
 - Company
-- Financial-Services
+- Financial Services
 - Identity Verification
 - KYC
 - KYB
@@ -70,6 +70,7 @@ tags_raw:
 - Fraud & AML
 - Document Verification
 - RegTech
+- Financial-Services
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

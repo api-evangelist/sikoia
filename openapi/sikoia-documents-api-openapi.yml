@@ -594,75 +594,6 @@ components:
           readOnly: true
       additionalProperties: false
       description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.IntegrityRuleResponse:
-      title: Integrity Rule Response
-      type: object
-      properties:
-        data_source_id:
-          type: string
-          description: 'A unique identifier for a specific data source within a document, such as an individual payslip in a multi-payslip file or an individual bank statement in a multi-statement document. For a full list of available data-sources, please visit this link: https://docs.sikoia.com/docs/data-sources-1.'
-          readOnly: true
-          example: 01951375-a680-77ce-b196-44d1feedc47c
-        rule_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the rule, such as 'Payslips are not handwritten'.
-          example: Payslips are not handwritten
-        decision:
-          type:
-          - string
-          - 'null'
-          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
-          example: Pass
-        message:
-          type:
-          - string
-          - 'null'
-          description: An optional field providing additional context regarding the status of the rule evaluation.
-          example: Integrity Check Passed
-      additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckRequestInstance:
-      title: Integrity Check Request Instance
-      type: object
-      properties:
-        integrity_type_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the integrity type, such as the ID for the 'Payslip Integrity' check.
-          example: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
-        document_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the document
-          example: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
-        status:
-          type:
-          - string
-          - 'null'
-          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
-          example: Complete
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was initiated.
-          example: '2024-01-29T12:21:52.933Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was completed.
-          example: '2024-01-30T09:44:22.466Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: An optional field providing additional context about the status of the check.
-          example: Integrity Check complete
-      additionalProperties: false
     SikoiaSharedModels.BusinessSupport.DocumentUpload.Request.DocumentUploadRequest:
       title: Upload File
       required:
@@ -760,79 +691,33 @@ components:
             $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckRequestInstance'
           description: A list of integrity check instance requests for the entity.
       additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckInstanceResponse:
-      title: Integrity Check Instance Response
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.IntegrityRuleResponse:
+      title: Integrity Rule Response
       type: object
       properties:
-        integrity_type_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the integrity type, such as the ID for the 'Payslip Integrity' check.
-          example: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
-        document_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the document
-          example: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
-        integrity_check_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the check type, such as 'Payslip Integrity Checks'.
-          example: Payslip Integrity Checks
-        integrity_check_version:
+        data_source_id:
           type: string
-          description: The version number of the integrity check.
-          example: '1'
-        status:
+          description: 'A unique identifier for a specific data source within a document, such as an individual payslip in a multi-payslip file or an individual bank statement in a multi-statement document. For a full list of available data-sources, please visit this link: https://docs.sikoia.com/docs/data-sources-1.'
+          readOnly: true
+          example: 01951375-a680-77ce-b196-44d1feedc47c
+        rule_name:
           type:
           - string
           - 'null'
-          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          description: The name of the rule, such as 'Payslips are not handwritten'.
+          example: Payslips are not handwritten
+        decision:
+          type:
+          - string
+          - 'null'
+          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
           example: Pass
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity.
-          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity.
-          example: case
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was initiated.
-          example: '2024-01-01T12:38:45.711Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was completed.
-          example: '2024-01-02T12:22:07.747Z'
         message:
           type:
           - string
           - 'null'
-          description: An optional field providing additional context about the status of the check.
-          example: Integrity Check request pending
-        rules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.IntegrityRuleResponse'
-          description: A list of rules to be evaluated as part of the check.
+          description: An optional field providing additional context regarding the status of the rule evaluation.
+          example: Integrity Check Passed
       additionalProperties: false
     SikoiaSharedModels.BusinessSupport.DocumentUpload.Response.DocumentUploadResponse:
       title: Document Response
@@ -963,6 +848,121 @@ components:
           format: date-time
           readOnly: true
           deprecated: true
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckRequestInstance:
+      title: Integrity Check Request Instance
+      type: object
+      properties:
+        integrity_type_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the integrity type, such as the ID for the 'Payslip Integrity' check.
+          example: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
+        document_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the document
+          example: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+        status:
+          type:
+          - string
+          - 'null'
+          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          example: Complete
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was initiated.
+          example: '2024-01-29T12:21:52.933Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was completed.
+          example: '2024-01-30T09:44:22.466Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: An optional field providing additional context about the status of the check.
+          example: Integrity Check complete
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.IntegrityCheckInstanceResponse:
+      title: Integrity Check Instance Response
+      type: object
+      properties:
+        integrity_type_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the integrity type, such as the ID for the 'Payslip Integrity' check.
+          example: a9d3f2b1-4c76-4a9b-8e1d-5f3a7c6e9d4b
+        document_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the document
+          example: 1f7a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+        integrity_check_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the check type, such as 'Payslip Integrity Checks'.
+          example: Payslip Integrity Checks
+        integrity_check_version:
+          type: string
+          description: The version number of the integrity check.
+          example: '1'
+        status:
+          type:
+          - string
+          - 'null'
+          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          example: Pass
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was initiated.
+          example: '2024-01-01T12:38:45.711Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was completed.
+          example: '2024-01-02T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: An optional field providing additional context about the status of the check.
+          example: Integrity Check request pending
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.IntegrityRuleResponse'
+          description: A list of rules to be evaluated as part of the check.
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

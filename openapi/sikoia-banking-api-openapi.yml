@@ -875,6 +875,207 @@ paths:
                 correlation_id: f2fb27ba-a132-4f4d-bde7-499849c6dba2
 components:
   schemas:
+    SikoiaSharedModels.OpenBanking.OpenBanking.Models.IdentificationModel:
+      title: Account Identifiers
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: The type of a Account Identifier
+          example: SORT_CODE
+        value:
+          type:
+          - string
+          - 'null'
+          description: The value of the Account Identifier
+          example: '100001'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AmountDetails:
+      type: object
+      properties:
+        value:
+          type:
+          - string
+          - 'null'
+          example: '1528.08'
+        currency:
+          type:
+          - string
+          - 'null'
+          example: USD
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.TransactionAmount:
+      title: Transaction Amount
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The transaction amount
+          format: double
+          example: '-1.1'
+        currency:
+          type:
+          - string
+          - 'null'
+          description: The transaction currency
+          example: GBP
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenResponse:
+      title: Open Banking Connection
+      type: object
+      properties:
+        bank_connection_id:
+          type:
+          - string
+          - 'null'
+          description: The Open Banking Connection ID
+          format: uuid
+          readOnly: true
+          example: e81154bd-f85f-4223-8b4f-36643843fa99
+        bank_connection_url:
+          type:
+          - string
+          - 'null'
+          description: The URL for the bank connection consent flow
+          format: url
+          example: https://verify.sikoia.com/openbanking/123456
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of the entity
+          example: company
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the connection was requested
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T04:21:07.0000000+00:00'
+        datetime_refreshed:
+          type:
+          - string
+          - 'null'
+          description: The time the connection was refreshed
+          format: date-time
+          readOnly: true
+          example: '2024-02-11T04:21:07.0000000+00:00'
+        datetime_connected:
+          type:
+          - string
+          - 'null'
+          description: The time the connection was connected
+          format: date-time
+          readOnly: true
+          example: '2024-02-14T04:21:07.0000000+00:00'
+        datetime_expiry:
+          type:
+          - string
+          - 'null'
+          description: The expiry time of the connection
+          format: date-time
+          readOnly: true
+          example: '2024-05-12T04:24:34.0000000+00:00'
+        status:
+          type:
+          - string
+          - 'null'
+          description: The connection status(`Created` `SelectingInstitutions` `Rejected` `Authorising` `Connected` `Deleted`)
+          example: Connected
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: The country code of the selected institution
+          example: GB
+        institution_name:
+          type:
+          - string
+          - 'null'
+          description: Name of the institution
+          example: Sandbox
+        institution_logo:
+          type:
+          - string
+          - 'null'
+          description: Logo of the institution
+          example: https://logolink.com
+        account_connection_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of connected accounts as Account Connection IDs
+          example: '["820eec09-dbdd-4c90-b0f2-acbca66f1ad5", "132d3353-ad29-46e0-b66a-caed8b572e93", "93886787-3307-4319-afa7-48540bf21362"]'
+        source:
+          type: string
+          description: The banking source(`Document` `OpenBanking`)
+          example: Document
+        document_id:
+          type: string
+          description: The document ID (when source is Document)
+          example: r51154bd-f85f-4223-8b4f-36643843fa33
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalances:
+      title: Account Balances
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: The type of account balances
+          example: CLOSING_AVAILABLE
+        amount:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AmountDetails'
+        date:
+          type:
+          - string
+          - 'null'
+          description: The balance date
+          example: '2024-02-12T16:24:50.149Z'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenRequest:
+      title: Create Open Banking Connection
+      required:
+      - entity_id
+      - entity_type
+      type: object
+      properties:
+        entity_id:
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          format: uuid
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of the entity
+          example: company
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Must be ISO 2 digit country code. Limits the institution selection to country provided.
+          example: GB
+      additionalProperties: false
     SikoiaSharedModels.OpenBanking.OpenBanking.ProprietaryBankTransaction:
       title: Proprietary Bank Transaction
       type: object
@@ -892,31 +1093,16 @@ components:
           description: The issuer
           example: ozone
       additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalancesResponse:
-      title: Account Balances
+    SikoiaSharedModels.OpenBanking.OpenBanking.IsoBankTransactionCode:
+      title: Iso Bank Transaction Code
       type: object
       properties:
-        account_connection_id:
-          type:
-          - string
-          - 'null'
-          description: The Account Connection ID of the bank account
-          format: uuid
-          readOnly: true
-          example: 132d3353-ad29-46e0-b66a-caed8b572e93
-        balances:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalances'
-          description: The list of account balances
-        datetime_refreshed:
-          type: string
-          description: The time the balances were refreshed
-          format: date-time
-          readOnly: true
-          example: '2024-02-12T04:25:09.0000000+00:00'
+        domain_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
+        family_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
+        sub_family_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
       additionalProperties: false
     SikoiaCore.Common.SikoiaErrorResponse:
       title: Error Response
@@ -945,6 +1131,140 @@ components:
           readOnly: true
       additionalProperties: false
       description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransaction:
+      title: Account Transactions
+      type: object
+      properties:
+        transaction_id:
+          type:
+          - string
+          - 'null'
+          description: Account Transaction ID
+          example: 0730deba-767a-4c40-bc89-ac7c96e5a1c9
+        date:
+          type:
+          - string
+          - 'null'
+          description: The account transaction date
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T02:57:24.0000000+00:00'
+        booking_datetime:
+          type:
+          - string
+          - 'null'
+          description: The booking date
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T02:57:24.0000000+00:00'
+        value_date_time:
+          type:
+          - string
+          - 'null'
+          description: The value date
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T02:57:24.0000000+00:00'
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status
+          example: PENDING
+        amount:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.TransactionAmount'
+        currency:
+          type:
+          - string
+          - 'null'
+          description: The transaction currency
+          example: GBP
+        reference:
+          type:
+          - string
+          - 'null'
+          description: The transaction reference
+          example: Acme123Ltd
+        description:
+          type:
+          - string
+          - 'null'
+          description: The transaction description
+          example: 1B8BAA320D3E4BFAB8B32495157B3604
+        merchant:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.Merchant'
+        iso_bank_transaction_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.IsoBankTransactionCode'
+        proprietary_bank_transaction_code:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.ProprietaryBankTransaction'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalancesResponse:
+      title: Account Balances
+      type: object
+      properties:
+        account_connection_id:
+          type:
+          - string
+          - 'null'
+          description: The Account Connection ID of the bank account
+          format: uuid
+          readOnly: true
+          example: 132d3353-ad29-46e0-b66a-caed8b572e93
+        balances:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalances'
+          description: The list of account balances
+        datetime_refreshed:
+          type: string
+          description: The time the balances were refreshed
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T04:25:09.0000000+00:00'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.Merchant:
+      title: Merchant
+      type: object
+      properties:
+        merchant_name:
+          type:
+          - string
+          - 'null'
+          description: The merchant name
+        merchant_category:
+          type:
+          - string
+          - 'null'
+          description: The merchant category
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransactionsResponse:
+      title: Account Transactions
+      type: object
+      properties:
+        account_connection_id:
+          type:
+          - string
+          - 'null'
+          description: The Account Connection ID for the bank account
+          format: uuid
+          readOnly: true
+          example: 132d3353-ad29-46e0-b66a-caed8b572e93
+        transactions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransaction'
+          description: The list of account transactions
+        datetime_refreshed:
+          type: string
+          description: The time the transactions were refreshed
+          format: date-time
+          readOnly: true
+          example: '2024-02-12T03:34:25.0000000+00:00'
+      additionalProperties: false
     SikoiaSharedModels.OpenBanking.OpenBanking.GetAccountDetailsResponse:
       title: Account Details
       type: object
@@ -1059,326 +1379,6 @@ components:
           - 'null'
           description: Full Address
           example: Flat 23, 49 Sample Street, London
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.Merchant:
-      title: Merchant
-      type: object
-      properties:
-        merchant_name:
-          type:
-          - string
-          - 'null'
-          description: The merchant name
-        merchant_category:
-          type:
-          - string
-          - 'null'
-          description: The merchant category
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.AmountDetails:
-      type: object
-      properties:
-        value:
-          type:
-          - string
-          - 'null'
-          example: '1528.08'
-        currency:
-          type:
-          - string
-          - 'null'
-          example: USD
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.IsoBankTransactionCode:
-      title: Iso Bank Transaction Code
-      type: object
-      properties:
-        domain_code:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
-        family_code:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
-        sub_family_code:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.Models.IdentificationModel:
-      title: Account Identifiers
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-          description: The type of a Account Identifier
-          example: SORT_CODE
-        value:
-          type:
-          - string
-          - 'null'
-          description: The value of the Account Identifier
-          example: '100001'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.AccountBalances:
-      title: Account Balances
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-          description: The type of account balances
-          example: CLOSING_AVAILABLE
-        amount:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AmountDetails'
-        date:
-          type:
-          - string
-          - 'null'
-          description: The balance date
-          example: '2024-02-12T16:24:50.149Z'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransactionsResponse:
-      title: Account Transactions
-      type: object
-      properties:
-        account_connection_id:
-          type:
-          - string
-          - 'null'
-          description: The Account Connection ID for the bank account
-          format: uuid
-          readOnly: true
-          example: 132d3353-ad29-46e0-b66a-caed8b572e93
-        transactions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransaction'
-          description: The list of account transactions
-        datetime_refreshed:
-          type: string
-          description: The time the transactions were refreshed
-          format: date-time
-          readOnly: true
-          example: '2024-02-12T03:34:25.0000000+00:00'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.TransactionAmount:
-      title: Transaction Amount
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The transaction amount
-          format: double
-          example: '-1.1'
-        currency:
-          type:
-          - string
-          - 'null'
-          description: The transaction currency
-          example: GBP
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenRequest:
-      title: Create Open Banking Connection
-      required:
-      - entity_id
-      - entity_type
-      type: object
-      properties:
-        entity_id:
-          type: string
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          format: uuid
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type: string
-          description: The type of the entity
-          example: company
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: Must be ISO 2 digit country code. Limits the institution selection to country provided.
-          example: GB
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.AccountTransaction:
-      title: Account Transactions
-      type: object
-      properties:
-        transaction_id:
-          type:
-          - string
-          - 'null'
-          description: Account Transaction ID
-          example: 0730deba-767a-4c40-bc89-ac7c96e5a1c9
-        date:
-          type:
-          - string
-          - 'null'
-          description: The account transaction date
-          format: date-time
-          readOnly: true
-          example: '2024-02-12T02:57:24.0000000+00:00'
-        booking_datetime:
-          type:
-          - string
-          - 'null'
-          description: The booking date
-          format: date-time
-          readOnly: true
-          example: '2024-02-12T02:57:24.0000000+00:00'
-        value_date_time:
-          type:
-          - string
-          - 'null'
-          description: The value date
-          format: date-time
-          readOnly: true
-          example: '2024-02-12T02:57:24.0000000+00:00'
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status
-          example: PENDING
-        amount:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.TransactionAmount'
-        currency:
-          type:
-          - string
-          - 'null'
-          description: The transaction currency
-          example: GBP
-        reference:
-          type:
-          - string
-          - 'null'
-          description: The transaction reference
-          example: Acme123Ltd
-        description:
-          type:
-          - string
-          - 'null'
-          description: The transaction description
-          example: 1B8BAA320D3E4BFAB8B32495157B3604
-        merchant:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.Merchant'
-        iso_bank_transaction_code:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.IsoBankTransactionCode'
-        proprietary_bank_transaction_code:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.OpenBanking.ProprietaryBankTransaction'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.OpenBanking.CreateTokenResponse:
-      title: Open Banking Connection
-      type: object
-      properties:
-        bank_connection_id:
-          type:
-          - string
-          - 'null'
-          description: The Open Banking Connection ID
-          format: uuid
-          readOnly: true
-          example: e81154bd-f85f-4223-8b4f-36643843fa99
-        bank_connection_url:
-          type:
-          - string
-          - 'null'
-          description: The URL for the bank connection consent flow
-          format: url
-          example: https://verify.sikoia.com/openbanking/123456
-        entity_id:
-          type: string
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          format: uuid
-          readOnly: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of the entity
-          example: company
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the connection was requested
-          format: date-time
-          readOnly: true
-          example: '2024-02-12T04:21:07.0000000+00:00'
-        datetime_refreshed:
-          type:
-          - string
-          - 'null'
-          description: The time the connection was refreshed
-          format: date-time
-          readOnly: true
-          example: '2024-02-11T04:21:07.0000000+00:00'
-        datetime_connected:
-          type:
-          - string
-          - 'null'
-          description: The time the connection was connected
-          format: date-time
-          readOnly: true
-          example: '2024-02-14T04:21:07.0000000+00:00'
-        datetime_expiry:
-          type:
-          - string
-          - 'null'
-          description: The expiry time of the connection
-          format: date-time
-          readOnly: true
-          example: '2024-05-12T04:24:34.0000000+00:00'
-        status:
-          type:
-          - string
-          - 'null'
-          description: The connection status(`Created` `SelectingInstitutions` `Rejected` `Authorising` `Connected` `Deleted`)
-          example: Connected
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: The country code of the selected institution
-          example: GB
-        institution_name:
-          type:
-          - string
-          - 'null'
-          description: Name of the institution
-          example: Sandbox
-        institution_logo:
-          type:
-          - string
-          - 'null'
-          description: Logo of the institution
-          example: https://logolink.com
-        account_connection_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: List of connected accounts as Account Connection IDs
-          example: '["820eec09-dbdd-4c90-b0f2-acbca66f1ad5", "132d3353-ad29-46e0-b66a-caed8b572e93", "93886787-3307-4319-afa7-48540bf21362"]'
-        source:
-          type: string
-          description: The banking source(`Document` `OpenBanking`)
-          example: Document
-        document_id:
-          type: string
-          description: The document ID (when source is Document)
-          example: r51154bd-f85f-4223-8b4f-36643843fa33
       additionalProperties: false
     SikoiaSharedModels.OpenBanking.OpenBanking.CommonCode:
       type: object

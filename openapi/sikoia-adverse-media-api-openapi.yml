@@ -220,6 +220,33 @@ paths:
                 correlation_id: 9f55622c-e244-41c0-85d1-c2e47de56259
 components:
   schemas:
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
     SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingResponse:
       title: Anti Money Laundering Response
       type: object
@@ -292,33 +319,6 @@ components:
           description: The URI of the Search Certificate
           example: https://sikoialake.blob.core.windows.net/sikoia/complyadvantagecertificate/01929b28-c39d-739e-beb8-6ceda5136d24.pdf?sv=2021-08-06&se=2024-10-17T15%3A56%3A33Z&sr=b&sp=r&sig=4E4X3hxHkpVvCS2pJvBVxGM6MvHcgpdZryC%2BpJmNRHE%3D
       additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
     SikoiaSharedModels.BusinessSupport.ComplyAdvantage.AntiMoneyLaunderingRequest:
       title: Anti Money Laundering Request
       required:

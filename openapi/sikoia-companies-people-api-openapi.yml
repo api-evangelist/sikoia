@@ -506,6 +506,183 @@ paths:
                 correlation_id: 2374085c-c9e0-4afa-97f0-1d428ba480a7
 components:
   schemas:
+    SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel:
+      title: Address
+      type: object
+      properties:
+        house_number:
+          type:
+          - string
+          - 'null'
+          description: The building or house number
+          example: '123'
+        building_name:
+          type:
+          - string
+          - 'null'
+          description: The building or house name
+          example: Main House
+        sub_building_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the sub-building
+        address_line_1:
+          type:
+          - string
+          - 'null'
+          description: The first line of the postal address, typically used for the street address
+          example: Main Street
+        address_line_2:
+          type:
+          - string
+          - 'null'
+          description: The second line of the postal address, typically used for additional information such as apartment or suite number
+          example: Apt.101
+        locality:
+          type:
+          - string
+          - 'null'
+          description: The locality of the postal address
+          example: Test County
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city of the postal address
+          example: Test Town
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
+          example: X9 9AA
+        country:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code
+          example: GB
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.DeleteCaseEntityRequest:
+      title: Delete Entities
+      type: object
+      properties:
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of company IDs to delete
+          format: uuid
+          example: '["ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f"]'
+        persons:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of person IDs to delete
+          format: uuid
+          example: '["c28c88d6-7fb5-4c2f-a5a1-559cd2675293"]'
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.UpdateCaseEntitiesRequest:
+      title: Update Entities
+      type: object
+      properties:
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesCompanyRequestModel'
+          description: List of companies to update
+        persons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesPersonRequestModel'
+          description: List of people to update
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.CaseManagement.Responses.CompanyRecordResponseModel:
+      title: Company
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: Sikoia ID for the company
+          format: uuid
+          readOnly: true
+          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
+        company_name:
+          type: string
+          description: The name of the company
+          example: Acme Limited
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '77642080'
+        jurisdiction_code:
+          type:
+          - string
+          - 'null'
+          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
+          example: GB
+        status:
+          type: string
+          description: The operational status of the company, defaults to `unknown`
+          readOnly: true
+          example: Active
+        number_of_officers:
+          type: integer
+          description: The number of officers
+          format: int32
+          readOnly: true
+          example: '5'
+        number_of_owners:
+          type: integer
+          description: The number of owners
+          format: int32
+          readOnly: true
+          example: '2'
+        media_adverse_requested:
+          type: boolean
+          deprecated: true
+        pep_sanction_requested:
+          type: boolean
+          deprecated: true
+      additionalProperties: false
     SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesPersonRequestModel:
       title: Person
       required:
@@ -558,83 +735,6 @@ components:
           description: Your external reference for the ID of the person/applicant in the case
           example: Wilson5432
       additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Responses.CompanyRecordResponseModel:
-      title: Company
-      type: object
-      properties:
-        company_id:
-          type: string
-          description: Sikoia ID for the company
-          format: uuid
-          readOnly: true
-          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
-        company_name:
-          type: string
-          description: The name of the company
-          example: Acme Limited
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: The company registration number
-          example: '77642080'
-        jurisdiction_code:
-          type:
-          - string
-          - 'null'
-          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
-          example: GB
-        status:
-          type: string
-          description: The operational status of the company, defaults to `unknown`
-          readOnly: true
-          example: Active
-        number_of_officers:
-          type: integer
-          description: The number of officers
-          format: int32
-          readOnly: true
-          example: '5'
-        number_of_owners:
-          type: integer
-          description: The number of owners
-          format: int32
-          readOnly: true
-          example: '2'
-        media_adverse_requested:
-          type: boolean
-          deprecated: true
-        pep_sanction_requested:
-          type: boolean
-          deprecated: true
-      additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
     SikoiaSharedModels.CaseManagement.Responses.PersonRecordResponseModel:
       title: Person
       type: object
@@ -708,6 +808,106 @@ components:
         pep_sanction_requested:
           type: boolean
           deprecated: true
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Requests.AddEntitiesToCaseRequest:
+      title: Add Entities
+      type: object
+      properties:
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord'
+          description: List of companies to add
+        persons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord'
+          description: List of people to add
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.Owner:
+      type: object
+      properties:
+        owner_id:
+          type:
+          - string
+          - 'null'
+          description: The case owner id
+          example: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
+        owner_type:
+          enum:
+          - User
+          type:
+          - string
+          - 'null'
+          description: The type of owner. This should be set to 'user'
+          example: user
+      additionalProperties: false
+    SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel:
+      title: Address
+      type: object
+      properties:
+        house_number:
+          type:
+          - string
+          - 'null'
+          description: The building or house number
+          example: '123'
+        building_name:
+          type:
+          - string
+          - 'null'
+          description: The building or house name
+          example: Main House
+        sub_building_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the sub-building
+        address_line_1:
+          type:
+          - string
+          - 'null'
+          description: The first line of the postal address, typically used for the street address.
+          example: Main Street
+        address_line_2:
+          type:
+          - string
+          - 'null'
+          description: The second line of the postal address, typically used for additional information such as apartment or suite number.
+          example: Apt. 101
+        locality:
+          type:
+          - string
+          - 'null'
+          description: The locality of the postal address.
+          example: Test Country
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city of the postal address.
+          example: Test Town
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
+          example: X9 9AA
+        country:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code
+          example: GB
+        summary_line:
+          type:
+          - string
+          - 'null'
+          example: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
       additionalProperties: false
     SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord:
       title: Company
@@ -788,37 +988,6 @@ components:
           - 'null'
           description: Your external reference for the ID of the person/applicant in the case
           example: Wilson5432
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesCompanyRequestModel:
-      title: Company
-      required:
-      - company_id
-      type: object
-      properties:
-        company_id:
-          type: string
-          description: Sikoia ID for the company
-          format: uuid
-          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
-        company_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the company
-          example: Acme Limited
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: The company registration number
-          example: '77642080'
-        jurisdiction_code:
-          pattern: ^\w{2}(_\w{2})?$
-          type:
-          - string
-          - 'null'
-          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
-          example: GB
       additionalProperties: false
     SikoiaSharedModels.CaseManagement.Responses.CaseResponse:
       title: Case Record
@@ -935,205 +1104,36 @@ components:
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Responses.PersonRecordResponseModel'
       additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.DeleteCaseEntityRequest:
-      title: Delete Entities
+    SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesCompanyRequestModel:
+      title: Company
+      required:
+      - company_id
       type: object
       properties:
-        companies:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: List of company IDs to delete
+        company_id:
+          type: string
+          description: Sikoia ID for the company
           format: uuid
-          example: '["ddf1d8ef-2cca-41ef-89c1-00fb0c05c54f"]'
-        persons:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: List of person IDs to delete
-          format: uuid
-          example: '["c28c88d6-7fb5-4c2f-a5a1-559cd2675293"]'
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.AddEntitiesToCaseRequest:
-      title: Add Entities
-      type: object
-      properties:
-        companies:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CaseCompanyRecord'
-          description: List of companies to add
-        persons:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.CasePersonRecord'
-          description: List of people to add
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Responses.Owner:
-      type: object
-      properties:
-        owner_id:
+          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
+        company_name:
           type:
           - string
           - 'null'
-          description: The case owner id
-          example: 6a9f8d73-29f4-4a6a-80dc-21b8cbecff75
-        owner_type:
-          enum:
-          - User
+          description: The name of the company
+          example: Acme Limited
+        company_number:
           type:
           - string
           - 'null'
-          description: The type of owner. This should be set to 'user'
-          example: user
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.Models.PostalAddressRequestModel:
-      title: Address
-      type: object
-      properties:
-        house_number:
+          description: The company registration number
+          example: '77642080'
+        jurisdiction_code:
+          pattern: ^\w{2}(_\w{2})?$
           type:
           - string
           - 'null'
-          description: The building or house number
-          example: '123'
-        building_name:
-          type:
-          - string
-          - 'null'
-          description: The building or house name
-          example: Main House
-        sub_building_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the sub-building
-        address_line_1:
-          type:
-          - string
-          - 'null'
-          description: The first line of the postal address, typically used for the street address
-          example: Main Street
-        address_line_2:
-          type:
-          - string
-          - 'null'
-          description: The second line of the postal address, typically used for additional information such as apartment or suite number
-          example: Apt.101
-        locality:
-          type:
-          - string
-          - 'null'
-          description: The locality of the postal address
-          example: Test County
-        city:
-          type:
-          - string
-          - 'null'
-          description: The city of the postal address
-          example: Test Town
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
-          example: X9 9AA
-        country:
-          type:
-          - string
-          - 'null'
-          description: Two letter ISO country code
+          description: The jurisdiction of the company as a two letter country code (optionally, the state can be included separated by `_`)
           example: GB
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Responses.PostalAddressResponseModel:
-      title: Address
-      type: object
-      properties:
-        house_number:
-          type:
-          - string
-          - 'null'
-          description: The building or house number
-          example: '123'
-        building_name:
-          type:
-          - string
-          - 'null'
-          description: The building or house name
-          example: Main House
-        sub_building_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the sub-building
-        address_line_1:
-          type:
-          - string
-          - 'null'
-          description: The first line of the postal address, typically used for the street address.
-          example: Main Street
-        address_line_2:
-          type:
-          - string
-          - 'null'
-          description: The second line of the postal address, typically used for additional information such as apartment or suite number.
-          example: Apt. 101
-        locality:
-          type:
-          - string
-          - 'null'
-          description: The locality of the postal address.
-          example: Test Country
-        city:
-          type:
-          - string
-          - 'null'
-          description: The city of the postal address.
-          example: Test Town
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The post code for the address. This is sometimes also referred to as postal code, ZIP code, Postal Index Number, or Eircode.
-          example: X9 9AA
-        country:
-          type:
-          - string
-          - 'null'
-          description: Two letter ISO country code
-          example: GB
-        summary_line:
-          type:
-          - string
-          - 'null'
-          example: 123, Main Street, Main House, Apt. 101, Test County, Test Town, X9 9AA, GB
-      additionalProperties: false
-    SikoiaSharedModels.CaseManagement.Requests.UpdateCaseEntitiesRequest:
-      title: Update Entities
-      type: object
-      properties:
-        companies:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesCompanyRequestModel'
-          description: List of companies to update
-        persons:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CaseManagement.Requests.Models.UpdateCaseEntitiesPersonRequestModel'
-          description: List of people to update
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

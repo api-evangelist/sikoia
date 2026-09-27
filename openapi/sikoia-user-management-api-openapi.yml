@@ -88,86 +88,6 @@ paths:
                 correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
 components:
   schemas:
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-          example: ServerError
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-          example: '500'
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-          example: Internal Server Error
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-          example: Something has gone wrong, please try again
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse401:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-          example: InvalidToken
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-          example: '401'
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-          example: Invalid Token
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-          example: Invalid token
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.External.Role:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The role assigned to the user
-          readOnly: true
-          example: Admin
-        description:
-          type:
-          - string
-          - 'null'
-          description: A description of the role assigned to the user
-          readOnly: true
-          example: Admin Role
-      additionalProperties: false
     MicroserviceUserManagement.Resources.External.User:
       type: object
       properties:
@@ -239,6 +159,86 @@ components:
           description: More details about what went wrong
           readOnly: true
           example: You've exceeded the maximum API request limit per minute. Please try again later.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.Role:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The role assigned to the user
+          readOnly: true
+          example: Admin
+        description:
+          type:
+          - string
+          - 'null'
+          description: A description of the role assigned to the user
+          readOnly: true
+          example: Admin Role
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: ServerError
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '500'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Internal Server Error
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Something has gone wrong, please try again
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse401:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: InvalidToken
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '401'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Invalid Token
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Invalid token
         correlation_id:
           type: string
           description: Correlation ID, please include this in any support tickets raised
