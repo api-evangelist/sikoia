@@ -367,113 +367,6 @@ paths:
                 correlation_id: ea5bf8d0-72ec-472c-946e-d8fa4ef2fd8a
 components:
   schemas:
-    SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestInstance:
-      title: Validation Check Request Instance
-      type: object
-      properties:
-        validation_instance_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for a specific instance of the check type.
-          example: 2ef5079a-b3de-44a5-b4ff-c534259e752c
-        validation_type_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
-          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
-        status:
-          type:
-          - string
-          - 'null'
-          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
-          example: Complete
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was initiated.
-          example: '2024-01-29T12:21:52.933Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was completed.
-          example: '2024-01-30T09:44:22.466Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: An optional field providing additional context about the status of the check.
-          example: Income Employer complete
-      additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.CheckListValidationType:
-      type: object
-      properties:
-        validation_type_id:
-          type: string
-          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
-          format: uuid
-          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
-        validation_check_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the check type, such as 'Last 3 months of payslips'.
-          example: Last 3 months of payslips
-        validation_description:
-          type:
-          - string
-          - 'null'
-          description: A detailed description of the check type, explaining its purpose and scope.
-          example: Checks if all payslips from the last 3 months have been provided
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity.
-          example: case
-      additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse:
-      type: object
-      properties:
-        rule_name:
-          type:
-          - string
-          - 'null'
-          description: The name of the rule, such as 'Payslips span a 3 month period'.
-          example: Payslips span a 3 month period
-        decision:
-          type:
-          - string
-          - 'null'
-          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
-          example: Pass
-        recipient:
-          type:
-          - string
-          - 'null'
-          description: The name of the recipient
-          example: Sam Smith
-        message:
-          type:
-          - string
-          - 'null'
-          description: An optional field providing additional context regarding the status of the rule evaluation.
-          example: Validation Check Passed
-        sources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource'
-          description: The data sources used for evaluating the rule.
-      additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Request.CheckListValidationRequest:
       type: object
       properties:
@@ -507,6 +400,49 @@ components:
             $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter'
           description: A list of parameters for the validation check to run against, such as specifying an individual document instead of the entire entity.
       additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter:
+      type: object
+      properties:
+        source_id:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for source
+          example: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
+        source_category_type:
+          type:
+          - string
+          - 'null'
+          description: Type of source
+          example: Document
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
     SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckInstanceResponse:
       title: Validation Check Instance Response
       type: object
@@ -584,33 +520,47 @@ components:
             $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse'
           description: A list of rules to be evaluated as part of the check.
       additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
+    SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestInstance:
+      title: Validation Check Request Instance
       type: object
       properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
+        validation_instance_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for a specific instance of the check type.
+          example: 2ef5079a-b3de-44a5-b4ff-c534259e752c
+        validation_type_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
         status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
+          type:
+          - string
+          - 'null'
+          description: 'The current status of the check, which may be one of the following: `Complete`, `Failed`, or `Pending`.'
+          example: Complete
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was initiated.
+          example: '2024-01-29T12:21:52.933Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was completed.
+          example: '2024-01-30T09:44:22.466Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: An optional field providing additional context about the status of the check.
+          example: Income Employer complete
       additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
     SikoiaSharedModels.EventProcessor.Checklist.Response.ValidationCheckRequestListResponse:
       title: Validation Check Request Instances Response
       type: object
@@ -703,22 +653,6 @@ components:
           description: An optional field providing additional context about the status of the check.
           example: Validation Check request pending
       additionalProperties: false
-    SikoiaSharedModels.EventProcessor.Checklist.Request.Models.CheckListParameter:
-      type: object
-      properties:
-        source_id:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier for source
-          example: 5c8a9d27-fa27-4e15-aefd-9b5a5e32f4c1
-        source_category_type:
-          type:
-          - string
-          - 'null'
-          description: Type of source
-          example: Document
-      additionalProperties: false
     SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource:
       type: object
       properties:
@@ -746,6 +680,72 @@ components:
           - 'null'
           description: The date of the data source.
           example: '2025-01-25'
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationRuleResponse:
+      type: object
+      properties:
+        rule_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the rule, such as 'Payslips span a 3 month period'.
+          example: Payslips span a 3 month period
+        decision:
+          type:
+          - string
+          - 'null'
+          description: 'The current decision of the rule evaluation, which may be one of the following: `Pass`, `Fail`, `Refer`.'
+          example: Pass
+        recipient:
+          type:
+          - string
+          - 'null'
+          description: The name of the recipient
+          example: Sam Smith
+        message:
+          type:
+          - string
+          - 'null'
+          description: An optional field providing additional context regarding the status of the rule evaluation.
+          example: Validation Check Passed
+        sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EventProcessor.Checklist.Response.Models.ValidationCheckSource'
+          description: The data sources used for evaluating the rule.
+      additionalProperties: false
+    SikoiaSharedModels.EventProcessor.Checklist.Response.Models.CheckListValidationType:
+      type: object
+      properties:
+        validation_type_id:
+          type: string
+          description: The unique identifier for the check type, such as the ID for the 'Last 3 months of payslips' check.
+          format: uuid
+          example: a072e37a-dee1-4a4e-b098-168a6a1f4603
+        validation_check_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the check type, such as 'Last 3 months of payslips'.
+          example: Last 3 months of payslips
+        validation_description:
+          type:
+          - string
+          - 'null'
+          description: A detailed description of the check type, explaining its purpose and scope.
+          example: Checks if all payslips from the last 3 months have been provided
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

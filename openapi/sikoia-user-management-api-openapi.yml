@@ -165,24 +165,6 @@ components:
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
       additionalProperties: false
-    MicroserviceUserManagement.Resources.External.Role:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The role assigned to the user
-          readOnly: true
-          example: Admin
-        description:
-          type:
-          - string
-          - 'null'
-          description: A description of the role assigned to the user
-          readOnly: true
-          example: Admin Role
-      additionalProperties: false
     MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
@@ -213,6 +195,24 @@ components:
           description: Correlation ID, please include this in any support tickets raised
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.Role:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The role assigned to the user
+          readOnly: true
+          example: Admin
+        description:
+          type:
+          - string
+          - 'null'
+          description: A description of the role assigned to the user
+          readOnly: true
+          example: Admin Role
       additionalProperties: false
     MicroserviceUserManagement.Resources.SikoiaErrorResponse401:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse

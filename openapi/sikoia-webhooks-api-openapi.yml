@@ -850,6 +850,83 @@ paths:
                 correlation_id: a28d1abd-ad97-4a1f-bd14-6698c5214544
 components:
   schemas:
+    MicroserviceUserManagement.Resources.External.WebhookEventType:
+      type: object
+      properties:
+        event_name:
+          type: string
+          description: The unique name of an event you can subscribe to notifications for
+          readOnly: true
+          example: DocumentProcessing.Completed
+        event_types:
+          type: array
+          items: {}
+          description: The event types that exist hierarchically under this current event type
+          readOnly: true
+          example: '[{"event_name":"BankStatementProcessing.Completed", "event_types":[{"event_name":"ExampleBankStatementProcessing.Completed", "event_types":[]}]}]'
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse409:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: UnprocessableRequest
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '409'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Cannot create multiple webhook secrets
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Only one webhook secret is supported. Please refer to the API docs on how to either rotate the existing key value or delete it from the system.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse429:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: RateLimit
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '429'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Too Many Requests
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: You've exceeded the maximum API request limit per minute. Please try again later.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
     MicroserviceUserManagement.Resources.External.WebhookRequest:
       type: object
       properties:
@@ -897,6 +974,123 @@ components:
           example: '[{"attempt_id":"8b1391e4-7ace-41a2-a04b-55decffb9fe5","requested_on":"2024-01-18T12:37:35.053Z","http_response_code":200}]'
       additionalProperties: false
       description: Represents a historic request made after a webhook was triggered by event in the Sikoia platform
+    MicroserviceUserManagement.Resources.External.WebhookEventGroup:
+      type: object
+      properties:
+        event_group_name:
+          type: string
+          description: The unique name that groups together a related hierarchy of event types
+          readOnly: true
+          example: Document Lifecycle
+        event_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookEventType'
+          description: The top most 'coarse' event types under a given group
+          readOnly: true
+          example: '[{"event_group_name":"Document Lifecycle","event_types":[{"event_name":"DocumentProcessing.Completed","event_types":[{"event_name":"BankStatementProcessing.Completed","event_types":[]}]}]}]'
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: A pre-formatted URL containing the location of the next ordered page of data
+          readOnly: true
+          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Forward
+        previous_page_url:
+          type:
+          - string
+          - 'null'
+          description: A pre-formatted URL containing the location of the previous ordered page of data
+          readOnly: true
+          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Backward
+        page_size:
+          type: integer
+          description: The maxium number of items that may be returned in a given page (the actual number may be equal to or less than)
+          format: int32
+          readOnly: true
+          example: '25'
+        page_count:
+          type: integer
+          description: ' Number of records in the current page (will be less than or equal to page_size)'
+          format: int32
+          readOnly: true
+          example: '5'
+      additionalProperties: false
+      description: Basic structure for keyset pagination results
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: ServerError
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '500'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Internal Server Error
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Something has gone wrong, please try again
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Resources.External.WebhookRequestAttempt:
+      type: object
+      properties:
+        attempt_id:
+          type: string
+          description: The unique identifier of each attempt to send a request
+          format: uuid
+          example: 8b1391e4-7ace-41a2-a04b-55decffb9fe5
+        datetime_created:
+          type: string
+          description: The date and time a request was attempted
+          format: date-time
+          example: '2024-01-18T12:37:35.0000000+00:00'
+        http_response_code:
+          type: integer
+          description: The HTTP response code we received back from a given request attempt
+          format: int32
+          example: '200'
+      additionalProperties: false
+      description: Represents each attempt made to deliver a webhook request to a callback URL
+    MicroserviceUserManagement.Resources.External.WebhookSecret:
+      type: object
+      properties:
+        shared_key:
+          type: string
+          description: The UTF8 encoded value used as the key in the SHA256 hash.
+          readOnly: true
+        date_created:
+          type: string
+          description: 'The timestamp for when the secret started being used to add a HMACSHA256 header to all webhook requests. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          description: 'The timestamp for when the key last changed. If a key is rotated this will be different to the date_created. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
+          format: date-time
+          readOnly: true
+      additionalProperties: false
+      description: The current secret used as the shared key for the HMACSHA256 header.
     MicroserviceUserManagement.Resources.External.WebhookUpdate:
       type: object
       properties:
@@ -927,7 +1121,7 @@ components:
           description: Supported events a webhook can subscribe to
           example: '["BankStatementProcessing.Completed"]'
       additionalProperties: false
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse400:
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse404:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
       properties:
@@ -935,89 +1129,23 @@ components:
           type: string
           description: The error type
           readOnly: true
-          example: InvalidRequest
+          example: ResourceNotFound
         status:
           type: integer
           description: HTTP status code of the error
           format: HttpCode
           readOnly: true
-          example: '400'
+          example: '404'
         title:
           type: string
           description: A short description of the error
           readOnly: true
-          example: Validation Errors
+          example: Resource Not Found
         detail:
           type: string
           description: More details about what went wrong
           readOnly: true
-          example: Entity Id is required.
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.External.WebhookRequestAttempt:
-      type: object
-      properties:
-        attempt_id:
-          type: string
-          description: The unique identifier of each attempt to send a request
-          format: uuid
-          example: 8b1391e4-7ace-41a2-a04b-55decffb9fe5
-        datetime_created:
-          type: string
-          description: The date and time a request was attempted
-          format: date-time
-          example: '2024-01-18T12:37:35.0000000+00:00'
-        http_response_code:
-          type: integer
-          description: The HTTP response code we received back from a given request attempt
-          format: int32
-          example: '200'
-      additionalProperties: false
-      description: Represents each attempt made to deliver a webhook request to a callback URL
-    MicroserviceUserManagement.Resources.External.WebhookEventType:
-      type: object
-      properties:
-        event_name:
-          type: string
-          description: The unique name of an event you can subscribe to notifications for
-          readOnly: true
-          example: DocumentProcessing.Completed
-        event_types:
-          type: array
-          items: {}
-          description: The event types that exist hierarchically under this current event type
-          readOnly: true
-          example: '[{"event_name":"BankStatementProcessing.Completed", "event_types":[{"event_name":"ExampleBankStatementProcessing.Completed", "event_types":[]}]}]'
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse409:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-          example: UnprocessableRequest
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-          example: '409'
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-          example: Cannot create multiple webhook secrets
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-          example: Only one webhook secret is supported. Please refer to the API docs on how to either rotate the existing key value or delete it from the system.
+          example: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
         correlation_id:
           type: string
           description: Correlation ID, please include this in any support tickets raised
@@ -1073,185 +1201,6 @@ components:
           readOnly: true
           example: '2024-01-18T12:37:35.0000000+00:00'
       additionalProperties: false
-    MicroserviceUserManagement.Resources.External.PaginatedWebhookRequestsResponse:
-      type: object
-      properties:
-        pagination_meta_data:
-          $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData'
-        webhook_requests:
-          type: array
-          items:
-            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookRequest'
-          description: All known requests made for a given webhook limited to the page size specified in pagination_meta_data.page_size
-          readOnly: true
-      additionalProperties: false
-      description: An ordered (most recent first) subset of webhook requests
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse404:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-          example: ResourceNotFound
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-          example: '404'
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-          example: Resource Not Found
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-          example: No resources found with id 6afd715b195c4d11b9e796bcdfbdfd9a.
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse429:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-          example: RateLimit
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-          example: '429'
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-          example: Too Many Requests
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-          example: You've exceeded the maximum API request limit per minute. Please try again later.
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.External.WebhookSecret:
-      type: object
-      properties:
-        shared_key:
-          type: string
-          description: The UTF8 encoded value used as the key in the SHA256 hash.
-          readOnly: true
-        date_created:
-          type: string
-          description: 'The timestamp for when the secret started being used to add a HMACSHA256 header to all webhook requests. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          description: 'The timestamp for when the key last changed. If a key is rotated this will be different to the date_created. Formatted: yyyy-MM-ddTHH:mm:ss.fffZ'
-          format: date-time
-          readOnly: true
-      additionalProperties: false
-      description: The current secret used as the shared key for the HMACSHA256 header.
-    MicroserviceUserManagement.Domain.Model.Webhooks.WebhookEventStatusCode:
-      enum:
-      - NotRequested
-      - Pending
-      - Complete
-      - Failed
-      type: string
-    MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData:
-      type: object
-      properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: A pre-formatted URL containing the location of the next ordered page of data
-          readOnly: true
-          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Forward
-        previous_page_url:
-          type:
-          - string
-          - 'null'
-          description: A pre-formatted URL containing the location of the previous ordered page of data
-          readOnly: true
-          example: https://api.sikoia.com/v2/{resource}?after_request_id=354c8709-8941-4a8e-a614-a618555034a0&pagination_direction=Backward
-        page_size:
-          type: integer
-          description: The maxium number of items that may be returned in a given page (the actual number may be equal to or less than)
-          format: int32
-          readOnly: true
-          example: '25'
-        page_count:
-          type: integer
-          description: ' Number of records in the current page (will be less than or equal to page_size)'
-          format: int32
-          readOnly: true
-          example: '5'
-      additionalProperties: false
-      description: Basic structure for keyset pagination results
-    MicroserviceUserManagement.Resources.External.WebhookEventGroup:
-      type: object
-      properties:
-        event_group_name:
-          type: string
-          description: The unique name that groups together a related hierarchy of event types
-          readOnly: true
-          example: Document Lifecycle
-        event_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookEventType'
-          description: The top most 'coarse' event types under a given group
-          readOnly: true
-          example: '[{"event_group_name":"Document Lifecycle","event_types":[{"event_name":"DocumentProcessing.Completed","event_types":[{"event_name":"BankStatementProcessing.Completed","event_types":[]}]}]}]'
-      additionalProperties: false
-    MicroserviceUserManagement.Resources.SikoiaErrorResponse500:
-      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-          example: ServerError
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-          example: '500'
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-          example: Internal Server Error
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-          example: Something has gone wrong, please try again
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
-      additionalProperties: false
     MicroserviceUserManagement.Resources.SikoiaErrorResponse401:
       title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
       type: object
@@ -1283,6 +1232,57 @@ components:
           readOnly: true
           example: a28d1abd-ad97-4a1f-bd14-6698c5214544
       additionalProperties: false
+    MicroserviceUserManagement.Resources.External.PaginatedWebhookRequestsResponse:
+      type: object
+      properties:
+        pagination_meta_data:
+          $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External._Shared.PaginationMetaData'
+        webhook_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicroserviceUserManagement.Resources.External.WebhookRequest'
+          description: All known requests made for a given webhook limited to the page size specified in pagination_meta_data.page_size
+          readOnly: true
+      additionalProperties: false
+      description: An ordered (most recent first) subset of webhook requests
+    MicroserviceUserManagement.Resources.SikoiaErrorResponse400:
+      title: MicroserviceUserManagement.Resources.SikoiaErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+          example: InvalidRequest
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+          example: '400'
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+          example: Validation Errors
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+          example: Entity Id is required.
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+          example: a28d1abd-ad97-4a1f-bd14-6698c5214544
+      additionalProperties: false
+    MicroserviceUserManagement.Domain.Model.Webhooks.WebhookEventStatusCode:
+      enum:
+      - NotRequested
+      - Pending
+      - Complete
+      - Failed
+      type: string
     MicroserviceUserManagement.Domain.Model.Common.PaginationDirection:
       enum:
       - Forward

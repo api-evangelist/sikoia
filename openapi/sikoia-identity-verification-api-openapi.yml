@@ -334,300 +334,40 @@ paths:
                 correlation_id: c14ab866-e8fe-4ccd-af70-4cd448d93008
 components:
   schemas:
-    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationMappedResponse:
-      title: Identity Verification Response
+    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Document:
+      title: Document
       type: object
       properties:
-        request_id:
+        type:
           type:
           - string
           - 'null'
-          description: Sikoia ID for the request
-          example: 0baa703c-950b-46b7-a424-8c24991987fd
-        status:
+          description: The Document Type (e.g. Driving License)
+          example: Passport
+        number:
           type:
           - string
           - 'null'
-          description: The status of the request(`Pending` `Complete` `Failed` `Expired`)
-          example: Complete
-        person_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the person
-          format: uuid
-          readOnly: true
-          example: 0fa323ec-b6e2-4a7a-8fea-58f2b264c57e
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          readOnly: true
-          example: '2024-02-12T15:03:40.389Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The time the request was completed
-          readOnly: true
-          example: '2024-02-12T15:19:37.211Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
+          description: The Document Number
+          example: '1234567890'
         country_code:
           type:
           - string
           - 'null'
-          description: Two letter ISO country code, e.g. GB
+          description: The Country Code
           example: GB
-        verification_url:
+        date_of_issue:
           type:
           - string
           - 'null'
-          description: Sikoia’s verification URL
-          example: https://verify.sikoia.com/v2/123456
-        direct_url:
+          description: The Document Date Of Issue
+          example: '2020-01-01'
+        date_of_expiry:
           type:
           - string
           - 'null'
-          description: IDV provider’s verification URL
-          example: https://alchemy.veriff.com/v/123456
-        data:
-          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationData'
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationMetaData:
-      title: Identity Verification Meta Data
-      type: object
-      properties:
-        status_codes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Status'
-          description: All status codes found in the IDV response and their definitions. May contain success, failure and/or information codes that qualify the overall IDV decision.
-      additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.BusinessSupport.Identity.Response.IdentityVerificationListResponse:
-      title: Identity Verification List Response
-      type: object
-      properties:
-        person_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the person
-          format: uuid
-          readOnly: true
-          example: 0fa323ec-b6e2-4a7a-8fea-58f2b264c57e
-        identity_verification_requests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.IdentityVerificationOrchestrationResponse'
-          description: The list of all IDV requests for the person
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Person:
-      title: Person
-      type: object
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: The First Name Found on the Document
-          example: John
-        surname:
-          type:
-          - string
-          - 'null'
-          description: The Surname Found on the Document
-          example: Smith
-        full_name:
-          type:
-          - string
-          - 'null'
-          description: The Full Name Found on the Document
-          example: John Smith
-        date_of_birth:
-          type:
-          - string
-          - 'null'
-          description: The Date Of Birth Found on the Document
-          example: '1980-01-01'
-        birth_year:
-          type:
-          - integer
-          - 'null'
-          description: The Birth Year Found on the Document
-          format: int32
-          example: '1980'
-        birth_month:
-          type:
-          - integer
-          - 'null'
-          description: The Birth Month Found on the Document
-          format: int32
-          example: '1'
-        birth_day:
-          type:
-          - integer
-          - 'null'
-          description: The Birth Day Found on the Document
-          format: int32
-          example: '1'
-        place_of_birth:
-          type:
-          - string
-          - 'null'
-          description: The Place Of Birth Found on the Document
-        gender:
-          type:
-          - string
-          - 'null'
-          description: The Gender Found on the Document
-        nationality:
-          type:
-          - string
-          - 'null'
-          description: The Nationality Found on the Document
-        address:
-          type:
-          - string
-          - 'null'
-          description: The Address Found on the Document
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationData:
-      title: Identity Verification Data
-      type: object
-      properties:
-        verification_status:
-          enum:
-          - Approved
-          - Declined
-          - ResubmissionRequested
-          - NotCompleted
-          type:
-          - string
-          - 'null'
-          description: "The Sikoia standardised verification status. Possible values are:\n- `Approved`: The IDV has been successful. The document is authentic and matches the person.\n- `Declined`: The IDV has been declined. The document may not be authentic or not match the person.\n- `Resubmission Requested`: It was not possible to make a decision based on the media provided (e.g. they were blurry). The person will need to go through the IDV process again.\n- `Not Completed`: The IDV process was either never started or abandoned. \n"
-          example: Approved
-        acceptance_time:
-          type:
-          - string
-          - 'null'
-          description: The Acceptance Time of the IDV Request
-          example: '2024-02-12T15:03:40.237Z'
-        decision_time:
-          type:
-          - string
-          - 'null'
-          description: The Decision Time of the IDV Request
-          example: '2024-02-12T15:19:34.904Z'
-        person:
-          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Person'
-        document:
-          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Document'
-        media:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Media'
-          description: The List of Images/Videos Collected for the IDV
-        meta_data:
-          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationMetaData'
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Media:
-      title: Media
-      type: object
-      properties:
-        mime_type:
-          type:
-          - string
-          - 'null'
-          description: The MIME Type of the Media (e.g. image/jpg)
-          example: video/webm
-        type:
-          type:
-          - string
-          - 'null'
-          description: The Type of the Media (e.g. ID Front or Selfie)
-          example: selfid_video
-        size:
-          type:
-          - integer
-          - 'null'
-          description: The Size (in bytes) of the Media
-          format: int32
-          example: '621901'
-        upload_date:
-          type:
-          - string
-          - 'null'
-          description: The Timestamp of the Media Upload
-        uri:
-          type:
-          - string
-          - 'null'
-          description: The URI Where the Media Can Be Downloaded
-          example: https://sikoialake.blob.core.windows.net/12345678
-        uri_expiry_in_minutes:
-          type:
-          - integer
-          - 'null'
-          description: The Expiry Time (in minutes) of the URI
-          format: int32
-          example: '30'
-      additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.Identity.Request.IdentityVerificationRequest:
-      title: Identity Verification Request
-      required:
-      - person_id
-      type: object
-      properties:
-        person_id:
-          minLength: 1
-          type: string
-          description: Sikoia ID for the person
-          format: uuid
-          example: 0fa323ec-b6e2-4a7a-8fea-58f2b264c57e
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: Two letter ISO country code, e.g. GB
-          example: GB
+          description: The Document Date Of Expiry
+          example: '2030-01-01'
       additionalProperties: false
     SikoiaSharedModels.BusinessSupport.Identity.Response.IdentityVerificationResponse:
       title: Identity Verification Response
@@ -713,6 +453,128 @@ components:
           description: A short explanation for the content in `value`
           example: The authentication tests passed.
       additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationMetaData:
+      title: Identity Verification Meta Data
+      type: object
+      properties:
+        status_codes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Status'
+          description: All status codes found in the IDV response and their definitions. May contain success, failure and/or information codes that qualify the overall IDV decision.
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Media:
+      title: Media
+      type: object
+      properties:
+        mime_type:
+          type:
+          - string
+          - 'null'
+          description: The MIME Type of the Media (e.g. image/jpg)
+          example: video/webm
+        type:
+          type:
+          - string
+          - 'null'
+          description: The Type of the Media (e.g. ID Front or Selfie)
+          example: selfid_video
+        size:
+          type:
+          - integer
+          - 'null'
+          description: The Size (in bytes) of the Media
+          format: int32
+          example: '621901'
+        upload_date:
+          type:
+          - string
+          - 'null'
+          description: The Timestamp of the Media Upload
+        uri:
+          type:
+          - string
+          - 'null'
+          description: The URI Where the Media Can Be Downloaded
+          example: https://sikoialake.blob.core.windows.net/12345678
+        uri_expiry_in_minutes:
+          type:
+          - integer
+          - 'null'
+          description: The Expiry Time (in minutes) of the URI
+          format: int32
+          example: '30'
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationData:
+      title: Identity Verification Data
+      type: object
+      properties:
+        verification_status:
+          enum:
+          - Approved
+          - Declined
+          - ResubmissionRequested
+          - NotCompleted
+          type:
+          - string
+          - 'null'
+          description: "The Sikoia standardised verification status. Possible values are:\n- `Approved`: The IDV has been successful. The document is authentic and matches the person.\n- `Declined`: The IDV has been declined. The document may not be authentic or not match the person.\n- `Resubmission Requested`: It was not possible to make a decision based on the media provided (e.g. they were blurry). The person will need to go through the IDV process again.\n- `Not Completed`: The IDV process was either never started or abandoned. \n"
+          example: Approved
+        acceptance_time:
+          type:
+          - string
+          - 'null'
+          description: The Acceptance Time of the IDV Request
+          example: '2024-02-12T15:03:40.237Z'
+        decision_time:
+          type:
+          - string
+          - 'null'
+          description: The Decision Time of the IDV Request
+          example: '2024-02-12T15:19:34.904Z'
+        person:
+          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Person'
+        document:
+          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Document'
+        media:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Media'
+          description: The List of Images/Videos Collected for the IDV
+        meta_data:
+          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationMetaData'
+      additionalProperties: false
     SikoiaSharedModels.BusinessSupport.Identity.Response.IdentityVerificationOrchestrationResponse:
       title: Identity Verification Orchestration Response
       type: object
@@ -777,40 +639,178 @@ components:
           description: IDV provider’s verification URL
           example: https://alchemy.veriff.com/v/123456
       additionalProperties: false
-    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Document:
-      title: Document
+    SikoiaSharedModels.BusinessSupport.Identity.Request.IdentityVerificationRequest:
+      title: Identity Verification Request
+      required:
+      - person_id
       type: object
       properties:
-        type:
-          type:
-          - string
-          - 'null'
-          description: The Document Type (e.g. Driving License)
-          example: Passport
-        number:
-          type:
-          - string
-          - 'null'
-          description: The Document Number
-          example: '1234567890'
+        person_id:
+          minLength: 1
+          type: string
+          description: Sikoia ID for the person
+          format: uuid
+          example: 0fa323ec-b6e2-4a7a-8fea-58f2b264c57e
         country_code:
           type:
           - string
           - 'null'
-          description: The Country Code
+          description: Two letter ISO country code, e.g. GB
           example: GB
-        date_of_issue:
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.Identity.Response.IdentityVerificationListResponse:
+      title: Identity Verification List Response
+      type: object
+      properties:
+        person_id:
           type:
           - string
           - 'null'
-          description: The Document Date Of Issue
-          example: '2020-01-01'
-        date_of_expiry:
+          description: Sikoia ID for the person
+          format: uuid
+          readOnly: true
+          example: 0fa323ec-b6e2-4a7a-8fea-58f2b264c57e
+        identity_verification_requests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.IdentityVerificationOrchestrationResponse'
+          description: The list of all IDV requests for the person
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationMappedResponse:
+      title: Identity Verification Response
+      type: object
+      properties:
+        request_id:
           type:
           - string
           - 'null'
-          description: The Document Date Of Expiry
-          example: '2030-01-01'
+          description: Sikoia ID for the request
+          example: 0baa703c-950b-46b7-a424-8c24991987fd
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Pending` `Complete` `Failed` `Expired`)
+          example: Complete
+        person_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the person
+          format: uuid
+          readOnly: true
+          example: 0fa323ec-b6e2-4a7a-8fea-58f2b264c57e
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          readOnly: true
+          example: '2024-02-12T15:03:40.389Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The time the request was completed
+          readOnly: true
+          example: '2024-02-12T15:19:37.211Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
+        verification_url:
+          type:
+          - string
+          - 'null'
+          description: Sikoia’s verification URL
+          example: https://verify.sikoia.com/v2/123456
+        direct_url:
+          type:
+          - string
+          - 'null'
+          description: IDV provider’s verification URL
+          example: https://alchemy.veriff.com/v/123456
+        data:
+          $ref: '#/components/schemas/SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.IdentityVerificationData'
+      additionalProperties: false
+    SikoiaSharedModels.BusinessSupport.Identity.Response.Mapped.Person:
+      title: Person
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The First Name Found on the Document
+          example: John
+        surname:
+          type:
+          - string
+          - 'null'
+          description: The Surname Found on the Document
+          example: Smith
+        full_name:
+          type:
+          - string
+          - 'null'
+          description: The Full Name Found on the Document
+          example: John Smith
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The Date Of Birth Found on the Document
+          example: '1980-01-01'
+        birth_year:
+          type:
+          - integer
+          - 'null'
+          description: The Birth Year Found on the Document
+          format: int32
+          example: '1980'
+        birth_month:
+          type:
+          - integer
+          - 'null'
+          description: The Birth Month Found on the Document
+          format: int32
+          example: '1'
+        birth_day:
+          type:
+          - integer
+          - 'null'
+          description: The Birth Day Found on the Document
+          format: int32
+          example: '1'
+        place_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The Place Of Birth Found on the Document
+        gender:
+          type:
+          - string
+          - 'null'
+          description: The Gender Found on the Document
+        nationality:
+          type:
+          - string
+          - 'null'
+          description: The Nationality Found on the Document
+        address:
+          type:
+          - string
+          - 'null'
+          description: The Address Found on the Document
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

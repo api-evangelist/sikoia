@@ -543,693 +543,22 @@ paths:
                 correlation_id: 5c137f9e-769b-47f1-8fe4-b8697429b278
 components:
   schemas:
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedPayItem:
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployeeAddress:
       type: object
       properties:
-        category:
+        summary_line:
           type:
           - string
           - 'null'
-          description: Sikoia’s categorisation of the pay type(`BonusPay` `BasicPay` `Arrears` `PensionPay` `SalarySacrifice` `CommissionPay` `ParentalPay` `SickPay` `OvertimePay` `ShiftAllowancePay` `HolidayPay` `CarAllowancePay` `OtherBenefitsInKind` `HealthcareBenefitPay` `Other`)
-          example: BasicPay
-        short_description:
+          description: The address of the employer, as stated on the payslip.
+          example: 19, Sample Street, London
+        post_code:
           type:
           - string
           - 'null'
-          description: The description of the pay item, as stated on the payslip.
-          example: January Salary
-        value:
-          type:
-          - number
-          - 'null'
-          description: The value of the pay item, as stated on the payslip.
-          format: double
-          example: '1971.42'
-        rate:
-          type:
-          - number
-          - 'null'
-          description: The rate of the pay item, as stated on the payslip.
-          format: double
-          example: '1'
-        quantity:
-          type:
-          - number
-          - 'null'
-          description: The quantity of the pay item, as stated on the payslip.
-          format: double
-          example: '1'
+          description: The postcode of the employer, as stated on the payslip.
+          example: SW1 1PN
       additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationIncome:
-      type: object
-      properties:
-        income_from_employments:
-          type:
-          - number
-          - 'null'
-          description: The total of all income items gained from employment
-          format: double
-          example: '21843.00'
-        income_from_benefits:
-          type:
-          - number
-          - 'null'
-          description: The total of all income from taxable state issued benefits excluding pensions
-          format: double
-        allowable_expenses:
-          type:
-          - number
-          - 'null'
-          description: Any claims to reduce taxable earnings such as interest on business loans
-          format: double
-        non_employment_income:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationNonEmploymentIncome'
-        total:
-          type:
-          - number
-          - 'null'
-          description: The (gross) total income earned by an individual from all sources
-          format: double
-          example: '48933.00'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource:
-      type: object
-      properties:
-        source_name:
-          type:
-          - string
-          - 'null'
-          description: Optional. The name of the data source (e.g. a file name like 'payslip') or null if no specific name is provided (e.g. for banking connections).
-          readOnly: true
-          example: Stmt - current - Feb 2023 - J Smith and J Hayley
-        source_id:
-          type: string
-          description: The ID of the primary data source, such as a document ID for files (e.g. payslips) or an account ID for an open banking connection.
-          readOnly: true
-          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
-        source_category_type:
-          type: string
-          description: The category of the data source, such as `Document` or `OpenBanking`.
-          readOnly: true
-          example: Document
-        source_type:
-          type:
-          - string
-          - 'null'
-          description: The specific type of data identified, such as `Payslip`, `BankStatement`, `BankAccount`, `SA302`, `TaxOverview`.
-          readOnly: true
-          example: Payslip
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AdditionalInformation:
-      type: object
-      properties:
-        bonuses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Bonus'
-          description: Any income received as bonuses, in addition to regular pay. Only available for payslips.
-        monthly_student_loan_deductions:
-          type:
-          - number
-          - 'null'
-          description: The total monthly deductions for student loan repayments. Only available for payslips.
-          format: double
-          example: '222.44'
-          deprecated: true
-        monthly_gross_pay_details:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem'
-          description: Contains detailed breakdown of the monthly gross pay. Only available for payslips.
-        monthly_deductions_details:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DeductionItem'
-          description: Contains a detailed breakdown of the monthly deductions from pay. Only available for payslips.
-        average_income_items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem'
-          description: Contains a list of the income items averaged across the SA302s provided. Only available for SA302s.
-        average_tax_items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem'
-          description: Contains a list of the tax items averaged across the SA302s provided. Only available for tax documents.
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationNonEmploymentIncome:
-      title: ''
-      type: object
-      properties:
-        share_schemes:
-          type:
-          - number
-          - 'null'
-          description: Any income gained from share schemes in UK companies
-          format: double
-        profit_from_self_employment:
-          type:
-          - number
-          - 'null'
-          description: Any profit earned from an individual's self employment role
-          format: double
-        profit_from_partnerships:
-          type:
-          - number
-          - 'null'
-          description: Any profit earned from a UK partnership
-          format: double
-        interest_from_partnerships:
-          type:
-          - number
-          - 'null'
-          description: Any interest from a UK partnership
-          format: double
-        dividends_from_partnerships:
-          type:
-          - number
-          - 'null'
-          description: Any dividends paid out to a shareholder in a UK parternship
-          format: double
-        profit_from_uk_land_and_property:
-          type:
-          - number
-          - 'null'
-          description: Any profit earned from land and property assets in the UK
-          format: double
-          example: '14590.00'
-        foreign_income:
-          type:
-          - number
-          - 'null'
-          description: Any income earned from sources outside of the UK
-          format: double
-        foreign_dividends:
-          type:
-          - number
-          - 'null'
-          description: Any dividends paid out from non-UK companies
-          format: double
-        foreign_savings:
-          type:
-          - number
-          - 'null'
-          description: Any earnings from savings accounts outside of the UK
-          format: double
-        trusts_and_estates:
-          type:
-          - number
-          - 'null'
-          description: Any earnings from trusts and estates registered in the UK
-          format: double
-        interest_from_uk_banks:
-          type:
-          - number
-          - 'null'
-          description: Any interest earned in bank accounts registered in the UK
-          format: double
-        dividends_from_uk_companies:
-          type:
-          - number
-          - 'null'
-          description: Any dividend payments from UK registered companies
-          format: double
-          example: '12500.00'
-        uk_pensions_and_state_benefits:
-          type:
-          - number
-          - 'null'
-          description: The combined income from pensions and taxable state benefits
-          format: double
-        gains_on_life_insurance_policies:
-          type:
-          - number
-          - 'null'
-          description: Any income earned from a life insurance policy paying out
-          format: double
-        other_income:
-          type:
-          - number
-          - 'null'
-          description: All other income not already broken down in one of the named fields
-          format: double
-        subtotal:
-          type:
-          - number
-          - 'null'
-          description: The total of all non employment income figures shown here
-          format: double
-          example: '27090.00'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Bonus:
-      type: object
-      properties:
-        amount:
-          type:
-          - number
-          - 'null'
-          description: The value of the bonus payment.
-          format: double
-          example: '222.22'
-        date:
-          type:
-          - string
-          - 'null'
-          description: The date the bonus was paid or awarded.
-          example: '2024-01-01'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationSummary:
-      type: object
-      properties:
-        employment_income:
-          type:
-          - number
-          - 'null'
-          description: The total of all income items gained from employment
-          format: double
-          example: '21843.00'
-        total_income:
-          type:
-          - number
-          - 'null'
-          description: The total (gross) of all income items
-          format: double
-          example: '48933.00'
-        net_income:
-          type:
-          - number
-          - 'null'
-          description: The total income remaining after all owed taxes have been taken away
-          format: double
-          example: '47437.30'
-        allowances_and_reliefs:
-          type:
-          - number
-          - 'null'
-          description: The total of all items that reduce a person's tax liability including any personal allowance
-          format: double
-          example: '12570.00'
-        tax_due:
-          type:
-          - number
-          - 'null'
-          description: The total (gross) amount of tax due
-          format: double
-          example: '3348.70'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.IncomeSourceData:
-      type: object
-      properties:
-        payslip_date:
-          type:
-          - string
-          - 'null'
-          description: The date on which the payslip was issued. Only available for payslips.
-          example: '2024-01-31'
-        pay_period_start_date:
-          type:
-          - string
-          - 'null'
-          description: The starting date of the payment period covered by the payslip. Only available for payslips.
-          example: '2024-01-01'
-        pay_period_end_date:
-          type:
-          - string
-          - 'null'
-          description: The ending date of the payment period covered by the payslip. Only available for payslips.
-          example: '2024-01-31'
-        payment_date:
-          type:
-          - string
-          - 'null'
-          description: The date the payment was issued or is scheduled to be issued. Only available for payslips.
-          example: '2024-01-31'
-        start_date:
-          type:
-          - string
-          - 'null'
-          description: The starting date of the bank transactions. Only available for bank statements and tax documents.
-          example: '2024-01-01'
-        end_date:
-          type:
-          - string
-          - 'null'
-          description: The ending date of the bank transactions. Only available for bank statements and tax documents.
-          example: '2024-04-01'
-        pay_frequency:
-          type:
-          - string
-          - 'null'
-          description: A list of pay frequencies derived from all data sources, such as `Monthly`, `Weekly`, `TwoWeekly`, or `FourWeekly`. Only available for payslips.
-          example: Monthly
-        pay_period:
-          type:
-          - integer
-          - 'null'
-          description: The period of the fiscal year for which the income is being paid, e.g. 5, 32. Only available for payslips.
-          format: int32
-          example: '5'
-        gross_pay:
-          type:
-          - number
-          - 'null'
-          description: The total gross pay as shown on the payslip. Only available for payslips.
-          format: double
-          example: '1971.42'
-        total_deductions:
-          type:
-          - number
-          - 'null'
-          description: The total deductions as shown on the payslip. Only available for payslips.
-          format: double
-          example: '319.49'
-        net_pay:
-          type:
-          - number
-          - 'null'
-          description: The total net pay displayed on the document. Only available for payslips and bank statements.
-          format: double
-          example: Basic Pay
-        national_insurance_number:
-          type:
-          - string
-          - 'null'
-          description: The National Insurance Number associated with the individual. Only available for payslips and SA302s.
-          example: QQ123456B
-        national_insurance_letter:
-          type:
-          - string
-          - 'null'
-          description: The National Insurance Letter associated with the individual. Only available for payslips.
-          example: Q
-        unique_taxpayer_reference:
-          type:
-          - string
-          - 'null'
-          description: The Unique Taxpayer Reference associated with the individual. Only available for tax documents.
-          example: '1234567890'
-        tax_code:
-          type:
-          - string
-          - 'null'
-          description: The Tax Code associated with the individual. Only available for payslips.
-          example: 1257L
-        paye_reference:
-          type:
-          - string
-          - 'null'
-          description: The unique code given to an employer by HMRC. Only available for payslips.
-          example: 123/AB456
-        employee_name:
-          type:
-          - string
-          - 'null'
-          description: The employee name as it appears in the source. Only available for payslips.
-          example: Sharon Smith
-        employer_name:
-          type:
-          - string
-          - 'null'
-          description: The employer name as it appears in the source. Only available for payslips.
-          example: BUILDING HOME LTD
-        employee_number:
-          type:
-          - string
-          - 'null'
-          description: The Employee ID or number associated with the individual. Only available for payslips.
-          example: '1234567890'
-        job_title:
-          type:
-          - string
-          - 'null'
-          description: The employee job title or position. Only available for payslips.
-          example: Customer Services Officer
-        income_source_address:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeSourceAddress'
-        employee_address:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeEmployeeAddress'
-        ytd_gross_pay:
-          type:
-          - number
-          - 'null'
-          description: The total gross pay year-to-date (YTD) as shown on the payslip. Only available for payslips.
-          format: double
-          example: '7000.00'
-        ytd_net_pay:
-          type:
-          - number
-          - 'null'
-          description: The total net pay year-to-date (YTD) as shown on the payslip. Only available for payslips.
-          format: double
-          example: '2600.00'
-        ytd_tax_paid:
-          type:
-          - number
-          - 'null'
-          description: The total tax paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
-          format: double
-          example: '1100.00'
-        ytd_ni_paid:
-          type:
-          - number
-          - 'null'
-          description: The total National Insurance (NI) contributions paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
-          format: double
-          example: '1100.00'
-        ytd_pension_paid:
-          type:
-          - number
-          - 'null'
-          description: The total pension contributions paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
-          format: double
-          example: '1100.00'
-        ytd_other_deductions:
-          type:
-          - number
-          - 'null'
-          description: Any additional deductions paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
-          format: double
-          example: '1100.00'
-        detailed_pay_items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedPayItem'
-          description: Contains a detailed breakdown of the gross pay. Only available for payslips and bank statements.
-        detailed_deduction_items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedDeductionItem'
-          description: Contains a detailed breakdown of the deductions from pay. Only available for payslips.
-        tax_information:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformation'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem:
-      type: object
-      properties:
-        category:
-          type:
-          - string
-          - 'null'
-          description: Sikoia’s categorisation of the pay type(`MonthlyBonusPay` `MonthlyBasicPay` `MonthlyArrears` `MonthlyPensionPay` `MonthlySalarySacrifice` `MonthlyCommissionPay` `MonthlyParentalPay` `MonthlySickPay` `MonthlyOvertimePay` `MonthlyShiftAllowancePay` `MonthlyHolidayPay` `MonthlyCarAllowancePay` `MonthlyOtherBenefitsInKind` `MonthlyHealthcareBenefitPay` `MonthlyOtherGrossPay`)
-          example: MonthlyBasicPay
-        amount:
-          type:
-          - number
-          - 'null'
-          description: The amount of pay for the specified category.
-          format: double
-          example: '222.44'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data:
-      type: object
-      properties:
-        income_details:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerDetail'
-          description: A list of income employment details, where each item represents an 'income recipient' and 'income source' pair.
-        data_sources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource'
-          description: Income Employment Sources
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Request.IncomeEmployerRequest:
-      title: Income Employer Request
-      required:
-      - entity_id
-      - entity_type
-      type: object
-      properties:
-        entity_id:
-          minLength: 1
-          type: string
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 473078e-e392-4943-9ea9-efe7590eb503
-        entity_type:
-          minLength: 1
-          enum:
-          - company
-          - person
-          - case
-          type: string
-          description: The type of entity
-          example: case
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.OrchestrationListResponse:
-      title: Income Employer List Response
-      type: object
-      properties:
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity
-          example: case
-        income_employer_requests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.OrchestrationResponse'
-          description: A list of income & employer verification requests for the entity
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeEmployerAdditionalDetailsResponse:
-      title: Income Employer Details Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: The unique Sikoia identifier for the request.
-          example: 8ef5079a-b3de-44a5-b4ff-c534259e752c
-        status:
-          type:
-          - string
-          - 'null'
-          description: The current status of the request, which can be `Pending`, `Complete`, or `Failed`.
-          example: Pending
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`; `person_id` or `case_id` of the entity.
-          example: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity.
-          example: case
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was initiated.
-          example: '2024-01-01T12:38:45.711Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was completed.
-          example: '2024-01-02T12:22:07.747Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional details or context about the request.
-          example: Income request pending
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeData'
-          description: The Income & Employer data items.
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem:
-      type: object
-      properties:
-        category:
-          type:
-          - string
-          - 'null'
-          description: The category of the tax item(`Tax` `TaxOverpaid` `Surcharges` `Interest` `Penalties` `Subtotal` `PaymentsForThisYear` `OtherAdjustments` `Total`)
-          example: Tax
-        short_description:
-          type:
-          - string
-          - 'null'
-          description: The category of the tax item.
-          example: Class 4 NIC
-        value:
-          type:
-          - number
-          - 'null'
-          description: The average value of the tax item across the tax documents provided.
-          format: double
-          example: '1971.42'
-      additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.IncomeEmployerResponse:
       title: Income Employer Response
       type: object
@@ -1281,124 +610,6 @@ components:
           description: Additional details or context about the request.
           example: Income request pending
       additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.OrchestrationResponse:
-      title: Income Employer Orchestration Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-          example: w5f84a41-01cf-4d21-901d-124c5a7c743a
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request, such as `Pending` `Complete` `Failed`.
-          example: Complete
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made.
-          example: '2024-01-29T12:21:52.933Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The time the request was completed.
-          example: '2024-01-30T09:44:22.466Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request.
-          example: Income Employer complete
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DeductionItem:
-      type: object
-      properties:
-        category:
-          type:
-          - string
-          - 'null'
-          description: Sikoia’s categorisation of the deduction type(`MonthlyIncomeTax` `MonthlyEmployeePension` `MonthlyEmployerPension` `MonthlyNationalInsurance` `MonthlyStudentLoan` `MonthlyHealthInsurance` `MonthlyOtherLoans` `MonthlyChildcare` `MonthlyChildcareVouchers` `MonthlySalarySacrifice` `MonthlyOtherDeductions`)
-          example: MonthlyIncomeTax
-        amount:
-          type:
-          - number
-          - 'null'
-          description: The amount of the deduction for the specified category.
-          format: double
-          example: '167.15'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformation:
-      title: Tax information surfaced from an uploaded file such as an `SA302` or `TaxYearOverview`
-      type: object
-      properties:
-        summary:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationSummary'
-        income:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationIncome'
-        tax_and_charges:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationTaxAndCharges'
-        payments:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationPayments'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerMappedResponse:
-      title: Income Employer Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: The unique Sikoia identifier for the request.
-          example: 8ef5079a-b3de-44a5-b4ff-c534259e752c
-        status:
-          type:
-          - string
-          - 'null'
-          description: The current status of the request, which can be `Pending`, `Complete`, or `Failed`.
-          example: Pending
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity.
-          example: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity.
-          example: case
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was initiated.
-          example: '2024-01-01T12:38:45.711Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The date and time when the request was completed.
-          example: '2024-01-02T12:22:07.747Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional details or context about the request.
-          example: Income request pending
-        data:
-          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data'
-      additionalProperties: false
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.Detail:
       type: object
       properties:
@@ -1428,30 +639,7 @@ components:
         income_source_data:
           $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.IncomeSourceData'
       additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedDeductionItem:
-      type: object
-      properties:
-        category:
-          type:
-          - string
-          - 'null'
-          description: Sikoia’s categorisation of the deduction type(`IncomeTax` `EmployeePension` `EmployerPension` `NationalInsurance` `StudentLoan` `OtherLoans` `HealthInsurance` `Childcare` `ChildcareVouchers` `SalarySacrifice` `Other`)
-          example: IncomeTax
-        short_description:
-          type:
-          - string
-          - 'null'
-          description: The description of the deduction item, as stated on the payslip.
-          example: PAYE
-        value:
-          type:
-          - number
-          - 'null'
-          description: The value of the deduction item, as stated on the payslip.
-          format: double
-          example: '319.49'
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeSourceAddress:
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeEmployeeAddress:
       type: object
       properties:
         summary_line:
@@ -1459,13 +647,13 @@ components:
           - string
           - 'null'
           description: The address of the employer, as stated on the payslip.
-          example: Flat 23, Sample Street, London
+          example: 19, Sample Street, London
         post_code:
           type:
           - string
           - 'null'
           description: The postcode of the employer, as stated on the payslip.
-          example: SW4 4PL
+          example: SW1 1PN
       additionalProperties: false
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerDetail:
       type: object
@@ -1667,6 +855,592 @@ components:
             $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.Detail'
           description: A list of income employment details, where each item represents an 'income recipient' and 'income source' pair.
       additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerMappedResponse:
+      title: Income Employer Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: The unique Sikoia identifier for the request.
+          example: 8ef5079a-b3de-44a5-b4ff-c534259e752c
+        status:
+          type:
+          - string
+          - 'null'
+          description: The current status of the request, which can be `Pending`, `Complete`, or `Failed`.
+          example: Pending
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity.
+          example: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was initiated.
+          example: '2024-01-01T12:38:45.711Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was completed.
+          example: '2024-01-02T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional details or context about the request.
+          example: Income request pending
+        data:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.OrchestrationResponse:
+      title: Income Employer Orchestration Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: w5f84a41-01cf-4d21-901d-124c5a7c743a
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request, such as `Pending` `Complete` `Failed`.
+          example: Complete
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made.
+          example: '2024-01-29T12:21:52.933Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The time the request was completed.
+          example: '2024-01-30T09:44:22.466Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request.
+          example: Income Employer complete
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeSourceAddress:
+      type: object
+      properties:
+        summary_line:
+          type:
+          - string
+          - 'null'
+          description: The address of the employer, as stated on the payslip.
+          example: Flat 23, Sample Street, London
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The postcode of the employer, as stated on the payslip.
+          example: SW4 4PL
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationPayments:
+      type: object
+      properties:
+        tax_already_paid_for_this_year:
+          type:
+          - number
+          - 'null'
+          description: Any tax payments already made towards the oustanding balance owed
+          format: double
+        outstanding_from_last_year:
+          type:
+          - number
+          - 'null'
+          description: Any tax payments still owed from the previous financial year
+          format: double
+        balancing_payment_for_this_year:
+          type:
+          - number
+          - 'null'
+          description: Any tax still outstanding before January 31st following the end of the tax year before penalties/interest may start being charged
+          format: double
+        first_payment_on_account_for_next_year:
+          type:
+          - number
+          - 'null'
+          description: Any payment on account due by the 31st of January at the end of the current tax year
+          format: double
+        second_payment_on_account_for_next_year:
+          type:
+          - number
+          - 'null'
+          description: Any payment on account due by 31st July for the previous tax year
+          format: double
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeEmployerAdditionalDetailsResponse:
+      title: Income Employer Details Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: The unique Sikoia identifier for the request.
+          example: 8ef5079a-b3de-44a5-b4ff-c534259e752c
+        status:
+          type:
+          - string
+          - 'null'
+          description: The current status of the request, which can be `Pending`, `Complete`, or `Failed`.
+          example: Pending
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`; `person_id` or `case_id` of the entity.
+          example: b3f6ed8f-bc57-4a23-801e-e744aecb7b03
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity.
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was initiated.
+          example: '2024-01-01T12:38:45.711Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The date and time when the request was completed.
+          example: '2024-01-02T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional details or context about the request.
+          example: Income request pending
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeData'
+          description: The Income & Employer data items.
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: The category of the tax item(`Tax` `TaxOverpaid` `Surcharges` `Interest` `Penalties` `Subtotal` `PaymentsForThisYear` `OtherAdjustments` `Total`)
+          example: Tax
+        short_description:
+          type:
+          - string
+          - 'null'
+          description: The category of the tax item.
+          example: Class 4 NIC
+        value:
+          type:
+          - number
+          - 'null'
+          description: The average value of the tax item across the tax documents provided.
+          format: double
+          example: '1971.42'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.IncomeSourceData:
+      type: object
+      properties:
+        payslip_date:
+          type:
+          - string
+          - 'null'
+          description: The date on which the payslip was issued. Only available for payslips.
+          example: '2024-01-31'
+        pay_period_start_date:
+          type:
+          - string
+          - 'null'
+          description: The starting date of the payment period covered by the payslip. Only available for payslips.
+          example: '2024-01-01'
+        pay_period_end_date:
+          type:
+          - string
+          - 'null'
+          description: The ending date of the payment period covered by the payslip. Only available for payslips.
+          example: '2024-01-31'
+        payment_date:
+          type:
+          - string
+          - 'null'
+          description: The date the payment was issued or is scheduled to be issued. Only available for payslips.
+          example: '2024-01-31'
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: The starting date of the bank transactions. Only available for bank statements and tax documents.
+          example: '2024-01-01'
+        end_date:
+          type:
+          - string
+          - 'null'
+          description: The ending date of the bank transactions. Only available for bank statements and tax documents.
+          example: '2024-04-01'
+        pay_frequency:
+          type:
+          - string
+          - 'null'
+          description: A list of pay frequencies derived from all data sources, such as `Monthly`, `Weekly`, `TwoWeekly`, or `FourWeekly`. Only available for payslips.
+          example: Monthly
+        pay_period:
+          type:
+          - integer
+          - 'null'
+          description: The period of the fiscal year for which the income is being paid, e.g. 5, 32. Only available for payslips.
+          format: int32
+          example: '5'
+        gross_pay:
+          type:
+          - number
+          - 'null'
+          description: The total gross pay as shown on the payslip. Only available for payslips.
+          format: double
+          example: '1971.42'
+        total_deductions:
+          type:
+          - number
+          - 'null'
+          description: The total deductions as shown on the payslip. Only available for payslips.
+          format: double
+          example: '319.49'
+        net_pay:
+          type:
+          - number
+          - 'null'
+          description: The total net pay displayed on the document. Only available for payslips and bank statements.
+          format: double
+          example: Basic Pay
+        national_insurance_number:
+          type:
+          - string
+          - 'null'
+          description: The National Insurance Number associated with the individual. Only available for payslips and SA302s.
+          example: QQ123456B
+        national_insurance_letter:
+          type:
+          - string
+          - 'null'
+          description: The National Insurance Letter associated with the individual. Only available for payslips.
+          example: Q
+        unique_taxpayer_reference:
+          type:
+          - string
+          - 'null'
+          description: The Unique Taxpayer Reference associated with the individual. Only available for tax documents.
+          example: '1234567890'
+        tax_code:
+          type:
+          - string
+          - 'null'
+          description: The Tax Code associated with the individual. Only available for payslips.
+          example: 1257L
+        paye_reference:
+          type:
+          - string
+          - 'null'
+          description: The unique code given to an employer by HMRC. Only available for payslips.
+          example: 123/AB456
+        employee_name:
+          type:
+          - string
+          - 'null'
+          description: The employee name as it appears in the source. Only available for payslips.
+          example: Sharon Smith
+        employer_name:
+          type:
+          - string
+          - 'null'
+          description: The employer name as it appears in the source. Only available for payslips.
+          example: BUILDING HOME LTD
+        employee_number:
+          type:
+          - string
+          - 'null'
+          description: The Employee ID or number associated with the individual. Only available for payslips.
+          example: '1234567890'
+        job_title:
+          type:
+          - string
+          - 'null'
+          description: The employee job title or position. Only available for payslips.
+          example: Customer Services Officer
+        income_source_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeSourceAddress'
+        employee_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeEmployeeAddress'
+        ytd_gross_pay:
+          type:
+          - number
+          - 'null'
+          description: The total gross pay year-to-date (YTD) as shown on the payslip. Only available for payslips.
+          format: double
+          example: '7000.00'
+        ytd_net_pay:
+          type:
+          - number
+          - 'null'
+          description: The total net pay year-to-date (YTD) as shown on the payslip. Only available for payslips.
+          format: double
+          example: '2600.00'
+        ytd_tax_paid:
+          type:
+          - number
+          - 'null'
+          description: The total tax paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
+          format: double
+          example: '1100.00'
+        ytd_ni_paid:
+          type:
+          - number
+          - 'null'
+          description: The total National Insurance (NI) contributions paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
+          format: double
+          example: '1100.00'
+        ytd_pension_paid:
+          type:
+          - number
+          - 'null'
+          description: The total pension contributions paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
+          format: double
+          example: '1100.00'
+        ytd_other_deductions:
+          type:
+          - number
+          - 'null'
+          description: Any additional deductions paid year-to-date (YTD) as shown on the payslip. Only available for payslips.
+          format: double
+          example: '1100.00'
+        detailed_pay_items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedPayItem'
+          description: Contains a detailed breakdown of the gross pay. Only available for payslips and bank statements.
+        detailed_deduction_items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedDeductionItem'
+          description: Contains a detailed breakdown of the deductions from pay. Only available for payslips.
+        tax_information:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformation'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationSummary:
+      type: object
+      properties:
+        employment_income:
+          type:
+          - number
+          - 'null'
+          description: The total of all income items gained from employment
+          format: double
+          example: '21843.00'
+        total_income:
+          type:
+          - number
+          - 'null'
+          description: The total (gross) of all income items
+          format: double
+          example: '48933.00'
+        net_income:
+          type:
+          - number
+          - 'null'
+          description: The total income remaining after all owed taxes have been taken away
+          format: double
+          example: '47437.30'
+        allowances_and_reliefs:
+          type:
+          - number
+          - 'null'
+          description: The total of all items that reduce a person's tax liability including any personal allowance
+          format: double
+          example: '12570.00'
+        tax_due:
+          type:
+          - number
+          - 'null'
+          description: The total (gross) amount of tax due
+          format: double
+          example: '3348.70'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.OrchestrationListResponse:
+      title: Income Employer List Response
+      type: object
+      properties:
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 3345857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: case
+        income_employer_requests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.OrchestrationResponse'
+          description: A list of income & employer verification requests for the entity
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformation:
+      title: Tax information surfaced from an uploaded file such as an `SA302` or `TaxYearOverview`
+      type: object
+      properties:
+        summary:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationSummary'
+        income:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationIncome'
+        tax_and_charges:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationTaxAndCharges'
+        payments:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationPayments'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedDeductionItem:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: Sikoia’s categorisation of the deduction type(`IncomeTax` `EmployeePension` `EmployerPension` `NationalInsurance` `StudentLoan` `OtherLoans` `HealthInsurance` `Childcare` `ChildcareVouchers` `SalarySacrifice` `Other`)
+          example: IncomeTax
+        short_description:
+          type:
+          - string
+          - 'null'
+          description: The description of the deduction item, as stated on the payslip.
+          example: PAYE
+        value:
+          type:
+          - number
+          - 'null'
+          description: The value of the deduction item, as stated on the payslip.
+          format: double
+          example: '319.49'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Data:
+      type: object
+      properties:
+        income_details:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployerDetail'
+          description: A list of income employment details, where each item represents an 'income recipient' and 'income source' pair.
+        data_sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource'
+          description: Income Employment Sources
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: The category of the income item(`PayFromAllEmployments` `BenefitsAndExpenses` `AllowableExpenses` `TotalEmploymentIncome` `ShareSchemes` `SelfEmployment` `InterestFromPartnerships` `DividendsFromPartnerships` `PropertyIncome` `ForeignIncome` `ForeignDividends` `ForeignSavings` `ForeignLifeInsurance` `TrustsAndEstates` `UkInterest` `UkDividends` `UkPensionsAndBenefits` `UkLifeInsurance` `OtherIncome` `TotalIncomeReceived` `RetirementAnnuityDeduction` `ForeignTaxOnEstatesDeduction` `IncomeTaxRelief` `AnnuityDeduction` `GiftsToCharity` `PersonalAllowance` `MarriageAllowanceTransfer` `BlindPersonAllowance` `TotalDeductionsApplied` `TotalTaxableIncome`)
+          example: PayFromAllEmployments
+        value:
+          type:
+          - number
+          - 'null'
+          description: The average value of the income item across the SA302s provided.
+          format: double
+          example: '1971.42'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DeductionItem:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: Sikoia’s categorisation of the deduction type(`MonthlyIncomeTax` `MonthlyEmployeePension` `MonthlyEmployerPension` `MonthlyNationalInsurance` `MonthlyStudentLoan` `MonthlyHealthInsurance` `MonthlyOtherLoans` `MonthlyChildcare` `MonthlyChildcareVouchers` `MonthlySalarySacrifice` `MonthlyOtherDeductions`)
+          example: MonthlyIncomeTax
+        amount:
+          type:
+          - number
+          - 'null'
+          description: The amount of the deduction for the specified category.
+          format: double
+          example: '167.15'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Request.IncomeEmployerRequest:
+      title: Income Employer Request
+      required:
+      - entity_id
+      - entity_type
+      type: object
+      properties:
+        entity_id:
+          minLength: 1
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 473078e-e392-4943-9ea9-efe7590eb503
+        entity_type:
+          minLength: 1
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity
+          example: case
+      additionalProperties: false
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationTaxAndCharges:
       type: object
       properties:
@@ -1744,104 +1518,106 @@ components:
           format: double
           example: '1495.70'
       additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem:
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Bonus:
+      type: object
+      properties:
+        amount:
+          type:
+          - number
+          - 'null'
+          description: The value of the bonus payment.
+          format: double
+          example: '222.22'
+        date:
+          type:
+          - string
+          - 'null'
+          description: The date the bonus was paid or awarded.
+          example: '2024-01-01'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.DetailedPayItem:
       type: object
       properties:
         category:
           type:
           - string
           - 'null'
-          description: The category of the income item(`PayFromAllEmployments` `BenefitsAndExpenses` `AllowableExpenses` `TotalEmploymentIncome` `ShareSchemes` `SelfEmployment` `InterestFromPartnerships` `DividendsFromPartnerships` `PropertyIncome` `ForeignIncome` `ForeignDividends` `ForeignSavings` `ForeignLifeInsurance` `TrustsAndEstates` `UkInterest` `UkDividends` `UkPensionsAndBenefits` `UkLifeInsurance` `OtherIncome` `TotalIncomeReceived` `RetirementAnnuityDeduction` `ForeignTaxOnEstatesDeduction` `IncomeTaxRelief` `AnnuityDeduction` `GiftsToCharity` `PersonalAllowance` `MarriageAllowanceTransfer` `BlindPersonAllowance` `TotalDeductionsApplied` `TotalTaxableIncome`)
-          example: PayFromAllEmployments
+          description: Sikoia’s categorisation of the pay type(`BonusPay` `BasicPay` `Arrears` `PensionPay` `SalarySacrifice` `CommissionPay` `ParentalPay` `SickPay` `OvertimePay` `ShiftAllowancePay` `HolidayPay` `CarAllowancePay` `OtherBenefitsInKind` `HealthcareBenefitPay` `Other`)
+          example: BasicPay
+        short_description:
+          type:
+          - string
+          - 'null'
+          description: The description of the pay item, as stated on the payslip.
+          example: January Salary
         value:
           type:
           - number
           - 'null'
-          description: The average value of the income item across the SA302s provided.
+          description: The value of the pay item, as stated on the payslip.
           format: double
           example: '1971.42'
+        rate:
+          type:
+          - number
+          - 'null'
+          description: The rate of the pay item, as stated on the payslip.
+          format: double
+          example: '1'
+        quantity:
+          type:
+          - number
+          - 'null'
+          description: The quantity of the pay item, as stated on the payslip.
+          format: double
+          example: '1'
       additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeEmployeeAddress:
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AdditionalInformation:
       type: object
       properties:
-        summary_line:
+        bonuses:
           type:
-          - string
+          - array
           - 'null'
-          description: The address of the employer, as stated on the payslip.
-          example: 19, Sample Street, London
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The postcode of the employer, as stated on the payslip.
-          example: SW1 1PN
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationPayments:
-      type: object
-      properties:
-        tax_already_paid_for_this_year:
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.Bonus'
+          description: Any income received as bonuses, in addition to regular pay. Only available for payslips.
+        monthly_student_loan_deductions:
           type:
           - number
           - 'null'
-          description: Any tax payments already made towards the oustanding balance owed
+          description: The total monthly deductions for student loan repayments. Only available for payslips.
           format: double
-        outstanding_from_last_year:
+          example: '222.44'
+          deprecated: true
+        monthly_gross_pay_details:
           type:
-          - number
+          - array
           - 'null'
-          description: Any tax payments still owed from the previous financial year
-          format: double
-        balancing_payment_for_this_year:
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem'
+          description: Contains detailed breakdown of the monthly gross pay. Only available for payslips.
+        monthly_deductions_details:
           type:
-          - number
+          - array
           - 'null'
-          description: Any tax still outstanding before January 31st following the end of the tax year before penalties/interest may start being charged
-          format: double
-        first_payment_on_account_for_next_year:
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DeductionItem'
+          description: Contains a detailed breakdown of the monthly deductions from pay. Only available for payslips.
+        average_income_items:
           type:
-          - number
+          - array
           - 'null'
-          description: Any payment on account due by the 31st of January at the end of the current tax year
-          format: double
-        second_payment_on_account_for_next_year:
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageIncomeItem'
+          description: Contains a list of the income items averaged across the SA302s provided. Only available for SA302s.
+        average_tax_items:
           type:
-          - number
+          - array
           - 'null'
-          description: Any payment on account due by 31st July for the previous tax year
-          format: double
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.IncomeSourceAddress:
-      type: object
-      properties:
-        summary_line:
-          type:
-          - string
-          - 'null'
-          description: The address of the employer, as stated on the payslip.
-          example: Flat 23, Sample Street, London
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The postcode of the employer, as stated on the payslip.
-          example: SW4 4PL
-      additionalProperties: false
-    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeEmployeeAddress:
-      type: object
-      properties:
-        summary_line:
-          type:
-          - string
-          - 'null'
-          description: The address of the employer, as stated on the payslip.
-          example: 19, Sample Street, London
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The postcode of the employer, as stated on the payslip.
-          example: SW1 1PN
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.AverageTaxItem'
+          description: Contains a list of the tax items averaged across the SA302s provided. Only available for tax documents.
       additionalProperties: false
     SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeDataSource:
       type: object
@@ -1877,6 +1653,230 @@ components:
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource'
           description: A list of the individual data sources used, such as 'payslip documents'.
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.DataSource:
+      type: object
+      properties:
+        source_name:
+          type:
+          - string
+          - 'null'
+          description: Optional. The name of the data source (e.g. a file name like 'payslip') or null if no specific name is provided (e.g. for banking connections).
+          readOnly: true
+          example: Stmt - current - Feb 2023 - J Smith and J Hayley
+        source_id:
+          type: string
+          description: The ID of the primary data source, such as a document ID for files (e.g. payslips) or an account ID for an open banking connection.
+          readOnly: true
+          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
+        source_category_type:
+          type: string
+          description: The category of the data source, such as `Document` or `OpenBanking`.
+          readOnly: true
+          example: Document
+        source_type:
+          type:
+          - string
+          - 'null'
+          description: The specific type of data identified, such as `Payslip`, `BankStatement`, `BankAccount`, `SA302`, `TaxOverview`.
+          readOnly: true
+          example: Payslip
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.PayItem:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: Sikoia’s categorisation of the pay type(`MonthlyBonusPay` `MonthlyBasicPay` `MonthlyArrears` `MonthlyPensionPay` `MonthlySalarySacrifice` `MonthlyCommissionPay` `MonthlyParentalPay` `MonthlySickPay` `MonthlyOvertimePay` `MonthlyShiftAllowancePay` `MonthlyHolidayPay` `MonthlyCarAllowancePay` `MonthlyOtherBenefitsInKind` `MonthlyHealthcareBenefitPay` `MonthlyOtherGrossPay`)
+          example: MonthlyBasicPay
+        amount:
+          type:
+          - number
+          - 'null'
+          description: The amount of pay for the specified category.
+          format: double
+          example: '222.44'
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationNonEmploymentIncome:
+      title: ''
+      type: object
+      properties:
+        share_schemes:
+          type:
+          - number
+          - 'null'
+          description: Any income gained from share schemes in UK companies
+          format: double
+        profit_from_self_employment:
+          type:
+          - number
+          - 'null'
+          description: Any profit earned from an individual's self employment role
+          format: double
+        profit_from_partnerships:
+          type:
+          - number
+          - 'null'
+          description: Any profit earned from a UK partnership
+          format: double
+        interest_from_partnerships:
+          type:
+          - number
+          - 'null'
+          description: Any interest from a UK partnership
+          format: double
+        dividends_from_partnerships:
+          type:
+          - number
+          - 'null'
+          description: Any dividends paid out to a shareholder in a UK parternship
+          format: double
+        profit_from_uk_land_and_property:
+          type:
+          - number
+          - 'null'
+          description: Any profit earned from land and property assets in the UK
+          format: double
+          example: '14590.00'
+        foreign_income:
+          type:
+          - number
+          - 'null'
+          description: Any income earned from sources outside of the UK
+          format: double
+        foreign_dividends:
+          type:
+          - number
+          - 'null'
+          description: Any dividends paid out from non-UK companies
+          format: double
+        foreign_savings:
+          type:
+          - number
+          - 'null'
+          description: Any earnings from savings accounts outside of the UK
+          format: double
+        trusts_and_estates:
+          type:
+          - number
+          - 'null'
+          description: Any earnings from trusts and estates registered in the UK
+          format: double
+        interest_from_uk_banks:
+          type:
+          - number
+          - 'null'
+          description: Any interest earned in bank accounts registered in the UK
+          format: double
+        dividends_from_uk_companies:
+          type:
+          - number
+          - 'null'
+          description: Any dividend payments from UK registered companies
+          format: double
+          example: '12500.00'
+        uk_pensions_and_state_benefits:
+          type:
+          - number
+          - 'null'
+          description: The combined income from pensions and taxable state benefits
+          format: double
+        gains_on_life_insurance_policies:
+          type:
+          - number
+          - 'null'
+          description: Any income earned from a life insurance policy paying out
+          format: double
+        other_income:
+          type:
+          - number
+          - 'null'
+          description: All other income not already broken down in one of the named fields
+          format: double
+        subtotal:
+          type:
+          - number
+          - 'null'
+          description: The total of all non employment income figures shown here
+          format: double
+          example: '27090.00'
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.Overview.IncomeSourceAddress:
+      type: object
+      properties:
+        summary_line:
+          type:
+          - string
+          - 'null'
+          description: The address of the employer, as stated on the payslip.
+          example: Flat 23, Sample Street, London
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The postcode of the employer, as stated on the payslip.
+          example: SW4 4PL
+      additionalProperties: false
+    SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationIncome:
+      type: object
+      properties:
+        income_from_employments:
+          type:
+          - number
+          - 'null'
+          description: The total of all income items gained from employment
+          format: double
+          example: '21843.00'
+        income_from_benefits:
+          type:
+          - number
+          - 'null'
+          description: The total of all income from taxable state issued benefits excluding pensions
+          format: double
+        allowable_expenses:
+          type:
+          - number
+          - 'null'
+          description: Any claims to reduce taxable earnings such as interest on business loans
+          format: double
+        non_employment_income:
+          $ref: '#/components/schemas/SikoiaSharedModels.EndUser.IncomeEmployer.Response.AdditionalDetails.TaxInformationNonEmploymentIncome'
+        total:
+          type:
+          - number
+          - 'null'
+          description: The (gross) total income earned by an individual from all sources
+          format: double
+          example: '48933.00'
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

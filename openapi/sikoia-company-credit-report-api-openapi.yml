@@ -732,6 +732,63 @@ paths:
                 correlation_id: 4eaab818-a226-4300-bccb-ce2a380d7179
 components:
   schemas:
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOfficer:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+        surname:
+          type:
+          - string
+          - 'null'
+        full_name:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+        officer_role:
+          type:
+          - string
+          - 'null'
+        date_appointed:
+          type:
+          - string
+          - 'null'
+        date_resigned:
+          type:
+          - string
+          - 'null'
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+        birth_year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        birth_month:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        birth_day:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        nationality:
+          type:
+          - string
+          - 'null'
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
+      additionalProperties: false
     SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonShareholder:
       title: Person Shareholder
       type: object
@@ -836,33 +893,7 @@ components:
         address:
           $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
       additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequestByCompanyId:
-      title: By Company ID
-      required:
-      - CompanyId
-      type: object
-      properties:
-        company_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the Company
-          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
-      additionalProperties: false
-      description: Company details are retrieved from the company entity.
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.FinancialStatements:
-      title: Financial Statements
-      type: object
-      properties:
-        global_reports:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.GlobalFinancialStatement'
-          description: List of Financial Statements
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.CreditReportResponse:
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditReportMappedResponse:
       title: Credit Report Response
       type: object
       properties:
@@ -871,13 +902,11 @@ components:
           - string
           - 'null'
           description: Sikoia ID for the request
-          example: cfed4c7f-37e8-4657-b185-7cf572d0b019
         status:
           type:
           - string
           - 'null'
           description: The status of the request(`Complete` `Failed` `TooManyResults`)
-          example: Complete
         company_id:
           type:
           - string
@@ -885,14 +914,12 @@ components:
           description: Sikoia ID for the Company
           format: uuid
           readOnly: true
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
         datetime_requested:
           type:
           - string
           - 'null'
           description: The time the request was made
           readOnly: true
-          example: '2024-02-12T14:50:10.383Z'
         message:
           type:
           - string
@@ -903,82 +930,117 @@ components:
           - string
           - 'null'
           description: The company registration number
-          example: '12345678'
         company_name:
           type:
           - string
           - 'null'
           description: The legal name of the company
-          example: Acme Inc
         country_code:
           type:
           - string
           - 'null'
           description: Two letter ISO country code, e.g. GB
-          example: GB
         provider_id:
           type:
           - string
           - 'null'
-          description: The data provider’s ID for the company
+          description: Internal ID of the Credit Report Provider
+        data:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditReportData'
         picklist:
           type:
           - array
           - 'null'
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditSearchMappedResponse'
-          description: If the response status is “TooManyResults”, this object will list the potential matches for the company
-          example: '[]'
+          description: Credit search response
       additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.GlobalFinancialStatement:
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Shareholders:
+      title: Shareholders
       type: object
       properties:
-        type:
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonShareholder'
+          description: List of Person Shareholders
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyShareholder'
+          description: List of Company Shareholders
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditRating:
+      title: Credit Rating
+      type: object
+      properties:
+        international_credit_rating:
           type:
           - string
           - 'null'
-        start_date:
+          description: International Credit Rating
+        international_credit_rating_description:
           type:
           - string
           - 'null'
-        end_date:
+          description: International Credit Rating Description
+        local_credit_rating:
           type:
           - string
           - 'null'
-        number_of_weeks:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        currency:
+          description: Local Credit Rating
+        local_credit_rating_description:
           type:
           - string
           - 'null'
-        original_currency:
+          description: Local Credit Rating Description
+        rating_date:
           type:
           - string
           - 'null'
-        currency_conversion_rate:
+          description: The Credit Rating Date
+          readOnly: true
+        probability_of_default:
           type:
           - number
           - 'null'
+          description: Default Probability
           format: double
-        consolidated_accounts:
+        national_percentile:
           type:
-          - boolean
+          - number
           - 'null'
-        amended_accounts:
+          description: National Percentile
+          format: double
+        credit_limit:
           type:
-          - boolean
+          - number
           - 'null'
-        profit_and_loss:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.ProfitAndLoss'
-        balance_sheet:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.BalanceSheet'
-        other_financials:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OtherFinancials'
-        ratios:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Ratios'
+          description: Credit Limit
+          format: double
+        credit_limit_currency:
+          type:
+          - string
+          - 'null'
+          description: Credit Limit Currency
+        credit_rating_history:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditRatingHistoryItem'
+          description: List of Credit Rating History
+        credit_limit_history:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditLimitHistoryItem'
+          description: List of Credit Limit History
       additionalProperties: false
     SikoiaSharedModels.CreditCheck.External.Response.Mapped.Ratios:
       type: object
@@ -1054,353 +1116,6 @@ components:
           - 'null'
           format: double
       additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditRating:
-      title: Credit Rating
-      type: object
-      properties:
-        international_credit_rating:
-          type:
-          - string
-          - 'null'
-          description: International Credit Rating
-        international_credit_rating_description:
-          type:
-          - string
-          - 'null'
-          description: International Credit Rating Description
-        local_credit_rating:
-          type:
-          - string
-          - 'null'
-          description: Local Credit Rating
-        local_credit_rating_description:
-          type:
-          - string
-          - 'null'
-          description: Local Credit Rating Description
-        rating_date:
-          type:
-          - string
-          - 'null'
-          description: The Credit Rating Date
-          readOnly: true
-        probability_of_default:
-          type:
-          - number
-          - 'null'
-          description: Default Probability
-          format: double
-        national_percentile:
-          type:
-          - number
-          - 'null'
-          description: National Percentile
-          format: double
-        credit_limit:
-          type:
-          - number
-          - 'null'
-          description: Credit Limit
-          format: double
-        credit_limit_currency:
-          type:
-          - string
-          - 'null'
-          description: Credit Limit Currency
-        credit_rating_history:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditRatingHistoryItem'
-          description: List of Credit Rating History
-        credit_limit_history:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditLimitHistoryItem'
-          description: List of Credit Limit History
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequestByProviderId:
-      title: By Provider ID
-      required:
-      - CompanyId
-      - ProviderId
-      type: object
-      properties:
-        company_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the Company
-          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
-        provider_id:
-          type:
-          - string
-          - 'null'
-          description: Internal ID of the Credit Report Provider
-      additionalProperties: false
-      description: Company details are not provided. The internal ID of the credit report provider is used instead. The report is still associated to the company entity specified.
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditSearchMappedResponse:
-      title: Credit Search Response
-      type: object
-      properties:
-        index:
-          type:
-          - integer
-          - 'null'
-          description: The index of the company
-          format: int32
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: The company registration number
-          example: '12345678'
-        company_name:
-          type:
-          - string
-          - 'null'
-          description: The legal name of the company
-          example: Acme Inc
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: Two letter ISO country code, e.g. GB
-          example: GB
-        provider_id:
-          type:
-          - string
-          - 'null'
-          description: Internal ID of the Credit Report Provider
-          example: ABC123
-        status:
-          type:
-          - string
-          - 'null'
-          description: The operational status of the company
-          example: Active
-        branch:
-          type:
-          - boolean
-          - 'null'
-          description: The branch status of the company
-          example: 'true'
-        official_address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
-        vat_number:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: List of VAT numbers for the company
-      additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CapitalStructure:
-      title: Capital Structure
-      type: object
-      properties:
-        currency:
-          type:
-          - string
-          - 'null'
-          description: Currency
-        nominal_capital:
-          type:
-          - number
-          - 'null'
-          description: Nominal Capital
-          format: double
-        issued_capital:
-          type:
-          - number
-          - 'null'
-          description: Issued Capital
-          format: double
-        number_of_shares:
-          type:
-          - integer
-          - 'null'
-          description: Number of Shares
-          format: int64
-        shareholders:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Shareholders'
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequest:
-      title: Credit Report Request
-      required:
-      - company_id
-      type: object
-      properties:
-        company_id:
-          minLength: 1
-          type: string
-          description: Sikoia ID for the Company
-          example: 78662640-73fc-4fa9-8367-ef4660d35cee
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: The company registration number
-          example: '12345678'
-        company_name:
-          type:
-          - string
-          - 'null'
-          description: The legal name of the company
-          example: Acme Inc
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: Two letter ISO country code, e.g. GB
-          example: GB
-        provider_id:
-          type:
-          - string
-          - 'null'
-          description: Internal ID of the Credit Report Provider
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Shareholders:
-      title: Shareholders
-      type: object
-      properties:
-        people:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonShareholder'
-          description: List of Person Shareholders
-        companies:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyShareholder'
-          description: List of Company Shareholders
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOfficer:
-      type: object
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-        surname:
-          type:
-          - string
-          - 'null'
-        full_name:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - string
-          - 'null'
-        officer_role:
-          type:
-          - string
-          - 'null'
-        date_appointed:
-          type:
-          - string
-          - 'null'
-        date_resigned:
-          type:
-          - string
-          - 'null'
-        date_of_birth:
-          type:
-          - string
-          - 'null'
-        birth_year:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        birth_month:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        birth_day:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        nationality:
-          type:
-          - string
-          - 'null'
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequestByDetails:
-      title: By Company Details
-      required:
-      - CompanyId
-      - CompanyName
-      - CompanyNumber
-      - CountryCode
-      type: object
-      properties:
-        company_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the Company
-          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: Company Registration Number
-          example: '77642080'
-        company_name:
-          type:
-          - string
-          - 'null'
-          description: Company Name
-          example: Acme Limited
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: 2 Letter ISO Country Code
-          example: GB
-      additionalProperties: false
-      description: Company details are provided directly in the call. They override what is defined in the company entity, but the report is still associated to it.
     SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyInformation:
       type: object
       properties:
@@ -1471,6 +1186,705 @@ components:
           - number
           - 'null'
           format: double
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Request.ResolvePicklistRequest:
+      title: Resolve Picklist Request
+      required:
+      - picklist_index
+      - request_id
+      type: object
+      properties:
+        request_id:
+          minLength: 1
+          type: string
+          description: Sikoia ID for the request
+          example: 9133edc8-6ac5-45ee-827a-fa717c90d47b
+        picklist_index:
+          type: integer
+          description: Picklist Index
+          format: int32
+          example: '1'
+          exclusiveMinimum: 0
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyShareholder:
+      title: Company Shareholder
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Shareholder
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+        holding_percentage:
+          type:
+          - number
+          - 'null'
+          description: Holding Percentage
+          format: double
+        holding_percentage_band:
+          type:
+          - string
+          - 'null'
+          description: Holding Percentage Band
+        voting_percentage:
+          type:
+          - number
+          - 'null'
+          description: Voting Percentage
+          format: double
+        voting_percentage_band:
+          type:
+          - string
+          - 'null'
+          description: Voting Percentage Band
+        number_of_shares:
+          type:
+          - integer
+          - 'null'
+          description: Number of Shares
+          format: int64
+        share_value:
+          type:
+          - number
+          - 'null'
+          description: Share Value
+          format: double
+        officer_role:
+          type:
+          - string
+          - 'null'
+          description: Officer Role
+        date_appointed:
+          type:
+          - string
+          - 'null'
+          description: Date Appointed
+        date_resigned:
+          type:
+          - string
+          - 'null'
+          description: Date Resigned
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOfficer:
+      title: Company Officer
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Company Officer
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+        officer_role:
+          type:
+          - string
+          - 'null'
+          description: The Role of the Officer
+        date_appointed:
+          type:
+          - string
+          - 'null'
+          description: The Date when Officer was Appointed
+        date_resigned:
+          type:
+          - string
+          - 'null'
+          description: The Date when Officer Resigned
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.GlobalFinancialStatement:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type:
+          - string
+          - 'null'
+        end_date:
+          type:
+          - string
+          - 'null'
+        number_of_weeks:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        currency:
+          type:
+          - string
+          - 'null'
+        original_currency:
+          type:
+          - string
+          - 'null'
+        currency_conversion_rate:
+          type:
+          - number
+          - 'null'
+          format: double
+        consolidated_accounts:
+          type:
+          - boolean
+          - 'null'
+        amended_accounts:
+          type:
+          - boolean
+          - 'null'
+        profit_and_loss:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.ProfitAndLoss'
+        balance_sheet:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.BalanceSheet'
+        other_financials:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OtherFinancials'
+        ratios:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Ratios'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequestByDetails:
+      title: By Company Details
+      required:
+      - CompanyId
+      - CompanyName
+      - CompanyNumber
+      - CountryCode
+      type: object
+      properties:
+        company_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the Company
+          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: Company Registration Number
+          example: '77642080'
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: Company Name
+          example: Acme Limited
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: 2 Letter ISO Country Code
+          example: GB
+      additionalProperties: false
+      description: Company details are provided directly in the call. They override what is defined in the company entity, but the report is still associated to it.
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Owners:
+      title: Owners
+      type: object
+      properties:
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOwner'
+          description: The List of People
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOwner'
+          description: The List of Companies
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.CreditReportOrchestrationResponse:
+      title: Credit Report Orchestration Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: cfed4c7f-37e8-4657-b185-7cf572d0b019
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Complete` `Failed` `TooManyResults`)
+          example: Complete
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          readOnly: true
+          example: '2024-02-12T14:50:10.383Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '12345678'
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+          example: Acme Inc
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
+        provider_id:
+          type:
+          - string
+          - 'null'
+          description: The data provider’s ID for the company
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditReportData:
+      title: Credit Report Data
+      type: object
+      properties:
+        company_information:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyInformation'
+        industry_codes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.IndustryCode'
+          description: List of Industry Codes
+        credit_rating:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditRating'
+        officers:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Officers'
+        owners:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Owners'
+        commentaries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CommentaryWithSentiment'
+          description: List of Comments With Sentiment
+        capital_structure:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CapitalStructure'
+        judgments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Judgment'
+          description: List of Judgments
+        bad_debts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.BadDebt'
+          description: List of Bad Debts
+        financial_statements:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.FinancialStatements'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress:
+      title: Official Address
+      type: object
+      properties:
+        address_line_1:
+          type:
+          - string
+          - 'null'
+          description: The First Line of Address
+        address_line_2:
+          type:
+          - string
+          - 'null'
+          description: The Second Line of Address
+        address_line_3:
+          type:
+          - string
+          - 'null'
+          description: The Third Line of Address
+        address_line_4:
+          type:
+          - string
+          - 'null'
+          description: The Fourth Line of Address
+        city:
+          type:
+          - string
+          - 'null'
+          description: The Name of the City
+        region:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Region
+        country:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Country
+        post_code:
+          type:
+          - string
+          - 'null'
+          description: The PostCode of the Address
+        full_address:
+          type:
+          - string
+          - 'null'
+          description: The Full Address
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.FinancialStatements:
+      title: Financial Statements
+      type: object
+      properties:
+        global_reports:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.GlobalFinancialStatement'
+          description: List of Financial Statements
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOwner:
+      title: Person Owner
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The First Name of the Owner
+        surname:
+          type:
+          - string
+          - 'null'
+          description: The Surname of the Owner
+        full_name:
+          type:
+          - string
+          - 'null'
+          description: The Full Name of the Owner
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+        holding_percentage:
+          type:
+          - number
+          - 'null'
+          description: Holding Percentage
+          format: double
+        holding_percentage_band:
+          type:
+          - string
+          - 'null'
+          description: Holding Percentage Band
+        voting_percentage:
+          type:
+          - number
+          - 'null'
+          description: Voting Percentage
+          format: double
+        voting_percentage_band:
+          type:
+          - string
+          - 'null'
+          description: Voting Percentage Band
+        date_appointed:
+          type:
+          - string
+          - 'null'
+          description: Date Appointed
+        date_resigned:
+          type:
+          - string
+          - 'null'
+          description: Date Resigned
+        date_of_birth:
+          type:
+          - string
+          - 'null'
+          description: The Date of Birth of the Owner
+        birth_year:
+          type:
+          - integer
+          - 'null'
+          description: The Year of Birth of the Owner
+          format: int32
+        birth_month:
+          type:
+          - integer
+          - 'null'
+          description: The Month of Birth of the Owner
+          format: int32
+        birth_day:
+          type:
+          - integer
+          - 'null'
+          description: The Day of Birth of the Owner
+          format: int32
+        nationality:
+          type:
+          - string
+          - 'null'
+          description: The Nationality of the Owner
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequestByCompanyId:
+      title: By Company ID
+      required:
+      - CompanyId
+      type: object
+      properties:
+        company_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the Company
+          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
+      additionalProperties: false
+      description: Company details are retrieved from the company entity.
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOwner:
+      title: Company Owner
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The Name of the Company Owner
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+        holding_percentage:
+          type:
+          - number
+          - 'null'
+          description: Holding Percentage
+          format: double
+        holding_percentage_band:
+          type:
+          - string
+          - 'null'
+          description: Holding Percentage Band
+        voting_percentage:
+          type:
+          - number
+          - 'null'
+          description: Voting Percentage
+          format: double
+        voting_percentage_band:
+          type:
+          - string
+          - 'null'
+          description: Voting Percentage Band
+        date_appointed:
+          type:
+          - string
+          - 'null'
+          description: Date Appointed
+        date_resigned:
+          type:
+          - string
+          - 'null'
+          description: Date Resigned
+        address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.CreditReportResponse:
+      title: Credit Report Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: cfed4c7f-37e8-4657-b185-7cf572d0b019
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Complete` `Failed` `TooManyResults`)
+          example: Complete
+        company_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the Company
+          format: uuid
+          readOnly: true
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          readOnly: true
+          example: '2024-02-12T14:50:10.383Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '12345678'
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+          example: Acme Inc
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
+        provider_id:
+          type:
+          - string
+          - 'null'
+          description: The data provider’s ID for the company
+        picklist:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditSearchMappedResponse'
+          description: If the response status is “TooManyResults”, this object will list the potential matches for the company
+          example: '[]'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.BadDebt:
+      title: Bad Debt
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          description: Date of Bad Debt
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: Company Number
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: Company Name
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Currency
+        amount:
+          type:
+          - number
+          - 'null'
+          description: Amount
+          format: double
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CapitalStructure:
+      title: Capital Structure
+      type: object
+      properties:
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Currency
+        nominal_capital:
+          type:
+          - number
+          - 'null'
+          description: Nominal Capital
+          format: double
+        issued_capital:
+          type:
+          - number
+          - 'null'
+          description: Issued Capital
+          format: double
+        number_of_shares:
+          type:
+          - integer
+          - 'null'
+          description: Number of Shares
+          format: int64
+        shareholders:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Shareholders'
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditLimitHistoryItem:
+      title: Credit Limit History
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          description: Date of Credit Limit History
+          readOnly: true
+        value:
+          type:
+          - string
+          - 'null'
+          description: Value of Credit Limit History
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Currency of Credit Limit History
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Officers:
+      title: Officers
+      type: object
+      properties:
+        people:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOfficer'
+          description: List of People Officers
+        companies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOfficer'
+          description: List of Company Officers
       additionalProperties: false
     SikoiaSharedModels.CreditCheck.External.Response.Mapped.BalanceSheet:
       type: object
@@ -1701,492 +2115,6 @@ components:
           - 'null'
           format: double
       additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Request.ResolvePicklistRequest:
-      title: Resolve Picklist Request
-      required:
-      - picklist_index
-      - request_id
-      type: object
-      properties:
-        request_id:
-          minLength: 1
-          type: string
-          description: Sikoia ID for the request
-          example: 9133edc8-6ac5-45ee-827a-fa717c90d47b
-        picklist_index:
-          type: integer
-          description: Picklist Index
-          format: int32
-          example: '1'
-          exclusiveMinimum: 0
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyShareholder:
-      title: Company Shareholder
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The Name of the Shareholder
-        status:
-          type:
-          - string
-          - 'null'
-          description: The Status
-        holding_percentage:
-          type:
-          - number
-          - 'null'
-          description: Holding Percentage
-          format: double
-        holding_percentage_band:
-          type:
-          - string
-          - 'null'
-          description: Holding Percentage Band
-        voting_percentage:
-          type:
-          - number
-          - 'null'
-          description: Voting Percentage
-          format: double
-        voting_percentage_band:
-          type:
-          - string
-          - 'null'
-          description: Voting Percentage Band
-        number_of_shares:
-          type:
-          - integer
-          - 'null'
-          description: Number of Shares
-          format: int64
-        share_value:
-          type:
-          - number
-          - 'null'
-          description: Share Value
-          format: double
-        officer_role:
-          type:
-          - string
-          - 'null'
-          description: Officer Role
-        date_appointed:
-          type:
-          - string
-          - 'null'
-          description: Date Appointed
-        date_resigned:
-          type:
-          - string
-          - 'null'
-          description: Date Resigned
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOwner:
-      title: Person Owner
-      type: object
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: The First Name of the Owner
-        surname:
-          type:
-          - string
-          - 'null'
-          description: The Surname of the Owner
-        full_name:
-          type:
-          - string
-          - 'null'
-          description: The Full Name of the Owner
-        status:
-          type:
-          - string
-          - 'null'
-          description: The Status
-        holding_percentage:
-          type:
-          - number
-          - 'null'
-          description: Holding Percentage
-          format: double
-        holding_percentage_band:
-          type:
-          - string
-          - 'null'
-          description: Holding Percentage Band
-        voting_percentage:
-          type:
-          - number
-          - 'null'
-          description: Voting Percentage
-          format: double
-        voting_percentage_band:
-          type:
-          - string
-          - 'null'
-          description: Voting Percentage Band
-        date_appointed:
-          type:
-          - string
-          - 'null'
-          description: Date Appointed
-        date_resigned:
-          type:
-          - string
-          - 'null'
-          description: Date Resigned
-        date_of_birth:
-          type:
-          - string
-          - 'null'
-          description: The Date of Birth of the Owner
-        birth_year:
-          type:
-          - integer
-          - 'null'
-          description: The Year of Birth of the Owner
-          format: int32
-        birth_month:
-          type:
-          - integer
-          - 'null'
-          description: The Month of Birth of the Owner
-          format: int32
-        birth_day:
-          type:
-          - integer
-          - 'null'
-          description: The Day of Birth of the Owner
-          format: int32
-        nationality:
-          type:
-          - string
-          - 'null'
-          description: The Nationality of the Owner
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Officers:
-      title: Officers
-      type: object
-      properties:
-        people:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOfficer'
-          description: List of People Officers
-        companies:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOfficer'
-          description: List of Company Officers
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.CreditReportOrchestrationResponse:
-      title: Credit Report Orchestration Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-          example: cfed4c7f-37e8-4657-b185-7cf572d0b019
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request(`Complete` `Failed` `TooManyResults`)
-          example: Complete
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          readOnly: true
-          example: '2024-02-12T14:50:10.383Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: The company registration number
-          example: '12345678'
-        company_name:
-          type:
-          - string
-          - 'null'
-          description: The legal name of the company
-          example: Acme Inc
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: Two letter ISO country code, e.g. GB
-          example: GB
-        provider_id:
-          type:
-          - string
-          - 'null'
-          description: The data provider’s ID for the company
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.BadDebt:
-      title: Bad Debt
-      type: object
-      properties:
-        date:
-          type:
-          - string
-          - 'null'
-          description: Date of Bad Debt
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: Company Number
-        company_name:
-          type:
-          - string
-          - 'null'
-          description: Company Name
-        currency:
-          type:
-          - string
-          - 'null'
-          description: Currency
-        amount:
-          type:
-          - number
-          - 'null'
-          description: Amount
-          format: double
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CommentaryWithSentiment:
-      title: Commentary with Sentiment
-      type: object
-      properties:
-        commentary:
-          type:
-          - string
-          - 'null'
-          description: Commentary
-        sentiment:
-          type:
-          - string
-          - 'null'
-          description: Sentiment
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Judgment:
-      title: Judgment
-      type: object
-      properties:
-        date:
-          type:
-          - string
-          - 'null'
-          description: Date of Judgment
-        type:
-          type:
-          - string
-          - 'null'
-          description: Type of Judgment
-        court_name:
-          type:
-          - string
-          - 'null'
-          description: Name of the Court
-        amount:
-          type:
-          - number
-          - 'null'
-          description: Amount
-          format: double
-        reference_number:
-          type:
-          - string
-          - 'null'
-          description: Reference Number
-        currency:
-          type:
-          - string
-          - 'null'
-          description: Currency
-        status:
-          type:
-          - string
-          - 'null'
-          description: The Status
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOwner:
-      title: Company Owner
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The Name of the Company Owner
-        status:
-          type:
-          - string
-          - 'null'
-          description: The Status
-        holding_percentage:
-          type:
-          - number
-          - 'null'
-          description: Holding Percentage
-          format: double
-        holding_percentage_band:
-          type:
-          - string
-          - 'null'
-          description: Holding Percentage Band
-        voting_percentage:
-          type:
-          - number
-          - 'null'
-          description: Voting Percentage
-          format: double
-        voting_percentage_band:
-          type:
-          - string
-          - 'null'
-          description: Voting Percentage Band
-        date_appointed:
-          type:
-          - string
-          - 'null'
-          description: Date Appointed
-        date_resigned:
-          type:
-          - string
-          - 'null'
-          description: Date Resigned
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditReportData:
-      title: Credit Report Data
-      type: object
-      properties:
-        company_information:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyInformation'
-        industry_codes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.IndustryCode'
-          description: List of Industry Codes
-        credit_rating:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditRating'
-        officers:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Officers'
-        owners:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Owners'
-        commentaries:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CommentaryWithSentiment'
-          description: List of Comments With Sentiment
-        capital_structure:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CapitalStructure'
-        judgments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.Judgment'
-          description: List of Judgments
-        bad_debts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.BadDebt'
-          description: List of Bad Debts
-        financial_statements:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.FinancialStatements'
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditReportMappedResponse:
-      title: Credit Report Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request(`Complete` `Failed` `TooManyResults`)
-        company_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the Company
-          format: uuid
-          readOnly: true
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
-        company_number:
-          type:
-          - string
-          - 'null'
-          description: The company registration number
-        company_name:
-          type:
-          - string
-          - 'null'
-          description: The legal name of the company
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: Two letter ISO country code, e.g. GB
-        provider_id:
-          type:
-          - string
-          - 'null'
-          description: Internal ID of the Credit Report Provider
-        data:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditReportData'
-        picklist:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditSearchMappedResponse'
-          description: Credit search response
-      additionalProperties: false
     SikoiaSharedModels.CreditCheck.External.Response.Mapped.ProfitAndLoss:
       type: object
       properties:
@@ -2301,56 +2229,6 @@ components:
           - 'null'
           description: The Industry Classification
       additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress:
-      title: Official Address
-      type: object
-      properties:
-        address_line_1:
-          type:
-          - string
-          - 'null'
-          description: The First Line of Address
-        address_line_2:
-          type:
-          - string
-          - 'null'
-          description: The Second Line of Address
-        address_line_3:
-          type:
-          - string
-          - 'null'
-          description: The Third Line of Address
-        address_line_4:
-          type:
-          - string
-          - 'null'
-          description: The Fourth Line of Address
-        city:
-          type:
-          - string
-          - 'null'
-          description: The Name of the City
-        region:
-          type:
-          - string
-          - 'null'
-          description: The Name of the Region
-        country:
-          type:
-          - string
-          - 'null'
-          description: The Name of the Country
-        post_code:
-          type:
-          - string
-          - 'null'
-          description: The PostCode of the Address
-        full_address:
-          type:
-          - string
-          - 'null'
-          description: The Full Address
-      additionalProperties: false
     SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditRatingHistoryItem:
       title: Credit Rating History Item
       type: object
@@ -2382,78 +2260,88 @@ components:
           - 'null'
           readOnly: true
       additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOfficer:
-      title: Company Officer
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
       type: object
       properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The Name of the Company Officer
-        status:
-          type:
-          - string
-          - 'null'
-          description: The Status
-        officer_role:
-          type:
-          - string
-          - 'null'
-          description: The Role of the Officer
-        date_appointed:
-          type:
-          - string
-          - 'null'
-          description: The Date when Officer was Appointed
-        date_resigned:
-          type:
-          - string
-          - 'null'
-          description: The Date when Officer Resigned
-        address:
-          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
-      additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditLimitHistoryItem:
-      title: Credit Limit History
-      type: object
-      properties:
-        date:
-          type:
-          - string
-          - 'null'
-          description: Date of Credit Limit History
+        type:
+          type: string
+          description: The error type
           readOnly: true
-        value:
-          type:
-          - string
-          - 'null'
-          description: Value of Credit Limit History
-        currency:
-          type:
-          - string
-          - 'null'
-          description: Currency of Credit Limit History
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
       additionalProperties: false
-    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Owners:
-      title: Owners
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequest:
+      title: Credit Report Request
+      required:
+      - company_id
       type: object
       properties:
-        people:
+        company_id:
+          minLength: 1
+          type: string
+          description: Sikoia ID for the Company
+          example: 78662640-73fc-4fa9-8367-ef4660d35cee
+        company_number:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.PersonOwner'
-          description: The List of People
-        companies:
+          description: The company registration number
+          example: '12345678'
+        company_name:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.CompanyOwner'
-          description: The List of Companies
+          description: The legal name of the company
+          example: Acme Inc
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
+        provider_id:
+          type:
+          - string
+          - 'null'
+          description: Internal ID of the Credit Report Provider
       additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Request.CreditReportRequestByProviderId:
+      title: By Provider ID
+      required:
+      - CompanyId
+      - ProviderId
+      type: object
+      properties:
+        company_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the Company
+          example: a035d37a-dee1-4a4e-b098-168a6a1f4603
+        provider_id:
+          type:
+          - string
+          - 'null'
+          description: Internal ID of the Credit Report Provider
+      additionalProperties: false
+      description: Company details are not provided. The internal ID of the credit report provider is used instead. The report is still associated to the company entity specified.
     SikoiaSharedModels.CreditCheck.External.Response.CreditReportListResponse:
       title: Credit Report List Response
       type: object
@@ -2473,6 +2361,118 @@ components:
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.CreditReportOrchestrationResponse'
           description: The list of all credit report requests for the company
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CommentaryWithSentiment:
+      title: Commentary with Sentiment
+      type: object
+      properties:
+        commentary:
+          type:
+          - string
+          - 'null'
+          description: Commentary
+        sentiment:
+          type:
+          - string
+          - 'null'
+          description: Sentiment
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.Judgment:
+      title: Judgment
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          description: Date of Judgment
+        type:
+          type:
+          - string
+          - 'null'
+          description: Type of Judgment
+        court_name:
+          type:
+          - string
+          - 'null'
+          description: Name of the Court
+        amount:
+          type:
+          - number
+          - 'null'
+          description: Amount
+          format: double
+        reference_number:
+          type:
+          - string
+          - 'null'
+          description: Reference Number
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Currency
+        status:
+          type:
+          - string
+          - 'null'
+          description: The Status
+      additionalProperties: false
+    SikoiaSharedModels.CreditCheck.External.Response.Mapped.CreditSearchMappedResponse:
+      title: Credit Search Response
+      type: object
+      properties:
+        index:
+          type:
+          - integer
+          - 'null'
+          description: The index of the company
+          format: int32
+        company_number:
+          type:
+          - string
+          - 'null'
+          description: The company registration number
+          example: '12345678'
+        company_name:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+          example: Acme Inc
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Two letter ISO country code, e.g. GB
+          example: GB
+        provider_id:
+          type:
+          - string
+          - 'null'
+          description: Internal ID of the Credit Report Provider
+          example: ABC123
+        status:
+          type:
+          - string
+          - 'null'
+          description: The operational status of the company
+          example: Active
+        branch:
+          type:
+          - boolean
+          - 'null'
+          description: The branch status of the company
+          example: 'true'
+        official_address:
+          $ref: '#/components/schemas/SikoiaSharedModels.CreditCheck.External.Response.Mapped.OfficialAddress'
+        vat_number:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of VAT numbers for the company
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

@@ -509,583 +509,6 @@ paths:
                 correlation_id: 8c61978d-602b-49db-9c9d-7b4654130fce
 components:
   schemas:
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.SubCategory:
-      title: SubCategory
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: 'The Sub-category Name. For a full list of available sub-categories, please visit this link: https://docs.sikoia.com/docs/groups-categories-indicators.'
-          example: Phone / Broadband
-        value:
-          type:
-          - number
-          - 'null'
-          description: The Value of the Sub-category Cashflow
-          format: double
-          example: '5109.45'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Indicator:
-      title: Indicator
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The Indicator Name(`Benefits` `Children` `Gambling` `High value transactions` `Insurance` `Loans (excluding credit cards)`)
-          example: Benefits
-        present:
-          type:
-          - boolean
-          - 'null'
-          description: Flag for Indicator Presence
-          example: 'true'
-        transactions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DetailedTransaction'
-          description: Any transactions that caused this specific flag to be true
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Category:
-      title: Category
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The Category Name(`Employment and/or Self-employment` `Benefits` `Other income` `Mortgage and rent` `Transportation and travel` `Utilities` `Groceries and shopping` `Credit cards and loans` `Cash withdrawal` `Insurance premiums` `Petcare` `Tax` `Healthcare` `Education` `Other essential expenditure` `Entertainment` `TV and subscriptions` `Savings` `Gambling` `Shopping` `Other non-essential expenses` `Other` `Other inflows` `Transfers`)
-          example: Employment and/or Self-employment
-        value:
-          type:
-          - number
-          - 'null'
-          description: The Value of the Category Cashflow
-          format: double
-          example: '5109.45'
-        subcategories:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.SubCategory'
-          description: Contains detailed breakdown of the category cashflow with granular sub-categories
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.TransactionDetailMappedResponse:
-      title: Transaction Detail Mapped Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request(`Pending` `Complete` `Failed`)
-          example: Complete
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity
-          example: case
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          example: '2023-11-29T12:21:52.933Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The time the request was completed
-          example: '2023-11-29T12:22:07.747Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
-          example: Affordability insights completed.
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DetailedTransaction'
-          description: The Data
-        data_sources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource'
-          description: The Data Sources
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Cashflow:
-      title: Cashflow
-      type: object
-      properties:
-        group:
-          type:
-          - string
-          - 'null'
-          description: The Group of the Categories(`Income` `Essential expenditure` `Non-essential expenditure` `Other`)
-          example: Income
-        value:
-          type:
-          - number
-          - 'null'
-          description: The Total Value of the Group Cashflow
-          format: double
-          example: '5249.19'
-        categories:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Category'
-          description: The List of Categories in the Group
-      additionalProperties: false
-    SikoiaCore.Common.SikoiaErrorResponse:
-      title: Error Response
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-          readOnly: true
-        status:
-          type: integer
-          description: HTTP status code of the error
-          format: HttpCode
-          readOnly: true
-        title:
-          type: string
-          description: A short description of the error
-          readOnly: true
-        detail:
-          type: string
-          description: More details about what went wrong
-          readOnly: true
-        correlation_id:
-          type: string
-          description: Correlation ID, please include this in any support tickets raised
-          readOnly: true
-      additionalProperties: false
-      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Request.AffordabilityInsightsRequest:
-      title: Affordability Insights Request
-      required:
-      - entity_id
-      - entity_type
-      type: object
-      properties:
-        entity_id:
-          minLength: 1
-          type: string
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
-        entity_type:
-          minLength: 1
-          enum:
-          - company
-          - person
-          - case
-          type: string
-          description: The type of entity
-          example: case
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.OrchestrationListResponse:
-      title: Affordability Insights List Response
-      type: object
-      properties:
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity
-          example: case
-        affordability_insights_requests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.OrchestrationResponse'
-          description: The List of Affordability Insights Requests
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.AffordabilityInsightsData:
-      title: Affordability Insights Data
-      type: object
-      properties:
-        cashflow:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Cashflow'
-          description: The Cashflow
-        indicators:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Indicator'
-          description: The Indicators
-        data_sources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource'
-          description: The Data Sources
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DetailedTransaction:
-      title: Detailed Transaction
-      type: object
-      properties:
-        transaction_id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of a single transaction
-          example: e77cc404-5978-4429-a25a-135303cd8fdf
-        account_connection_id:
-          type:
-          - string
-          - 'null'
-          description: The Account Connection ID of the bank
-          example: e77cc404-5978-4429-a25a-135303cd8fdf
-        date:
-          type:
-          - string
-          - 'null'
-          description: The date the transaction was made
-          example: '2025-01-24'
-        group:
-          type:
-          - string
-          - 'null'
-          description: The Group of the Transaction(`Income` `Essential expenditure` `Non-essential expenditure` `Other`)
-          example: Essential expenditure
-        category:
-          type:
-          - string
-          - 'null'
-          description: The Category of the Transaction(`Employment and/or Self-employment` `Benefits` `Other income` `Mortgage and rent` `Transportation and travel` `Utilities` `Groceries and shopping` `Credit cards and loans` `Cash withdrawal` `Insurance premiums` `Petcare` `Tax` `Healthcare` `Education` `Other essential expenditure` `Entertainment` `TV and subscriptions` `Savings` `Gambling` `Shopping` `Other non-essential expenses` `Other` `Other inflows` `Transfers`)
-          example: Utilities
-        subcategory:
-          type:
-          - string
-          - 'null'
-          description: 'The Sub-category of the Transaction. For a full list of available sub-categories, please visit this link: https://docs.sikoia.com/docs/groups-categories-indicators.'
-          example: Phone and broadband
-        short_description:
-          type:
-          - string
-          - 'null'
-          description: The Short Description of the Transaction
-          example: EE Limited
-        long_description:
-          type:
-          - string
-          - 'null'
-          description: The Long Description of the Transaction
-          example: EE LIMITED, LONDON GB
-        amount:
-          type: number
-          description: The Value of the Transaction
-          format: double
-          example: '-6.90'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.AffordabilityInsightsMappedResponse:
-      title: Affordability Insights Mapped Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request(`Pending` `Complete` `Failed`)
-          example: Complete
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity
-          example: case
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          example: '2023-11-29T12:21:52.933Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The time the request was completed
-          example: '2023-11-29T12:22:07.747Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
-          example: Affordability insights pending
-        data:
-          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.AffordabilityInsightsData'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.AffordabilityInsightsResponse:
-      title: Affordability Insights Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request(`Pending` `Failed`)
-          example: Pending
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity
-          example: case
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          example: '2023-11-24T12:38:45.711Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The time the request was completed
-          example: '2023-11-24T12:41:14.222Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
-          example: Affordability insights pending
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource:
-      title: Data Source
-      type: object
-      properties:
-        source_id:
-          type: string
-          description: The ID of the root source of data, this can be a document ID for files like bank statements or an account id for a successful open banking connection
-          readOnly: true
-          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
-        source_name:
-          type:
-          - string
-          - 'null'
-          description: Optional value that is either the name of the file (like a bank statement) or null if the data source has no name (like a banking connection)
-          readOnly: true
-          example: Stmt - current - Feb 2023 - J Smith and J Hayley
-        source_category_type:
-          type:
-          - string
-          - 'null'
-          description: The name of the base source of data e.g. a document or open banking(`Document` `OpenBanking`)
-          example: Document
-        source_type:
-          type:
-          - string
-          - 'null'
-          description: The specific type of data that was identified such as a bank statement or bank account(`BankStatement` `BankAccount`)
-          example: BankStatement
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.OrchestrationResponse:
-      title: Affordability Insights Orchestration Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request(`Pending` `Complete` `Failed`)
-          example: Complete
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          example: '2023-11-29T12:21:52.933Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The time the request was completed
-          example: '2023-11-29T12:22:07.747Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
-          example: Affordability insights complete
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.MonthlyData:
-      title: Monthly Data
-      type: object
-      properties:
-        year:
-          type:
-          - integer
-          - 'null'
-          description: The Year
-          format: int32
-          example: '2023'
-        month:
-          type:
-          - integer
-          - 'null'
-          description: The Month
-          format: int32
-          example: '10'
-        total_value:
-          type:
-          - number
-          - 'null'
-          description: The Total Value of the Transactions for the Period
-          format: double
-          example: '-90.48'
-      additionalProperties: false
-    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.TransactionViewMappedResponse:
-      title: Transaction View Mapped Response
-      type: object
-      properties:
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Sikoia ID for the request
-          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
-        status:
-          type:
-          - string
-          - 'null'
-          description: The status of the request(`Pending` `Complete` `Failed`)
-          example: Complete
-        entity_id:
-          type:
-          - string
-          - 'null'
-          description: The `company_id`, `person_id` or `case_id` of the entity
-          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
-        entity_type:
-          enum:
-          - company
-          - person
-          - case
-          type:
-          - string
-          - 'null'
-          description: The type of entity
-          example: case
-        datetime_requested:
-          type:
-          - string
-          - 'null'
-          description: The time the request was made
-          example: '2023-11-29T12:21:52.933Z'
-        datetime_completed:
-          type:
-          - string
-          - 'null'
-          description: The time the request was completed
-          example: '2023-11-29T12:22:07.747Z'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Additional detail about the request
-          example: Affordability insights completed.
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Transaction'
-          description: The Data
-        data_sources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource'
-          description: The Data Sources
-      additionalProperties: false
     SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Transaction:
       title: Transaction
       type: object
@@ -1156,6 +579,583 @@ components:
           items:
             $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.MonthlyData'
           description: The Monthly Breakdown of Transactions
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.AffordabilityInsightsMappedResponse:
+      title: Affordability Insights Mapped Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Pending` `Complete` `Failed`)
+          example: Complete
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          example: '2023-11-29T12:21:52.933Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The time the request was completed
+          example: '2023-11-29T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+          example: Affordability insights pending
+        data:
+          $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.AffordabilityInsightsData'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.MonthlyData:
+      title: Monthly Data
+      type: object
+      properties:
+        year:
+          type:
+          - integer
+          - 'null'
+          description: The Year
+          format: int32
+          example: '2023'
+        month:
+          type:
+          - integer
+          - 'null'
+          description: The Month
+          format: int32
+          example: '10'
+        total_value:
+          type:
+          - number
+          - 'null'
+          description: The Total Value of the Transactions for the Period
+          format: double
+          example: '-90.48'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.TransactionDetailMappedResponse:
+      title: Transaction Detail Mapped Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Pending` `Complete` `Failed`)
+          example: Complete
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          example: '2023-11-29T12:21:52.933Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The time the request was completed
+          example: '2023-11-29T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+          example: Affordability insights completed.
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DetailedTransaction'
+          description: The Data
+        data_sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource'
+          description: The Data Sources
+      additionalProperties: false
+    SikoiaCore.Common.SikoiaErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+          readOnly: true
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: HttpCode
+          readOnly: true
+        title:
+          type: string
+          description: A short description of the error
+          readOnly: true
+        detail:
+          type: string
+          description: More details about what went wrong
+          readOnly: true
+        correlation_id:
+          type: string
+          description: Correlation ID, please include this in any support tickets raised
+          readOnly: true
+      additionalProperties: false
+      description: 'See the [Response Guide](https://docs.sikoia.com/docs/api-behaviour#responses) for more detail '
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.AffordabilityInsightsData:
+      title: Affordability Insights Data
+      type: object
+      properties:
+        cashflow:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Cashflow'
+          description: The Cashflow
+        indicators:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Indicator'
+          description: The Indicators
+        data_sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource'
+          description: The Data Sources
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.TransactionViewMappedResponse:
+      title: Transaction View Mapped Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Pending` `Complete` `Failed`)
+          example: Complete
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          example: '2023-11-29T12:21:52.933Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The time the request was completed
+          example: '2023-11-29T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+          example: Affordability insights completed.
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Transaction'
+          description: The Data
+        data_sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource'
+          description: The Data Sources
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Request.AffordabilityInsightsRequest:
+      title: Affordability Insights Request
+      required:
+      - entity_id
+      - entity_type
+      type: object
+      properties:
+        entity_id:
+          minLength: 1
+          type: string
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 3f615611-3dc3-418b-bed5-a53c4390c97c
+        entity_type:
+          minLength: 1
+          enum:
+          - company
+          - person
+          - case
+          type: string
+          description: The type of entity
+          example: case
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Cashflow:
+      title: Cashflow
+      type: object
+      properties:
+        group:
+          type:
+          - string
+          - 'null'
+          description: The Group of the Categories(`Income` `Essential expenditure` `Non-essential expenditure` `Other`)
+          example: Income
+        value:
+          type:
+          - number
+          - 'null'
+          description: The Total Value of the Group Cashflow
+          format: double
+          example: '5249.19'
+        categories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Category'
+          description: The List of Categories in the Group
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DataSource:
+      title: Data Source
+      type: object
+      properties:
+        source_id:
+          type: string
+          description: The ID of the root source of data, this can be a document ID for files like bank statements or an account id for a successful open banking connection
+          readOnly: true
+          example: 4b9ac393-d34b-4a14-9ee3-88ce2d244e90
+        source_name:
+          type:
+          - string
+          - 'null'
+          description: Optional value that is either the name of the file (like a bank statement) or null if the data source has no name (like a banking connection)
+          readOnly: true
+          example: Stmt - current - Feb 2023 - J Smith and J Hayley
+        source_category_type:
+          type:
+          - string
+          - 'null'
+          description: The name of the base source of data e.g. a document or open banking(`Document` `OpenBanking`)
+          example: Document
+        source_type:
+          type:
+          - string
+          - 'null'
+          description: The specific type of data that was identified such as a bank statement or bank account(`BankStatement` `BankAccount`)
+          example: BankStatement
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DetailedTransaction:
+      title: Detailed Transaction
+      type: object
+      properties:
+        transaction_id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of a single transaction
+          example: e77cc404-5978-4429-a25a-135303cd8fdf
+        account_connection_id:
+          type:
+          - string
+          - 'null'
+          description: The Account Connection ID of the bank
+          example: e77cc404-5978-4429-a25a-135303cd8fdf
+        date:
+          type:
+          - string
+          - 'null'
+          description: The date the transaction was made
+          example: '2025-01-24'
+        group:
+          type:
+          - string
+          - 'null'
+          description: The Group of the Transaction(`Income` `Essential expenditure` `Non-essential expenditure` `Other`)
+          example: Essential expenditure
+        category:
+          type:
+          - string
+          - 'null'
+          description: The Category of the Transaction(`Employment and/or Self-employment` `Benefits` `Other income` `Mortgage and rent` `Transportation and travel` `Utilities` `Groceries and shopping` `Credit cards and loans` `Cash withdrawal` `Insurance premiums` `Petcare` `Tax` `Healthcare` `Education` `Other essential expenditure` `Entertainment` `TV and subscriptions` `Savings` `Gambling` `Shopping` `Other non-essential expenses` `Other` `Other inflows` `Transfers`)
+          example: Utilities
+        subcategory:
+          type:
+          - string
+          - 'null'
+          description: 'The Sub-category of the Transaction. For a full list of available sub-categories, please visit this link: https://docs.sikoia.com/docs/groups-categories-indicators.'
+          example: Phone and broadband
+        short_description:
+          type:
+          - string
+          - 'null'
+          description: The Short Description of the Transaction
+          example: EE Limited
+        long_description:
+          type:
+          - string
+          - 'null'
+          description: The Long Description of the Transaction
+          example: EE LIMITED, LONDON GB
+        amount:
+          type: number
+          description: The Value of the Transaction
+          format: double
+          example: '-6.90'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Indicator:
+      title: Indicator
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The Indicator Name(`Benefits` `Children` `Gambling` `High value transactions` `Insurance` `Loans (excluding credit cards)`)
+          example: Benefits
+        present:
+          type:
+          - boolean
+          - 'null'
+          description: Flag for Indicator Presence
+          example: 'true'
+        transactions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.DetailedTransaction'
+          description: Any transactions that caused this specific flag to be true
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.OrchestrationResponse:
+      title: Affordability Insights Orchestration Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Pending` `Complete` `Failed`)
+          example: Complete
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          example: '2023-11-29T12:21:52.933Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The time the request was completed
+          example: '2023-11-29T12:22:07.747Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+          example: Affordability insights complete
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.Category:
+      title: Category
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The Category Name(`Employment and/or Self-employment` `Benefits` `Other income` `Mortgage and rent` `Transportation and travel` `Utilities` `Groceries and shopping` `Credit cards and loans` `Cash withdrawal` `Insurance premiums` `Petcare` `Tax` `Healthcare` `Education` `Other essential expenditure` `Entertainment` `TV and subscriptions` `Savings` `Gambling` `Shopping` `Other non-essential expenses` `Other` `Other inflows` `Transfers`)
+          example: Employment and/or Self-employment
+        value:
+          type:
+          - number
+          - 'null'
+          description: The Value of the Category Cashflow
+          format: double
+          example: '5109.45'
+        subcategories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.SubCategory'
+          description: Contains detailed breakdown of the category cashflow with granular sub-categories
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.Mapped.SubCategory:
+      title: SubCategory
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: 'The Sub-category Name. For a full list of available sub-categories, please visit this link: https://docs.sikoia.com/docs/groups-categories-indicators.'
+          example: Phone / Broadband
+        value:
+          type:
+          - number
+          - 'null'
+          description: The Value of the Sub-category Cashflow
+          format: double
+          example: '5109.45'
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.OrchestrationListResponse:
+      title: Affordability Insights List Response
+      type: object
+      properties:
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: case
+        affordability_insights_requests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.OrchestrationResponse'
+          description: The List of Affordability Insights Requests
+      additionalProperties: false
+    SikoiaSharedModels.OpenBanking.AffordabilityInsights.Response.AffordabilityInsightsResponse:
+      title: Affordability Insights Response
+      type: object
+      properties:
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Sikoia ID for the request
+          example: a5f84a41-01cf-4d21-901d-124c5a7c743a
+        status:
+          type:
+          - string
+          - 'null'
+          description: The status of the request(`Pending` `Failed`)
+          example: Pending
+        entity_id:
+          type:
+          - string
+          - 'null'
+          description: The `company_id`, `person_id` or `case_id` of the entity
+          example: 7885857d-fa2b-43ab-8b15-67e5fea8e896
+        entity_type:
+          enum:
+          - company
+          - person
+          - case
+          type:
+          - string
+          - 'null'
+          description: The type of entity
+          example: case
+        datetime_requested:
+          type:
+          - string
+          - 'null'
+          description: The time the request was made
+          example: '2023-11-24T12:38:45.711Z'
+        datetime_completed:
+          type:
+          - string
+          - 'null'
+          description: The time the request was completed
+          example: '2023-11-24T12:41:14.222Z'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Additional detail about the request
+          example: Affordability insights pending
       additionalProperties: false
   securitySchemes:
     authorizationHeader:

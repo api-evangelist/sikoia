@@ -75,33 +75,6 @@ paths:
                 $ref: '#/components/schemas/TokenErrorResponse'
 components:
   schemas:
-    ObtainTokenRequest:
-      title: ObtainToken
-      required:
-      - grant_type
-      - scope
-      - client_id
-      - client_secret
-      type: object
-      properties:
-        grant_type:
-          type: string
-          description: The type of Oauth 2.0 grant. Must be set to `client_credentials`
-          example: client_credentials
-        scope:
-          type: string
-          description: The scope of the token. Must be set to `https://api.sikoia.com/.default` for production and `https://api-staging.sikoia.com/.default` for staging
-          example: https://api.sikoia.com/.default
-        client_id:
-          type: string
-          description: The client ID of your application
-          format: uuid
-          example: e5ca26ec-f3a0-4d7f-bcf1-b6ebd5446aee
-        client_secret:
-          type: string
-          description: The client secret that you created for your application
-          example: Yoa8Q@of26stihrz3~JfP4Wz6TGby0fJFT2^UcU0
-      additionalProperties: false
     TokenResponse:
       title: Token Response
       type: object
@@ -130,6 +103,33 @@ components:
           type: string
           description: fdd608dc-2f2f-48b1-aefe-3fed991f587e
           example: Audience of the token
+      additionalProperties: false
+    ObtainTokenRequest:
+      title: ObtainToken
+      required:
+      - grant_type
+      - scope
+      - client_id
+      - client_secret
+      type: object
+      properties:
+        grant_type:
+          type: string
+          description: The type of Oauth 2.0 grant. Must be set to `client_credentials`
+          example: client_credentials
+        scope:
+          type: string
+          description: The scope of the token. Must be set to `https://api.sikoia.com/.default` for production and `https://api-staging.sikoia.com/.default` for staging
+          example: https://api.sikoia.com/.default
+        client_id:
+          type: string
+          description: The client ID of your application
+          format: uuid
+          example: e5ca26ec-f3a0-4d7f-bcf1-b6ebd5446aee
+        client_secret:
+          type: string
+          description: The client secret that you created for your application
+          example: Yoa8Q@of26stihrz3~JfP4Wz6TGby0fJFT2^UcU0
       additionalProperties: false
     TokenErrorResponse:
       title: Token Error Response
