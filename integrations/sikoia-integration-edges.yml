@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/sikoia/integrations
+- https://n8n.io/integrations/sikoia/
+- https://composio.dev/toolkits/sikoia
+- https://monid.ai/tools/sikoia
+checked:
+- https://composio.dev/toolkits/sikoia
+- https://monid.ai/tools/sikoia
+- https://n8n.io/integrations/sikoia/
+- https://zapier.com/apps/sikoia/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
